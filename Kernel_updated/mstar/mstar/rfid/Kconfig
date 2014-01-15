@@ -1,0 +1,15 @@
+config MSTAR_RFID
+
+tristate "RFID"
+
+help
+    MStar RFID driver function for MSR chips.
+    Support device: MSR3201
+         
+    It is hard coded to use PWM3 and GPIO88/ET_CRS D10 during
+    system setup. It only run one time when the system is setup.
+    Read the unique ID and save it in a static matrix,
+    wait nad passing the ID to user program.
+    It is very sensitive to timing sequence
+
+    * CAUTION * only for babao BD-556A-T2, Say NO for other cases.

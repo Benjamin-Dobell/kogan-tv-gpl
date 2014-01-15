@@ -1,0 +1,1 @@
+#define CONFIG_CMD_EXT4 1

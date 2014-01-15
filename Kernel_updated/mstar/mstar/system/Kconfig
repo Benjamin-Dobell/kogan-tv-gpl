@@ -1,0 +1,4 @@
+config MSTAR_SYSTEM
+	tristate "System"
+	select CRC32
+  default y

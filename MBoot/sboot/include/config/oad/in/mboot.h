@@ -1,0 +1,1 @@
+#undef CONFIG_OAD_IN_MBOOT

@@ -1,0 +1,18 @@
+
+[DRAM Buffer]
+
+bootram
+	_ld_bootram_RAM_start: 	0x80100000	(link.ld)
+			size:  	2KB		(link.ld)
+
+zipbin
+	ADDR_ZIPBIN_RAM_START:	0xA1000000	(boot.inc)
+
+unzipbin
+	vma:			0x80200000	(unzip/link.ld)
+	ADDR_UNZIP_RAM_START:	0xA0200000	(boot.inc)
+	ADDR_UNZIP_BUFFER:      0x80300000	(boot.inc)
+	ADDR_UNZIP_STACK_POINTER: 0x80380000	(boot.inc)
+
+kernel
+	ADDR_SYSTEM_RAM_START:	0xA0400000	(boot.inc)

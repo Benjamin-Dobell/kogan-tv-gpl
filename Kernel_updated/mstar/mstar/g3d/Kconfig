@@ -1,0 +1,4 @@
+config MSTAR_G3D
+tristate "G3D"
+help
+    MStar G3d driver function

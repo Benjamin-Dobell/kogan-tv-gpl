@@ -1,0 +1,1 @@
+#define CONFIG_LX2_START 0x

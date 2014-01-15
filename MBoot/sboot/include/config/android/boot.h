@@ -1,0 +1,1 @@
+#define CONFIG_ANDROID_BOOT 1

@@ -1,0 +1,1 @@
+#define CONFIG_CPU_1152MHZ 1

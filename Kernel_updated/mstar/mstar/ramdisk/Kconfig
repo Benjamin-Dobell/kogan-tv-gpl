@@ -1,0 +1,7 @@
+config MSTAR_RAMDISK
+
+tristate "RAMDISK"
+ 
+help
+    MStar ramdisk driver function
+    

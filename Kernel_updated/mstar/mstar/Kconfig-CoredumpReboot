@@ -1,0 +1,4 @@
+config MSTAR_COREDUMP_REBOOT
+bool "Coredump Reboot"
+help
+    When Coredump finished, reboot kernel.

@@ -1,0 +1,10 @@
+if MSTAR_URANUS4
+
+config MSTAR_SHIRE
+       bool "Shire"
+       default n
+
+       help
+           MStar Shire driver function
+
+endif

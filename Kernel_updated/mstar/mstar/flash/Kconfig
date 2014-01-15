@@ -1,0 +1,34 @@
+config MSTAR_SPI_FLASH
+
+  select MTD
+  select MTD_CHAR
+  select MTD_BLKDEVS
+  select NFTL
+  select NFTL_RW
+  select MTD_OOPS
+  
+  select MTD_COMPLEX_MAPPINGS
+  select MTD_BLOCK2MTD
+  select MTD_CMDLINE_PARTS
+  select SCSI_LOWLEVEL
+  select AUTOFS_FS
+  
+  select FAT_FS
+  select MSDOS_FS
+  select VFAT_FS
+  
+  select MTD_DEBUG
+  #select MTD_DEBUG_VERBOSE
+  select MTD_CONCAT
+  select MTD_PARTITIONS
+  #select MTD_NAND
+  #select JFFS2_FS
+  #select JFFS2_FS_DEBUG
+  #select JFFS2_FS_WRITEBUFFER
+
+tristate "SPI Flash"
+default n
+
+---help---
+Enable compilation option for driver SPI Flash.
+	

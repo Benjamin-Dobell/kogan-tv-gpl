@@ -1,0 +1,1 @@
+#undef CONFIG_UBI_ENHANCE_INIT

@@ -1,0 +1,7 @@
+config MSTAR_SWREG
+
+tristate "SWREG"
+
+help
+    MStar SW special register driver function
+

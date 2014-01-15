@@ -1,0 +1,6 @@
+config MSTAR_SC
+tristate "Smart card"
+default n
+help
+    enable MStar smart card driver.
+

@@ -1,0 +1,1 @@
+#define CONFIG_ENV_IN_SERIAL 1

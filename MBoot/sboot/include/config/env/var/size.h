@@ -1,0 +1,1 @@
+#define CONFIG_ENV_VAR_SIZE 0x10000

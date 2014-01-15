@@ -1,0 +1,4 @@
+config MSTAR_FUSION
+	tristate "Fusion"
+	---help---
+	  Fusion is the IPC API used by DirectFB and FusionSound.

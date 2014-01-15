@@ -1,0 +1,1 @@
+#undef CONFIG_KERNEL_3_0_20

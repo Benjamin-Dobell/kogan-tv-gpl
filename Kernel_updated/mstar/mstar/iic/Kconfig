@@ -1,0 +1,7 @@
+config MSTAR_IIC
+
+tristate "IIC"
+ 
+help
+    MStar IIC driver function
+    

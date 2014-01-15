@@ -1,0 +1,7 @@
+config MSTAR_MSYSTEM
+
+tristate "MSYSTEM"
+ 
+help
+    MStar all in one system driver function
+

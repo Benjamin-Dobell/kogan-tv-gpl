@@ -1,0 +1,1 @@
+#define CONFIG_CMD_EXT2 1

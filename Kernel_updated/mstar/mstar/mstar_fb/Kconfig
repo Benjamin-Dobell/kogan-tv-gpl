@@ -1,0 +1,7 @@
+config MSTAR_FB
+
+tristate "FB"
+	default n
+	help
+		Enable compilation option for driver FB
+

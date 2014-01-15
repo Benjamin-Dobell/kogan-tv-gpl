@@ -1,0 +1,1 @@
+#define CONFIG_PHY_SELECTION 1

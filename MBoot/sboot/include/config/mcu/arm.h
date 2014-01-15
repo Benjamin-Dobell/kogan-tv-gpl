@@ -1,0 +1,1 @@
+#define CONFIG_MCU_ARM 1

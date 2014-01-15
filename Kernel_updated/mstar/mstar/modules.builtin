@@ -1,0 +1,10 @@
+kernel/drivers/mstar/alsa_audio_driver/drv/mdrv-alsa-audio.ko
+kernel/drivers/mstar/alsa_audio_driver/hal/mhal-alsa-audio.ko
+kernel/drivers/mstar/emac/mdrv-emac.ko
+kernel/drivers/mstar/fusion/fusion.ko
+kernel/drivers/mstar/gflip/mdrv-gflip.ko
+kernel/drivers/mstar/iomap/mdrv-iomap.ko
+kernel/drivers/mstar/mbx/mdrv-mbx.ko
+kernel/drivers/mstar/mpool/mdrv-mpool.ko
+kernel/drivers/mstar/semutex/mdrv-semutex.ko
+kernel/drivers/mstar/system/mdrv-system.ko

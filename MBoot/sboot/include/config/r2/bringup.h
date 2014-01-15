@@ -1,0 +1,1 @@
+#undef CONFIG_R2_BRINGUP

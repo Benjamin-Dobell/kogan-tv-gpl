@@ -1,0 +1,1 @@
+#define CONFIG_UBOOT_HEAP_SIZE 0x

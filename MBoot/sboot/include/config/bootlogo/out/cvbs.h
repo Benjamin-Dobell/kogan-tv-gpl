@@ -1,0 +1,1 @@
+#define CONFIG_BOOTLOGO_OUT_CVBS 1

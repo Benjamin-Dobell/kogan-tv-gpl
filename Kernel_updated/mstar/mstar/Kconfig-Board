@@ -1,0 +1,276 @@
+# drivers/MStar/Kconfig-Board
+
+choice
+        prompt "MStar DTV Board Config"
+        default MSTAR_TITANIA_BD_MST064D_D01A_S if (MSTAR_TITANIA2)
+        default MSTAR_OBERON_BD_MST060A_D01A_S  if (MSTAR_OBERON)
+        default MSTAR_EUCLID_BD_GENERIC  if (MSTAR_EUCLID)
+        default MSTAR_TITANIA3_BD_GENERIC  if (MSTAR_TITANIA3)
+        default MSTAR_TITANIA10_BD_GENERIC  if (MSTAR_TITANIA10)
+        default MSTAR_TITANIA4_BD_GENERIC  if (MSTAR_TITANIA4)
+        default MSTAR_TITANIA8_BD_GENERIC  if (MSTAR_TITANIA8)
+        default MSTAR_TITANIA9_BD_GENERIC  if (MSTAR_TITANIA9)
+        default MSTAR_TITANIA11_BD_GENERIC  if (MSTAR_TITANIA11)
+        default MSTAR_TITANIA12_BD_GENERIC  if (MSTAR_TITANIA12)
+        default MSTAR_TITANIA13_BD_GENERIC  if (MSTAR_TITANIA13)
+        default MSTAR_AMBER1_BD_GENERIC  if (MSTAR_AMBER1)
+        default MSTAR_AMBER5_BD_GENERIC  if (MSTAR_AMBER5)
+        default MSTAR_AMBER6_BD_GENERIC  if (MSTAR_AMBER6)
+        default MSTAR_AMBER7_BD_GENERIC  if (MSTAR_AMBER7)
+        default MSTAR_AMETHYST_BD_GENERIC  if (MSTAR_AMETHYST)
+        default MSTAR_KRONUS_BD_GENERIC  if (MSTAR_KRONUS)
+        default MSTAR_KAISERIN_BD_GENERIC  if (MSTAR_KAISERIN)
+        default MSTAR_AGATE_BD_GENERIC  if (MSTAR_AGATE)
+        default MSTAR_AMBER3_BD_GENERIC  if (MSTAR_AMBER3)
+        default MSTAR_EAGLE_BD_GENERIC  if (MSTAR_EAGLE)
+        default MSTAR_EIFFEL_BD_GENERIC  if (MSTAR_EIFFEL)
+    config MSTAR_BD_NONE
+        bool "None"
+
+
+
+if (MSTAR_TITANIA2)
+
+    config MSTAR_TITANIA_BD_FPGA
+        bool "BD_FPGA"
+
+    config MSTAR_TITANIA_BD_MST064C_D01A_S
+        bool "MST064C-D01A-S"
+
+    config MSTAR_TITANIA_BD_MST064D_D01A_S
+        bool "MST064D-D01A-S"
+
+    config MSTAR_TITANIA_BD_MST064E_D01A_S
+        bool "MST064E-D01A-S"
+
+    config MSTAR_TITANIA_BD_CUS05KS_X1_BN41_090303
+        bool "X1-BN41-090303"
+
+    config MSTAR_TITANIA_BD_CUS05KS_X1_BN41_090420
+        bool "X1-BN41-090420"
+
+endif
+
+if (MSTAR_OBERON)
+
+    config MSTAR_OBERON_BD_MST060A_D01A_S
+        bool "MST060A_D01A_S(Oberon)"
+
+endif
+
+if (MSTAR_EUCLID)
+
+    config MSTAR_EUCLID_BD_FPGA
+        bool "BD_FPGA"
+
+    config MSTAR_EUCLID_BD_GENERIC
+        bool "Generic Board Setting"
+
+endif
+
+
+if (MSTAR_TITANIA3)
+
+    config MSTAR_TITANIA3_BD_FPGA
+        bool "BD_FPGA"
+
+    config MSTAR_TITANIA3_BD_GENERIC
+        bool "Generic Board Setting"
+
+endif
+
+if (MSTAR_TITANIA10)
+
+    config MSTAR_TITANIA10_BD_FPGA
+        bool "BD_FPGA"
+
+    config MSTAR_TITANIA10_BD_GENERIC
+        bool "Generic Board Setting"
+
+endif
+
+
+if (MSTAR_TITANIA4)
+
+    config MSTAR_TITANIA4_BD_FPGA
+        bool "FPGA TITANIA4 Board Setting"
+
+    config MSTAR_TITANIA4_BD_GENERIC
+        bool "Generic Board Setting"
+endif
+
+if (MSTAR_TITANIA8)
+
+    config MSTAR_TITANIA8_BD_FPGA
+        bool "FPGA TITANIA8 Board Setting"
+
+    config MSTAR_TITANIA8_BD_GENERIC
+        bool "Generic Board Setting"
+endif
+
+if (MSTAR_TITANIA9)
+
+    config MSTAR_TITANIA9_BD_FPGA
+        bool "Titania9: FPGA Board Setting"
+
+    config MSTAR_TITANIA9_BD_GENERIC
+        bool "Titania9: Generic Board Setting"
+endif
+
+if (MSTAR_TITANIA11)
+
+    config MSTAR_TITANIA11_BD_FPGA
+        bool "Titania11: FPGA Board Setting"
+
+    config MSTAR_TITANIA11_BD_GENERIC
+        bool "Titania11: Generic Board Setting"
+endif
+
+if (MSTAR_TITANIA12)
+
+    config MSTAR_TITANIA12_BD_FPGA
+        bool "FPGA TITANIA12 Board Setting"
+
+    config MSTAR_TITANIA12_BD_GENERIC
+        bool "Generic Board Setting"
+endif
+
+if (MSTAR_TITANIA13)
+
+    config MSTAR_TITANIA13_BD_FPGA
+        bool "Titania13: FPGA Board Setting"
+
+    config MSTAR_TITANIA13_BD_GENERIC
+        bool "Titania13: Generic Board Setting"
+endif
+
+if (MSTAR_AMBER1)
+    config MSTAR_AMBER1_BD_FPGA
+        bool "Amber1: FPGA Board Setting"
+
+    config MSTAR_AMBER1_BD_GENERIC
+        bool "Amber1: Generic Board Setting"
+endif
+
+if (MSTAR_AMBER5)
+    config MSTAR_AMBER5_BD_FPGA
+        bool "Amber5: FPGA Board Setting"
+
+    config MSTAR_AMBER5_BD_GENERIC
+        bool "Amber5: Generic Board Setting"
+endif
+
+if (MSTAR_AMBER6)
+    config MSTAR_AMBER6_BD_FPGA
+        bool "Amber6: FPGA Board Setting"
+
+    config MSTAR_AMBER6_BD_GENERIC
+        bool "Amber6: Generic Board Setting"
+endif
+
+if (MSTAR_AMBER7)
+    config MSTAR_AMBER7_BD_FPGA
+        bool "Amber7: FPGA Board Setting"
+
+    config MSTAR_AMBER7_BD_GENERIC
+        bool "Amber7: Generic Board Setting"
+endif
+
+if (MSTAR_AMETHYST)
+    config MSTAR_AMETHYST_BD_FPGA
+        bool "Amethyst: FPGA Board Setting"
+
+    config MSTAR_AMETHYST_BD_GENERIC
+        bool "Amethyst: Generic Board Setting"
+endif
+
+if (MSTAR_URANUS4)
+
+    config MSTAR_URANUS4_BD_FPGA
+        bool "FPGA URANUS4 Board Setting"
+
+    config MSTAR_URANUS4_BD_GENERIC
+        bool "Generic Board Setting"
+endif
+
+if (MSTAR_JANUS2)
+
+    config MSTAR_JANUS2_BD_FPGA
+        bool "FPGA Janus2 Board Setting"
+
+    config MSTAR_JANUS2_BD_GENERIC
+        bool "Generic Board Setting"
+endif
+
+if (MSTAR_KRONUS)
+
+    config MSTAR_KRONUS_BD_FPGA
+        bool "FPGA Kronus Board Setting"
+
+    config MSTAR_KRONUS_BD_GENERIC
+        bool "Generic Board Setting"
+endif
+
+if (MSTAR_KAISERIN)
+
+    config MSTAR_KAISERIN_BD_FPGA
+        bool "FPGA Kaiserin Board Setting"
+
+    config MSTAR_KAISERIN_BD_GENERIC
+        bool "Generic Board Setting"
+endif
+
+
+if (MSTAR_AGATE)
+
+    config MSTAR_AGATE_BD_FPGA
+        bool "FPGA AGATE Board Setting"
+
+    config MSTAR_AGATE_BD_GENERIC
+        bool "Generic Board Setting"
+endif
+
+
+if (MSTAR_AMBER3)
+
+    config MSTAR_AMBER3_BD_FPGA
+        bool "FPGA AMBER3 Board Setting"
+
+    config MSTAR_AMBER3_BD_GENERIC
+        bool "Generic Board Setting"
+endif
+
+if (MSTAR_EAGLE)
+    config MSTAR_EAGLE_BD_FPGA
+        bool "Eagle FPGA Board Setting"
+
+    config MSTAR_EAGLE_BD_GENERIC
+        bool "Eagle Generic Board Setting"
+endif
+
+if (MSTAR_EMERALD)
+    config MSTAR_EMERALD_BD_FPGA
+        bool "Emerald: FPGA Board Setting"
+
+    config MSTAR_EMERALD_BD_GENERIC
+        bool "Emerald: Generic Board Setting"
+endif
+
+if (MSTAR_ARM)
+
+    config MSTAR_ARM_BD_FPGA
+        bool "FPGA ARM Board Setting"
+
+    config MSTAR_ARM_BD_GENERIC
+        bool "Generic Board Setting"
+endif
+
+if (MSTAR_EIFFEL)
+    config MSTAR_EIFFEL_BD_FPGA
+        bool "Eiffel FPGA Board Setting"
+
+    config MSTAR_EIFFEL_BD_GENERIC
+        bool "Eiffel Generic Board Setting"
+endif
+
+endchoice

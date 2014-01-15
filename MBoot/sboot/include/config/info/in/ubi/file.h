@@ -1,0 +1,1 @@
+#undef CONFIG_INFO_IN_UBI_FILE

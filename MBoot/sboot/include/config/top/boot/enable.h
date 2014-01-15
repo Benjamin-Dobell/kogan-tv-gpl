@@ -1,0 +1,1 @@
+#undef CONFIG_TOP_BOOT_ENABLE

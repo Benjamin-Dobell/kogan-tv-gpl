@@ -1,0 +1,1 @@
+#undef CONFIG_MEM2133MHz

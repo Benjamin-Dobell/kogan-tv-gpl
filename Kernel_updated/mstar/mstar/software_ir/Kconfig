@@ -1,0 +1,6 @@
+config MSTAR_SOFTWARE_IR
+
+tristate "Software IrDA"
+
+help
+    MStar SoftwareIrDA driver function

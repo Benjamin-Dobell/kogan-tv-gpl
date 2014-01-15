@@ -1,0 +1,1 @@
+#undef CONFIG_BFN_WRITE_NAND

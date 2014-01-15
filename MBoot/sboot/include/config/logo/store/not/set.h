@@ -1,0 +1,1 @@
+#undef CONFIG_LOGO_STORE_NOT_SET

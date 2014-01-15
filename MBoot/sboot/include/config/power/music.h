@@ -1,0 +1,1 @@
+#define CONFIG_POWER_MUSIC 1

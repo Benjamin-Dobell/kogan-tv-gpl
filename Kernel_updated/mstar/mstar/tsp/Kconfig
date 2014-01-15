@@ -1,0 +1,5 @@
+config MSTAR_TSP
+tristate "TSP"
+help
+    enable MStar TSP driver.
+

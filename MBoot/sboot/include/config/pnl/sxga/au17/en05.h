@@ -1,0 +1,1 @@
+#undef CONFIG_PNL_SXGA_AU17_EN05

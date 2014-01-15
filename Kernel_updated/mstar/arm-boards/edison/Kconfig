@@ -1,0 +1,32 @@
+menu "MStar MSB25xx PCB Diversity"
+
+choice
+        prompt "Board selection"
+        default  MS2510DVBT43
+
+config G35
+        bool "G35"
+
+config G35MP
+        bool "G35MP"
+
+config MS2510ATSC43
+        bool "MS2510ATSC43"
+
+config MS2510DVBT43
+        bool "MS2510DVBT43"
+
+config MS2516QC7A
+        bool "MS2516QC7A"
+
+config MS2516SZ7A
+        bool "MS2516SZ7A"
+
+config MS2517QC7D
+        bool "MS2517QC7D"
+
+config MSB2510_35
+        bool "MSB2510_35"
+
+endchoice
+endmenu

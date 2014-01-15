@@ -1,0 +1,56 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD obj/lzmadec.o
+LOAD obj/lzmadecode.o
+                0x0000000080200000                . = 0x80200000
+
+.text           0x0000000080200000     0x1b30
+ *(.text)
+ .text          0x0000000080200000      0x190 obj/lzmadec.o
+                0x0000000080200000                LzmaDec
+ .text          0x0000000080200190     0x19a0 obj/lzmadecode.o
+                0x0000000080200190                LzmaDecodeProperties
+                0x000000008020029c                LzmaDecode
+                0x0000000080201b30                . = ALIGN (0x8)
+
+.rodata
+ *(.rodata)
+ *(.rodata.*)
+
+.data           0x0000000080201b30        0x0
+                0x0000000080201b30                . = ALIGN (0x8)
+                0x0000000080201b30                _ld_data_RAM_start = .
+ *(.data)
+                0x0000000080201b30                . = ALIGN (0x8)
+                0x0000000080201b30                _ld_data_RAM_end = .
+                0x0000000080209b30                _gp = (. + 0x8000)
+                0x0000000080201b30                _gp_disp = .
+
+.lit8
+ *(.lit8)
+
+.lit4
+ *(.lit4)
+
+.bss            0x0000000080201b30        0x0
+ *(.bss)
+ *(COMMON)
+
+/DISCARD/
+ *(.exit.text)
+ *(.exit.data)
+ *(.exitcall.exit)
+ *(.comment)
+ *(.MIPS.options)
+ *(.note)
+ *(.options)
+ *(.pdr)
+ *(.reginfo)
+ *(.mdebug*)
+OUTPUT(out/unzip.elf elf32-tradlittlemips)

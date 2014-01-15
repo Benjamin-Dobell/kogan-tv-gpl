@@ -1,0 +1,23 @@
+# drivers/MStar/alsa_audio_driver/Kconfig
+
+menuconfig MSTAR_ALSA_AUDIO_DRIVER
+	tristate "ALSA Audio Driver"
+	default n
+	depends on SND
+	help
+		MStar ALSA Audio Driver.
+
+		Note!
+		Before enable "MStar ASLA Audio Driver",
+		be remembered to enable "Linux ALSA Kernel Module" first,
+		and enable the required modules then.
+
+		[Device Driver]->[Sound card support]->[Advanced Linux Sound Architecture]->...
+
+if MSTAR_ALSA_AUDIO_DRIVER
+
+source "drivers/mstar/alsa_audio_driver/drv/Kconfig"
+
+source "drivers/mstar/alsa_audio_driver/hal/Kconfig"
+
+endif #MSTAR_ALSA_AUDIO_DRIVER

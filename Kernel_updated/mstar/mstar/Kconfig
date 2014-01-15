@@ -1,0 +1,737 @@
+# drivers/MStar/Kconfig
+
+menu "MStar Platform Configuration"
+
+#===================================================
+# MStar Chip Selection
+#===================================================
+choice
+	prompt "MStar Chip Selection"
+	default None
+
+config MSTAR_NONE
+	bool "None"
+
+config MSTAR_TITANIA
+	bool "Titania"
+	select BOOT_ELF32
+	select DMA_NONCOHERENT
+	select MIPS_BOARDS_GEN
+	select CEVT_R4K
+	select CSRC_R4K
+	select IRQ_CPU
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_HAS_CPU_MIPS32_R2
+	select SYS_HAS_EARLY_PRINTK
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_BIG_ENDIAN
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select SYS_SUPPORTS_MULTITHREADING
+
+
+config MSTAR_TRITON
+	bool "Triton"
+	select BOOT_ELF32
+	select DMA_NONCOHERENT
+	select MIPS_BOARDS_GEN
+	select CEVT_R4K
+	select CSRC_R4K
+	select IRQ_CPU
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_HAS_CPU_MIPS32_R2
+	select SYS_HAS_EARLY_PRINTK
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_BIG_ENDIAN
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select SYS_SUPPORTS_MULTITHREADING
+
+config MSTAR_TITANIA2
+	bool "Titania2"
+	select BOOT_ELF32
+	select DMA_NONCOHERENT
+	select MIPS_BOARDS_GEN
+	select CEVT_R4K
+	select CSRC_R4K
+	select IRQ_CPU
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_HAS_CPU_MIPS32_R2
+	select SYS_HAS_EARLY_PRINTK
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_BIG_ENDIAN
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select SYS_SUPPORTS_MULTITHREADING
+	select ZONE_DMA
+	select MS_USB_MIU1_PATCH
+	select MS_NAND_MIU1_PATCH
+
+config MSTAR_OBERON
+	bool "Oberon"
+	select BOOT_ELF32
+	select DMA_NONCOHERENT
+	select MIPS_BOARDS_GEN
+	select CEVT_R4K
+	select CSRC_R4K
+	select IRQ_CPU
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_HAS_CPU_MIPS32_R2
+	select SYS_HAS_EARLY_PRINTK
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_BIG_ENDIAN
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select SYS_SUPPORTS_MULTITHREADING
+
+config MSTAR_EUCLID
+	bool "Euclid"
+	select BOOT_ELF32
+	select DMA_NONCOHERENT
+	select MIPS_BOARDS_GEN
+	select CEVT_R4K
+	select CSRC_R4K
+	select IRQ_CPU
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_HAS_CPU_MIPS32_R2
+	select SYS_HAS_EARLY_PRINTK
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_BIG_ENDIAN
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select SYS_SUPPORTS_MULTITHREADING
+	select ZONE_DMA
+	select MS_USB_MIU1_PATCH
+
+
+config MSTAR_TITANIA3
+        bool "Titania3"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_TITANIA10
+        bool "Titania10"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+
+config MSTAR_TITANIA4
+        bool "Titania4"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_TITANIA8
+        bool "Titania8"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_TITANIA9
+        bool "Titania9"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_TITANIA11
+        bool "Titania11"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_TITANIA12
+        bool "Titania12"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HA
+
+config MSTAR_TITANIA13
+        bool "Titania13"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_AMBER1
+        bool "Amber1"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_AMBER5
+        bool "Amber5"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_AMBER6
+        bool "Amber6"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_AMBER7
+        bool "Amber7"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_AMETHYST
+        bool "Amethyst"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_URANUS4
+        bool "Uranus4"
+        select BOOT_ELF32
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_JANUS
+        bool "Janus"
+        select BOOT_ELF32
+        select DMA_NONCOHERENT
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select CPU_HAS_SYNC
+
+config MSTAR_JANUS2
+        bool "Janus2"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_KRONUS
+        bool "Kronus"
+        select BOOT_ELF32
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_KAISERIN
+        bool "Kaiserin"
+        select BOOT_ELF32
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+
+config MSTAR_AGATE
+        bool "AGATE"
+        select ARCH_WANT_OPTIONAL_GPIOLIB
+        select ARM_AMBA
+        select ARM_TIMER_SP804
+        select COMMON_CLKDEV
+        select HAVE_CLK
+        select ICST
+        select PLAT_VERSATILE
+        help
+          This enables support for the ARM Ltd Versatile Express boards.
+
+config MSTAR_AMBER3
+        bool "AMBER3"
+        select ARCH_WANT_OPTIONAL_GPIOLIB
+        select ARM_AMBA
+        select ARM_TIMER_SP804
+        select COMMON_CLKDEV
+        select HAVE_CLK
+        select ICST
+        select PLAT_VERSATILE
+        help
+          This enables support for the ARM Ltd Versatile Express boards.
+
+config MSTAR_EAGLE
+    bool "Eagle"
+    select ARCH_WANT_OPTIONAL_GPIOLIB
+    select ARM_AMBA
+    select ARM_TIMER_SP804
+    select COMMON_CLKDEV
+    select HAVE_CLK
+    select ICST
+    select PLAT_VERSATILE
+
+config MSTAR_EIFFEL
+    bool "Eiffel"
+    select ARCH_WANT_OPTIONAL_GPIOLIB
+    select ARM_AMBA
+    select ARM_TIMER_SP804
+    select COMMON_CLKDEV
+    select HAVE_CLK
+    select ICST
+    select PLAT_VERSATILE
+    
+config MSTAR_EMERALD
+        bool "Emerald"
+        select BOOT_ELF32
+        select ARCH_SPARSEMEM_ENABLE
+        select DMA_NONCOHERENT
+        select MIPS_BOARDS_GEN
+        select CEVT_R4K
+        select CSRC_R4K
+        select IRQ_CPU
+        select SYS_HAS_CPU_MIPS32_R2
+        select SYS_HAS_EARLY_PRINTK
+        select SYS_SUPPORTS_32BIT_KERNEL
+        select SYS_SUPPORTS_BIG_ENDIAN
+        select SYS_SUPPORTS_LITTLE_ENDIAN
+        select SYS_SUPPORTS_MULTITHREADING
+        select HIGHMEM
+        select ZONE_DMA
+        select MS_USB_MIU1_PATCH
+        select SYS_SUPPORTS_HIGHMEM
+        select CPU_HAS_SYNC
+
+config MSTAR_EDISON
+        bool "EDISON"
+        select ARCH_WANT_OPTIONAL_GPIOLIB
+        select ARM_AMBA
+        select ARM_TIMER_SP804
+        select COMMON_CLKDEV
+        select HAVE_CLK
+        select ICST
+        select PLAT_VERSATILE
+        help
+          This enables support for the ARM Ltd Versatile Express boards.
+
+config MSTAR_EINSTEIN
+        bool "EINSTEIN"
+        select ARCH_WANT_OPTIONAL_GPIOLIB
+        select ARM_AMBA
+        select ARM_TIMER_SP804
+        select COMMON_CLKDEV
+        select HAVE_CLK
+        select ICST
+        select PLAT_VERSATILE
+        help
+          This enables support for the ARM Ltd Versatile Express boards.
+endchoice
+
+#===================================================
+# MStar Chip (auto-select)
+# 0: None
+# 1: Titania
+# 2: Triton
+# 3: Titania2
+#===================================================
+config MSTAR_CHIP_TYPE
+	int
+	default 1 if MSTAR_TITANIA
+	default 2 if MSTAR_TRITON
+	default 3 if MSTAR_TITANIA2
+	default 4 if MSTAR_OBERON
+	default 5 if MSTAR_EUCLID
+	default 0
+
+#===================================================
+# MStar Chip Name (auto-select)
+#===================================================
+config MSTAR_CHIP_NAME
+	string
+	default "titania" if MSTAR_TITANIA
+	default "triton" if MSTAR_TRITON
+	default "titania2" if MSTAR_TITANIA2
+	default "oberon" if MSTAR_OBERON
+	default "euclid" if MSTAR_EUCLID
+	default "titania3" if MSTAR_TITANIA3
+	default "titania10" if MSTAR_TITANIA10
+	default "titania4" if MSTAR_TITANIA4
+	default "titania8" if MSTAR_TITANIA8
+	default "titania9" if MSTAR_TITANIA9
+	default "titania11" if MSTAR_TITANIA11
+    default "titania12" if MSTAR_TITANIA12
+    default "titania13" if MSTAR_TITANIA13
+    default "amber1" if MSTAR_AMBER1
+    default "amber5" if MSTAR_AMBER5
+    default "amber6" if MSTAR_AMBER6
+    default "amber7" if MSTAR_AMBER7
+    default "amethyst" if MSTAR_AMETHYST
+	default "uranus4" if MSTAR_URANUS4
+	default "janus" if MSTAR_JANUS
+	default "janus2" if MSTAR_JANUS2
+	default "kronus" if MSTAR_KRONUS
+	default "kaiserin" if MSTAR_KAISERIN
+	default "agate" if MSTAR_AGATE
+	default "amber3" if MSTAR_AMBER3
+	default "eagle" if MSTAR_EAGLE
+    default "emerald" if MSTAR_EMERALD
+	default "edison" if MSTAR_EDISON
+	default "eiffel" if MSTAR_EIFFEL
+	default "einstein" if MSTAR_EINSTEIN
+	default "error"
+
+#===================================================
+# Titania 2 Chip Revision Selection
+#===================================================
+if MSTAR_TITANIA2
+choice
+	prompt "-- Titania 2 Chip Revision"
+	default None
+
+config MSTAR_TITANIA2_REV_NONE
+	bool "None"
+
+config MSTAR_TITANIA2_REV_U02
+    bool "U02"
+
+config MSTAR_TITANIA2_REV_U03
+    bool "U03"
+
+endchoice
+endif
+
+#===================================================
+#Chip based define
+#===================================================
+config MSTAR_ARM
+    bool "Enable ARM BASE CPU"
+    default n
+config MSTAR_MIPS
+    bool "Enable MIPS BASE CPU"
+	depends on !MSTAR_ARM
+    default n
+
+
+#===================================================
+#Android recovery Flag
+#===================================================
+
+config WRITE_TO_ANDROID_MISC
+    bool "Write Andorid recovery command to partition"
+    default n
+
+choice
+  depends on WRITE_TO_ANDROID_MISC
+	prompt "storage type"
+	default EMMC
+
+config WRITE_TO_ANDROID_MISC_EMMC
+    bool "EMMC"
+
+config WRITE_TO_ANDROID_MISC_NAND
+    bool "NAND"
+endchoice
+
+config LX3_SUPPORT
+    bool "LX3 support"
+    default n
+  
+#===================================================
+# USB MIU1 PATCH
+#===================================================
+config MS_USB_MIU1_PATCH
+    bool
+    default n
+
+#===================================================
+# USB NAND PATCH
+#===================================================
+config MS_NAND_MIU1_PATCH
+    bool
+    default n
+
+config MSTAR_COOCAA_AUTH
+    bool "Link with COOCAA Authorization"
+    default n
+
+if !MSTAR_NONE
+#==========================================
+# Remove this latter - cc.chen
+#==========================================
+source "drivers/mstar/Kconfig-Board"
+source "drivers/mstar/Kconfig-MMap"
+
+#===================================================
+# MStar Device Drivers
+#===================================================
+comment "MStar Device Drivers"
+source "drivers/mstar/g3d/Kconfig"
+source "drivers/mstar/iomap/Kconfig"
+source "drivers/mstar/msystem/Kconfig"
+source "drivers/mstar/mpool/Kconfig"
+source "drivers/mstar/ramdisk/Kconfig"
+source "drivers/mstar/gpio/Kconfig"
+source "drivers/mstar/iic/Kconfig"
+source "drivers/mstar/emac/Kconfig"
+source "drivers/mstar/system/Kconfig"
+source "drivers/mstar/ir/Kconfig"
+source "drivers/mstar/software_ir/Kconfig"
+source "drivers/mstar/nand/Kconfig"
+source "drivers/mstar/sdmmc/Kconfig"
+source "drivers/mstar/flash/Kconfig"
+source "drivers/mstar/mbx/Kconfig"
+source "drivers/mstar/fusion_8_7/Kconfig"
+source "drivers/mstar/fusion/Kconfig"
+source "drivers/mstar/firmware/Kconfig"
+source "drivers/mstar/onenand/Kconfig"
+source "drivers/mstar/gflip/Kconfig"
+source "drivers/mstar/rfid/Kconfig"
+source "drivers/mstar/vid_pre_alloc_mem/Kconfig"
+source "drivers/mstar/msglog/Kconfig"
+source "drivers/mstar/msgio/Kconfig"
+source "drivers/mstar/tsp/Kconfig"
+source "drivers/mstar/shire/Kconfig"
+source "drivers/mstar/sc/Kconfig"
+source "drivers/mstar/mpif/Kconfig"
+source "drivers/mstar/alsa_audio_driver/Kconfig"
+source "drivers/mstar/uarttp/Kconfig"
+source "drivers/mstar/semutex/Kconfig"
+source "drivers/mstar/Kconfig-CoredumpReboot"
+source "drivers/mstar/Kconfig-Kernel"
+source "drivers/mstar/gmac/Kconfig"
+source "drivers/mstar/trustzone/Kconfig"
+source "drivers/mstar/mstar_fb/Kconfig"
+endif
+
+endmenu

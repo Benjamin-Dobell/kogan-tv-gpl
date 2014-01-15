@@ -1,0 +1,1 @@
+#undef CONFIG_UBI_MLC_BACKUP_LSB

@@ -1,0 +1,49 @@
+
+config MSTAR_NAND
+  select MTD
+  select MTD_CHAR
+  select MTD_BLKDEVS
+  select NFTL
+  select NFTL_RW
+  select MTD_OOPS
+
+  select MTD_COMPLEX_MAPPINGS
+  select MTD_BLOCK2MTD
+  select MTD_NAND_MUSEUM_IDS
+  select MTD_NAND_PLATFORM
+  select MTD_CMDLINE_PARTS
+  select MTD_UBI
+  #select MTD_UBI_WL_THRESHOLD
+  #select MTD_UBI_BEB_RESERVE
+  select SCSI_LOWLEVEL
+  select AUTOFS_FS
+
+  #select FAT_FS
+  #select MSDOS_FS
+  #select VFAT_FS
+  #select FAT_DEFAULT_CODEPAGE
+  #select FAT_DEFAULT_IOCHARSET
+
+  select MTD_DEBUG
+  #select MTD_DEBUG_VERBOSE
+  select MTD_CONCAT
+  select MTD_PARTITIONS
+  select MTD_NAND
+  #select JFFS2_FS
+  #select JFFS2_FS_DEBUG
+  #select JFFS2_FS_WRITEBUFFER
+  tristate "NAND"
+  default n
+
+help
+Enable compilation option for hy27us MTD driver
+
+    
+config MSTAR_NAND_IP
+	string
+	default "titania" if MSTAR_TITANIA
+	default "titania2" if MSTAR_TITANIA2
+	default "titania3" if (MSTAR_TITANIA3||MSTAR_TITANIA10)
+	default "euclid" if MSTAR_EUCLID
+	default "fcie3"
+

@@ -1,0 +1,7 @@
+config MSTAR_MPOOL
+
+tristate "MPOOL"
+ 
+help
+    MStar MPOOL driver function
+    

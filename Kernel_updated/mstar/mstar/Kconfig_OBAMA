@@ -1,0 +1,253 @@
+# drivers/MStar/Kconfig
+
+#===================================================
+# !!! THIS FILE IS JUST A TEMP FILE. ONCE THE TEST
+#     FOR NEW CONFIGURATION LAYOUT IS DONE. PLEASE
+#     REPLACE drivers/MStar/Kconfig WITH IT !!!
+#===================================================
+
+menu "MStar Platform Configuration"
+
+#===================================================
+# MStar Chip Selection
+#===================================================
+choice
+	prompt "MStar Chip Selection"
+	default None
+
+config MSTAR_NONE
+	bool "None"
+
+config MSTAR_TITANIA
+	bool "Titania"
+	select BOOT_ELF32
+	select DMA_NONCOHERENT
+	select MIPS_BOARDS_GEN
+	select CEVT_R4K
+	select CSRC_R4K
+	select IRQ_CPU
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_HAS_CPU_MIPS32_R2
+	select SYS_HAS_EARLY_PRINTK
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_BIG_ENDIAN
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select SYS_SUPPORTS_MULTITHREADING
+
+config MSTAR_TRITON
+	bool "Triton"
+	select BOOT_ELF32
+	select DMA_NONCOHERENT
+	select MIPS_BOARDS_GEN
+	select CEVT_R4K
+	select CSRC_R4K
+	select IRQ_CPU
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_HAS_CPU_MIPS32_R2
+	select SYS_HAS_EARLY_PRINTK
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_BIG_ENDIAN
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select SYS_SUPPORTS_MULTITHREADING
+
+config MSTAR_TITANIA2
+	bool "Titania2"
+	select BOOT_ELF32
+	select DMA_NONCOHERENT
+	select MIPS_BOARDS_GEN
+	select CEVT_R4K
+	select CSRC_R4K
+	select IRQ_CPU
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_HAS_CPU_MIPS32_R2
+	select SYS_HAS_EARLY_PRINTK
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_BIG_ENDIAN
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select SYS_SUPPORTS_MULTITHREADING
+
+config MSTAR_OBERON
+	bool "Oberon"
+	select BOOT_ELF32
+	select DMA_NONCOHERENT
+	select MIPS_BOARDS_GEN
+	select CEVT_R4K
+	select CSRC_R4K
+	select IRQ_CPU
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_HAS_CPU_MIPS32_R2
+	select SYS_HAS_EARLY_PRINTK
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_BIG_ENDIAN
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select SYS_SUPPORTS_MULTITHREADING
+
+config MSTAR_EUCLID
+	bool "Euclid"
+	select BOOT_ELF32
+	select DMA_NONCOHERENT
+	select MIPS_BOARDS_GEN
+	select CEVT_R4K
+	select CSRC_R4K
+	select IRQ_CPU
+	select SYS_HAS_CPU_MIPS32_R1
+	select SYS_HAS_CPU_MIPS32_R2
+	select SYS_HAS_EARLY_PRINTK
+	select SYS_SUPPORTS_32BIT_KERNEL
+	select SYS_SUPPORTS_BIG_ENDIAN
+	select SYS_SUPPORTS_LITTLE_ENDIAN
+	select SYS_SUPPORTS_MULTITHREADING
+
+#config MSTAR_TITANIAX                                      <- // MODME, >> add new chip here <<
+#	bool "TitaniaX"                                         <- // MODME, >> add new chip here <<
+#	select BOOT_ELF32                                       <- // MODME, >> add new chip here <<
+#	select DMA_NONCOHERENT                                  <- // MODME, >> add new chip here <<
+#	select MIPS_BOARDS_GEN                                  <- // MODME, >> add new chip here <<
+#	select CEVT_R4K                                         <- // MODME, >> add new chip here <<
+#	select CSRC_R4K                                         <- // MODME, >> add new chip here <<
+#	select IRQ_CPU                                          <- // MODME, >> add new chip here <<
+#	select SYS_HAS_CPU_MIPS32_R1                            <- // MODME, >> add new chip here <<
+#	select SYS_HAS_CPU_MIPS32_R2                            <- // MODME, >> add new chip here <<
+#	select SYS_HAS_EARLY_PRINTK                             <- // MODME, >> add new chip here <<
+#	select SYS_SUPPORTS_32BIT_KERNEL                        <- // MODME, >> add new chip here <<
+#	select SYS_SUPPORTS_BIG_ENDIAN                          <- // MODME, >> add new chip here <<
+#	select SYS_SUPPORTS_LITTLE_ENDIAN                       <- // MODME, >> add new chip here <<
+#	select SYS_SUPPORTS_MULTITHREADING                      <- // MODME, >> add new chip here <<
+
+endchoice
+
+#===================================================
+# MStar Chip (auto-select)
+# 0: None
+# 1: Titania
+# 2: Triton
+# 3: Titania2
+#===================================================
+config MSTAR_CHIP_TYPE
+	int
+	default 1 if MSTAR_TITANIA
+	default 2 if MSTAR_TRITON
+	default 3 if MSTAR_TITANIA2
+	default 4 if MSTAR_OBERON
+	default 5 if MSTAR_EUCLID
+#	default X if MSTAR_TITANIAX                             <- // MODME, >> add new chip here <<
+	default 0
+
+#===================================================
+# MStar Chip Name (auto-select)
+#===================================================
+config MSTAR_CHIP_NAME
+	string
+	default "titania" if MSTAR_TITANIA
+	default "triton" if MSTAR_TRITON
+	default "titania2" if MSTAR_TITANIA2
+	default "oberon" if MSTAR_OBERON
+	default "euclid" if MSTAR_EUCLID
+#	default "titaniaX" if MSTAR_TITANIAX                    <- // MODME, >> add new chip here << (titaniaX is the chip specific directory / CONFIG_MSTAR_CHIP_NAME)
+	default "error"
+
+#===================================================
+# FIXME: remove this later - cc.chen
+#===================================================
+config Titania
+	bool
+	default y if MSTAR_TITANIA
+
+config Triton
+	bool
+	default y if MSTAR_TRITON
+
+config Titania2
+	bool
+	default y if MSTAR_TITANIA2
+
+config Oberon
+	bool
+	default y if MSTAR_OBERON
+
+config Euclid
+	bool
+	default y if MSTAR_EUCLID
+
+#config TitaniaX                                            <- // MODME, >> add new chip here <<
+#	bool                                                    <- // MODME, >> add new chip here <<
+#	default y if MSTAR_TITANIAX                             <- // MODME, >> add new chip here <<
+
+#===================================================
+# MStar Chip Configuration
+#===================================================
+if MSTAR_TITANIA
+endif
+if MSTAR_TRITON
+endif
+if MSTAR_TITANIA2
+source "arch/mips/mips-boards/titania2/Kconfig"
+endif
+if MSTAR_OBERON
+source "arch/mips/mips-boards/oberon/Kconfig"
+endif
+if MSTAR_EUCLID
+source "arch/mips/mips-boards/euclid/Kconfig"
+endif
+#if MSTAR_TITANIAX                                          <- // MODME, >> add new chip here << (titaniaX is the chip specific directory / CONFIG_MSTAR_CHIP_NAME)
+#source "arch/mips/mips-boards/titaniaX/Kconfig"            <- // MODME, >> add new chip here << (titaniaX is the chip specific directory / CONFIG_MSTAR_CHIP_NAME)
+#endif                                                      <- // MODME, >> add new chip here << (titaniaX is the chip specific directory / CONFIG_MSTAR_CHIP_NAME)
+
+
+
+#===================================================
+#  MStar Device Driver
+#===================================================
+comment "MStar Device Drivers"
+
+if !MSTAR_NONE
+source "drivers/mstar/ci/Kconfig"
+source "drivers/mstar/tsp/Kconfig"
+source "drivers/mstar/ge/Kconfig"
+source "drivers/mstar/ge1.2/Kconfig"
+source "drivers/mstar/iomap/Kconfig"
+source "drivers/mstar/msystem/Kconfig"
+source "drivers/mstar/gop/Kconfig"
+source "drivers/mstar/mpool/Kconfig"
+source "drivers/mstar/iic/Kconfig"
+source "drivers/mstar/gpio/Kconfig"
+source "drivers/mstar/pwm/Kconfig"
+source "drivers/mstar/emac/Kconfig"
+source "drivers/mstar/scaler/Kconfig"
+source "drivers/mstar/system/Kconfig"
+source "drivers/mstar/miu/Kconfig"
+source "drivers/mstar/mad/Kconfig"
+source "drivers/mstar/vd/Kconfig"
+source "drivers/mstar/mvd/Kconfig"
+source "drivers/mstar/mvop/Kconfig"
+source "drivers/mstar/ir/Kconfig"
+source "drivers/mstar/8051/Kconfig"
+source "drivers/mstar/micom/Kconfig"
+source "drivers/mstar/aeon/Kconfig"
+source "drivers/mstar/rld/Kconfig"
+source "drivers/mstar/ttx/Kconfig"
+source "drivers/mstar/mlink/Kconfig"
+source "drivers/mstar/ve/Kconfig"
+source "drivers/mstar/cc/Kconfig"
+source "drivers/mstar/jpeg/Kconfig"
+source "drivers/mstar/jpeg1.1/Kconfig"
+source "drivers/mstar/h264/Kconfig"
+source "drivers/mstar/nand/Kconfig"
+source "drivers/mstar/fbdev/Kconfig"
+source "drivers/mstar/msmailbox/Kconfig"
+source "drivers/mstar/mbx/Kconfig"
+source "drivers/mstar/fusion/Kconfig"
+source "drivers/mstar/dma/Kconfig"
+source "drivers/mstar/semaphore/Kconfig"
+source "drivers/mstar/rvd/Kconfig"
+source "drivers/mstar/mediacodec/Kconfig"
+source "drivers/mstar/kip/Kconfig"
+source "drivers/mstar/firmware/Kconfig"
+source "drivers/mstar/onenand/Kconfig"
+source "drivers/mstar/gflip/Kconfig"
+source "drivers/mstar/mslog/Kconfig"
+source "drivers/mstar/ramdisk/Kconfig"
+#source "drivers/mstar/XXX/Kconfig"                         <- // MODME, >> add new device driver here <<
+endif
+
+endmenu

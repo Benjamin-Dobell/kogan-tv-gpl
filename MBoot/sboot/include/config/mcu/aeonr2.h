@@ -1,0 +1,1 @@
+#undef CONFIG_MCU_AEONR2

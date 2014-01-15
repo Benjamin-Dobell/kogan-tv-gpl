@@ -1,0 +1,2954 @@
+#
+# For a description of the syntax of this configuration file,
+# see scripts/kbuild/config-language.txt.
+#
+
+mainmenu "SBoot Configuration"
+
+config HAVE_DOT_CONFIG
+	bool
+	default y
+
+menu "Platform Configuration"
+
+choice
+	prompt "MStar Chip Family"
+	default MSTAR_TITANIA4
+
+config MSTAR_TITANIA4
+	bool "Titania 4"
+
+config MSTAR_TITANIA7
+	bool "Titania 7"
+
+config MSTAR_TITANIA8
+  bool "Titania 8"
+
+config MSTAR_TITANIA9
+  bool "Titania 9"
+
+config MSTAR_TITANIA12
+  bool "Titania 12"
+
+config MSTAR_TITANIA13
+  bool "Titania 13"
+
+config MSTAR_AMBER1
+  bool "Amber 1"
+
+config MSTAR_AMBER2
+  bool "Amber 2"
+
+config MSTAR_AMBER3
+  bool "Amber 3"
+
+config MSTAR_AMBER5
+  bool "Amber 5"
+
+config MSTAR_AMBER6
+  bool "Amber 6"
+
+config MSTAR_AMBER7
+  bool "Amber 7"
+
+config MSTAR_AMETHYST
+  bool "Amethyst"
+
+config MSTAR_EAGLE
+  bool "Eagle"
+
+config MSTAR_EIFFEL
+  bool "Eiffel"
+
+config MSTAR_NIKE
+  bool "Nike"
+
+config MSTAR_EMERALD
+  bool "Emerald"
+
+config MSTAR_URANUS4
+	bool "URANUS 4"
+
+config MSTAR_JANUS
+	bool "Janus"
+
+config MSTAR_JANUS2
+	bool "Janus2"
+
+config MSTAR_MARIA10
+	bool "Maria10"
+
+config MSTAR_MACAW12
+	bool "Macaw12"
+
+config MSTAR_EDEN
+	bool "Eden"
+
+config MSTAR_EULER
+	bool "Euler"
+
+config MSTAR_AGATE
+	bool "Agate"
+
+config MSTAR_KRONUS
+	bool "Kronus"
+
+config MSTAR_KAISERIN
+	bool "Kaiserin"
+
+config MSTAR_EDISON
+  bool "Edison"
+
+config MSTAR_EINSTEIN
+  bool "Einstein"
+
+endchoice
+
+#===================================================
+# MStar Chip Name (auto-select)
+#===================================================
+config MSTAR_CHIP_NAME
+	string
+	default "titania4" if MSTAR_TITANIA4
+	default "titania7" if MSTAR_TITANIA7
+	default "titania8" if MSTAR_TITANIA8
+	default "titania9" if MSTAR_TITANIA9
+    default "titania12" if MSTAR_TITANIA12
+    default "titania13" if MSTAR_TITANIA13
+    default "amber1" if MSTAR_AMBER1
+    default "amber2" if MSTAR_AMBER2
+    default "amber3" if MSTAR_AMBER3
+    default "amber5" if MSTAR_AMBER5
+    default "amber6" if MSTAR_AMBER6
+    default "amber7" if MSTAR_AMBER7
+    default "amethyst" if MSTAR_AMETHYST
+    default "eagle" if MSTAR_EAGLE
+    default "eiffel" if MSTAR_EIFFEL
+    default "nike" if MSTAR_NIKE
+    default "emerald" if MSTAR_EMERALD
+	default "uranus4" if MSTAR_URANUS4
+	default "maria10" if MSTAR_MARIA10
+	default "macaw12" if MSTAR_MACAW12
+    default "eden" if MSTAR_EDEN
+    default "euler" if MSTAR_EULER
+	default "janus" if MSTAR_JANUS
+	default "janus2" if MSTAR_JANUS2
+	default "kronus" if MSTAR_KRONUS
+	default "kaiserin" if MSTAR_KAISERIN
+	default "agate" if MSTAR_AGATE
+	default "edison" if MSTAR_EDISON
+	default "einstein" if MSTAR_EINSTEIN
+	default "error"
+
+choice
+	prompt "CPU Core Selection"
+
+	config MCU_MIPS32
+		bool "MIPS32"
+		depends on (!MSTAR_JANUS && !MSTAR_MARIA10 && !MSTAR_MACAW12 && !MSTAR_EDEN && !MSTAR_EULER && !MSTAR_AMBER3 && !MSTAR_AGATE && !MSTAR_EAGLE && !MSTAR_EIFFEL && !MSTAR_NIKE && !MSTAR_EDISON && !MSTAR_EINSTEIN)
+
+#	config MCU_AEON
+#		bool "AEON for Test"
+
+	config MCU_ARM
+		bool "ARM"
+		depends on (MSTAR_AMBER3 || MSTAR_AGATE || MSTAR_EAGLE || MSTAR_EIFFEL || MSTAR_NIKE || MSTAR_EDISON || MSTAR_EINSTEIN)
+
+	config MCU_AEONR2
+		bool "AEON R2 Only"
+		depends on (MSTAR_JANUS || MSTAR_MARIA10 || MSTAR_MACAW12 || MSTAR_EDEN || MSTAR_EULER)
+
+endchoice
+
+choice
+	prompt "Booting Mode"
+	default BOOTING_FROM_EXT_SPI_WITH_CPU
+
+	config BOOTING_FROM_EXT_SPI_WITH_CPU
+		bool "CPU Booting from External SPI Flash"
+
+if(MSTAR_TITANIA12)||(MSTAR_AMBER7)||(MSTAR_AMBER3)||(MSTAR_AGATE) || (MSTAR_EAGLE) || (MSTAR_EIFFEL) || (MSTAR_NIKE) || (MSTAR_AMBER5) || (MSTAR_AMETHYST) || (MSTAR_EDISON) || (MSTAR_EINSTEIN)
+	config BOOTING_FROM_EXT_SPI_WITH_PM51
+		bool "PM51 Booting from External SPI Flash"
+
+	config BOOTING_FROM_OTP_WITH_PM51
+		bool "PM51 Booting from Internal OTP"
+endif
+
+    config MSTAR_ROM_BOOT_WITH_NAND_FLASH
+        bool "CPU Booting from Internal Mask ROM with NAND Flash"
+        depends on (MSTAR_EAGLE || MSTAR_EMERALD || MSTAR_EIFFEL || MSTAR_NIKE || MSTAR_EDISON)
+
+    config MSTAR_ROM_BOOT_WITH_EMMC_FLASH
+        bool "CPU Booting from Internal Mask ROM with EMMC Flash"
+        depends on (MSTAR_EDISON || MSTAR_EIFFEL || MSTAR_NIKE)
+
+	config BOOTING_FROM_EXT_EMMC_WITH_CPU
+		bool "CPU Booting from External eMMC"
+		depends on (MSTAR_EAGLE || MSTAR_EIFFEL)
+
+endchoice
+
+choice
+	prompt "MBoot Storage"
+
+    default MBOOT_IN_SPI_FLASH
+
+    config MBOOT_IN_SPI_FLASH
+        bool "Store in SPI Flash"
+        depends on (SPI)
+
+    config MBOOT_IN_NAND_FLASH
+        bool "Store in NAND Flash"
+        depends on (NAND_FLASH)
+
+	config MBOOT_IN_MMC_FLASH
+		bool "Store in MMC Flash"
+		depends on (MMC)
+
+endchoice
+
+
+choice
+	prompt "CPU Clock Selection"
+
+	default CPU_384MHZ if(MSTAR_JANUS)
+	default CPU_600MHZ if(MSTAR_JANUS2) || (MSTAR_EMERALD)
+	default CPU_576MHZ if((MSTAR_AMBER1) || (MSTAR_AMBER7) || (MSTAR_AMETHYST))
+	default CPU_720MHZ if(MSTAR_AMBER2)
+	default CPU_900MHZ if((MSTAR_AMBER3) || (MSTAR_AGATE) || (MSTAR_EINSTEIN))
+	default CPU_900MHZ if(MSTAR_AMBER5)
+	default CPU_456MHZ if(MSTAR_AMBER6)
+	default CPU_216MHZ if(MSTAR_MARIA10)
+	default CPU_216MHZ if(MSTAR_MACAW12)
+	default CPU_216MHZ if(MSTAR_EDEN)
+	default CPU_216MHZ if(MSTAR_EULER)
+	default CPU_696MHZ if(MSTAR_KRONUS)
+	default CPU_312MHZ if((MSTAR_TITANIA4) || (MSTAR_TITANIA7))
+	default CPU_672MHZ if((MSTAR_TITANIA8) || (MSTAR_TITANIA12))
+	default CPU_552MHZ if((MSTAR_TITANIA9) || (MSTAR_TITANIA13) || (MSTAR_URANUS4))
+	default CPU_792MHZ if(MSTAR_KAISERIN)
+	default CPU_900MHZ if((MSTAR_EAGLE) || (MSTAR_EIFFEL) || (MSTAR_NIKE))
+	default CPU_1152MHZ if(MSTAR_EDISON)
+
+	config CPU_1152MHZ
+		bool "1152MHz"
+		help
+		    CPU Clock: 1152MHz
+
+        config CPU_1044MHZ
+		bool "1044MHz"
+		help
+		    CPU Clock: 1044MHz
+
+	config CPU_1008MHZ
+		bool "1008MHz"
+		help
+		    CPU Clock: 1008MHz
+
+	config CPU_900MHZ
+		bool "900MHz"
+		help
+		    CPU Clock: 900MHz
+
+	config CPU_888MHZ
+		bool "888MHz"
+		help
+		    CPU Clock: 888MHz
+
+	config CPU_876MHZ
+		bool "876MHz"
+		help
+		    CPU Clock: 876MHz
+
+	config CPU_864MHZ
+		bool "864MHz"
+		help
+		    CPU Clock: 864MHz
+
+	config CPU_852MHZ
+		bool "852MHz"
+		help
+		    CPU Clock: 852MHz
+
+	config CPU_840MHZ
+		bool "840MHz"
+		help
+		    CPU Clock: 840MHz
+
+	config CPU_828MHZ
+		bool "816MHz"
+		help
+		    CPU Clock: 828MHz
+
+	config CPU_816MHZ
+		bool "816MHz"
+		help
+		    CPU Clock: 816MHz
+
+	config CPU_804MHZ
+		bool "804MHz"
+		help
+		    CPU Clock: 804MHz
+
+	config CPU_792MHZ
+		bool "792MHz"
+		help
+		    CPU Clock: 792MHz
+
+	config CPU_780MHZ
+		bool "780MHz"
+		help
+		    CPU Clock: 780MHz
+
+	config CPU_768MHZ
+		bool "768MHz"
+		help
+		    CPU Clock: 768MHz
+
+	config CPU_756MHZ
+		bool "756MHz"
+		help
+		    CPU Clock: 756MHz
+
+	config CPU_744MHZ
+		bool "744MHz"
+		help
+		    CPU Clock: 744MHz
+
+	config CPU_732MHZ
+		bool "732MHz"
+		help
+		    CPU Clock: 732MHz
+
+	config CPU_720MHZ
+		bool "720MHz"
+		help
+		    CPU Clock: 720MHz
+
+	config CPU_708MHZ
+		bool "708MHz"
+		help
+		    CPU Clock: 708MHz
+
+	config CPU_696MHZ
+		bool "696MHz"
+		help
+		    CPU Clock: 696MHz
+
+	config CPU_684MHZ
+		bool "684MHz"
+		help
+		    CPU Clock: 684MHz
+
+	config CPU_672MHZ
+		bool "672MHz"
+		help
+		    CPU Clock: 672MHz
+
+	config CPU_660MHZ
+		bool "660MHz"
+		help
+		    CPU Clock: 660MHz
+
+	config CPU_648MHZ
+		bool "648MHz"
+		help
+		    CPU Clock: 648MHz
+
+	config CPU_636MHZ
+		bool "636MHz"
+		help
+		    CPU Clock: 636MHz
+
+	config CPU_624MHZ
+		bool "624MHz"
+		help
+		    CPU Clock: 624MHz
+
+	config CPU_612MHZ
+		bool "612MHz"
+		help
+		    CPU Clock: 612MHz
+
+	config CPU_600MHZ
+		bool "600MHz"
+		help
+		    CPU Clock: 600MHz
+
+	config CPU_588MHZ
+		bool "588MHz"
+		help
+		    CPU Clock: 588MHz
+
+	config CPU_576MHZ
+		bool "576MHz"
+		help
+		    CPU Clock: 576MHz
+
+	config CPU_564MHZ
+		bool "564MHz"
+		help
+		    CPU Clock: 564MHz
+
+	config CPU_552MHZ
+		bool "552MHz"
+		help
+		    CPU Clock: 552MHz
+
+	config CPU_540MHZ
+		bool "540MHz"
+		help
+		    CPU Clock: 540MHz
+
+	config CPU_528MHZ
+		bool "528MHz"
+		help
+		    CPU Clock: 528MHz
+
+	config CPU_516MHZ
+		bool "516MHz"
+		help
+		    CPU Clock: 516MHz
+
+	config CPU_504MHZ
+		bool "504MHz"
+		help
+		    CPU Clock: 504MHz
+
+	config CPU_492MHZ
+		bool "492MHz"
+		help
+		    CPU Clock: 492MHz
+
+	config CPU_480MHZ
+		bool "480MHz"
+		help
+		    CPU Clock: 480MHz
+
+	config CPU_456MHZ
+		bool "456MHz"
+		help
+		    CPU Clock: 456MHz
+
+	config CPU_432MHZ
+		bool "432MHz"
+		help
+		    CPU Clock: 432MHz
+
+	config CPU_408MHZ
+		bool "408MHz"
+		help
+		    CPU Clock: 408MHz
+
+	config CPU_384MHZ
+		bool "384MHz"
+		help
+		    CPU Clock: 384MHz
+
+	config CPU_360MHZ
+		bool "360MHz"
+		help
+		    CPU Clock: 360MHz
+
+	config CPU_336MHZ
+		bool "336MHz"
+		help
+		    CPU Clock: 336MHz
+
+	config CPU_312MHZ
+		bool "312MHz"
+		help
+		    CPU Clock: 312MHz
+
+	config CPU_288MHZ
+		bool "288MHz"
+		help
+		    CPU Clock: 288MHz
+
+	config CPU_264MHZ
+		bool "264MHz"
+		help
+		    CPU Clock: 264MHz
+
+	config CPU_240MHZ
+		bool "240MHz"
+		help
+		    CPU Clock: 240MHz
+
+	config CPU_216MHZ
+		bool "216MHz"
+		help
+		    CPU Clock: 216MHz
+
+	config MSTAR_MANUAL
+		bool "Manual Setting"
+		help
+		    CPU Clock: Manual Setting
+
+endchoice
+
+config MSTAR_OTHERS
+    int "Please Input CPU Clock by Decimalism"
+    default "552"
+    depends on MSTAR_MANUAL
+    help
+        Set specific CPU clock by user
+
+choice
+	prompt "Board Selection"
+
+	default MSTAR_TITANIA_BD_MST098A_D01A_S if MSTAR_URANUS4
+	default MSTAR_TITANIA_BD_MST090A_D01A_S if MSTAR_TITANIA4
+	default MSTAR_TITANIA_BD_MST091A_D01A_S if MSTAR_TITANIA7
+	default MSTAR_TITANIA_BD_MST087F_D01A_T8 if MSTAR_TITANIA8
+	default MSTAR_TITANIA_BD_MST105C_D01A_A2 if MSTAR_AMBER2
+	default MSTAR_TITANIA_BD_MST129F_D01A1_S if MSTAR_AMBER3
+	default MSTAR_BD_MST147A_D01A_S_AGATE if MSTAR_AGATE
+	default MSTAR_TITANIA_BD_MST129B_D01A_S if MSTAR_AMBER5
+	default MSTAR_TITANIA_BD_MST106B_D01A_S if MSTAR_TITANIA9
+	default MSTAR_TITANIA_BD_MST116A_D01A_S if MSTAR_TITANIA12
+	default MSTAR_TITANIA_BD_MST106B_D01A_S if MSTAR_TITANIA13
+	default MSTAR_TITANIA_BD_MST127B_D01A_S if MSTAR_AMBER1
+	default MSTAR_BD_MST131A_D01A_S if MSTAR_AMBER6
+	default MSTAR_BD_MST132B_D01A_S if MSTAR_AMBER7
+	default MSTAR_BD_MST142C_D01A_S if MSTAR_AMETHYST
+	default MSTAR_JANUS_BD_MST092A_D01A_S if MSTAR_JANUS
+	default MSTAR_JANUS2_BD_MST120A_D01A_S if MSTAR_JANUS2
+	default MSTAR_MARIA10_BD_MST109A_D01A_S if MSTAR_MARIA10
+	default MSTAR_MACAW12_BD_MST149A_D01A_S if MSTAR_MACAW12
+	default MSTAR_EDEN_BD_MST165A_D01A_S if MSTAR_EDEN
+	default MSTAR_EULER_BD_MST165A_D01B_S if MSTAR_EULER
+	default MSTAR_KRONUS_BD_MST124A_D02A_S if MSTAR_KRONUS
+	default MSTAR_KAISERIN_BD_MST138A_D01A_S if MSTAR_KAISERIN
+    default MSTAR_BD_MST142A_D01A_S_EAGLE if MSTAR_EAGLE
+    default MSTAR_BD_MST169A_D01A_S_EIFFEL if MSTAR_EIFFEL
+    default MSTAR_BD_MST152A_D01A_S_NIKE if MSTAR_NIKE
+	default MSTAR_BD_MST157A_D01A_S if MSTAR_EMERALD
+	default MSTAR_BD_MST159A_D01A_S if MSTAR_EDISON
+	default MSTAR_BD_MST147A_D01A_S if MSTAR_EINSTEIN
+
+	config MSTAR_TITANIA_BD_FPGA
+		bool "BD_FPGA"
+
+	if (MSTAR_URANUS4)
+		config MSTAR_TITANIA_BD_MST098A_D01A_S
+			bool "BD_MST098A_D01A_S"
+		config MSTAR_TITANIA_BD_MST098B_D01A_S
+			bool "BD_MST098B_D01A_S"
+		config MSTAR_TITANIA_BD_MST098B_D01A
+			bool "BD_MST098B_D01A"
+		config MSTAR_TITANIA_BD_MST098C_D01A_S
+			bool "BD_MST098C_D01A_S"
+		config MSTAR_TITANIA_BD_MST098D_D01A_S
+			bool "BD_MST098D_D01A_S"
+		config MSTAR_TITANIA_BD_MST098E_D01A
+			bool "BD_MST098E_D01A"
+		config MSTAR_TITANIA_BD_MST098E_D01B
+			bool "BD_MST098E_D01B"
+		config MSTAR_TITANIA_BD_ZDT300_V01
+			bool "BD_ZDT300_V01"
+	endif
+
+	if (MSTAR_KRONUS)
+		config MSTAR_KRONUS_BD_MST124A_D01A_S
+			bool "BD_MST124A_D01A_S"
+		config MSTAR_KRONUS_BD_MST124A_D02A_S
+			bool "BD_MST124A_D02A_S"
+		config MSTAR_KRONUS_BD_MST124B_D01A_S
+			bool "BD_MST124B_D01A_S"
+	        config MSTAR_KRONUS_BD_MST124B_D02A_S
+			bool "BD_MST124B_D02A_S"
+                config MSTAR_KRONUS_BD_MST124B_D02A
+			bool "BD_MST124B_D02A"
+		config MSTAR_KRONUS_BD_MST124C_D01A_S
+			bool "BD_MST124C_D01A_S"
+		config MSTAR_KRONUS_BD_MST124D_D01A
+			bool "BD_MST124D_D01A"
+		config MSTAR_KRONUS_BD_MST124D_D02A_S
+			bool "BD_MST124D_D02A_S"
+		config MSTAR_KRONUS_BD_MST124SZ
+			bool "BD_MST124SZ"
+		config MSTAR_KRONUS_BD_MST124E_D01A_S
+			bool "BD_MST124E_D01A_S"
+		config MSTAR_KRONUS_BD_MST124E_D01A_SZ
+			bool "BD_MST124E_D01A_SZ"
+	endif
+
+	if (MSTAR_KAISERIN)
+		config MSTAR_KAISERIN_BD_MST138A_D01A_S
+			bool "BD_MST138A_D01A_S"
+		config MSTAR_KAISERIN_BD_MST138B_D01A_S
+			bool "BD_MST138B_D01A_S"
+		config MSTAR_KAISERIN_BD_MST138B_D01A
+			bool "BD_MST138B_D01A"
+	endif
+
+	# Boards for T4 (MSTAR)
+
+	if (MSTAR_TITANIA4)
+		config MSTAR_TITANIA_BD_MST090A_D01A_S
+			bool "BD_MST090A_D01A_S"
+		config MSTAR_TITANIA_BD_MST090B_D01A_S
+			bool "BD_MST090B_D01A_S"
+		config MSTAR_TITANIA_BD_MST090C_D01A_S
+			bool "BD_MST090C_D01A_S"
+		config MSTAR_TITANIA_BD_MST090D_D01A_S
+			bool "BD_MST090D_D01A_S"
+		config MSTAR_TITANIA_BD_MST090E_D01A_S
+			bool "BD_MST090E_D01A_S"
+		config MSTAR_TITANIA_BD_MST090F_C01A
+			bool "BD_MST090F_C01A"
+		config MSTAR_TITANIA_BD_MSD380B_D01A
+			bool "BD_MSD380B_D01A"
+		config MSTAR_TITANIA_BD_MSD523B_D01A
+			bool "BD_MSD523B_D01A"
+		config MSTAR_TITANIA_BD_CUS08VL_17MB60
+			bool "BD_CUS08VL_17MB60"
+	endif
+
+	# Boards for T7 (MSTAR)
+
+	if (MSTAR_TITANIA7)
+		config MSTAR_TITANIA_BD_MST091A_D01A_S
+			bool "BD_MST091A_D01A_S"
+		config MSTAR_TITANIA_BD_MST091B_D01A_S
+			bool "BD_MST091B_D01A_S"
+		config MSTAR_TITANIA_BD_MST091C_D01A_S
+			bool "BD_MST091C_D01A_S"
+		config MSTAR_TITANIA_BD_MSD441C_T7_10A
+			bool "BD_MSD441C_T7_10A"
+	endif
+
+	# Boards for T8/T12 (MSTAR)
+
+	if ((MSTAR_TITANIA8)||(MSTAR_TITANIA12))
+		config MSTAR_TITANIA_BD_MST093A_D01A_S
+			bool "BD_MST093A_D01A_S"
+		config MSTAR_TITANIA_BD_MST087F_D01A_T8
+		  bool "BD_MST087F_D01A_T8"
+		config MSTAR_TITANIA_BD_MST105A_D01A_S
+		  bool "BD_MST105A_D01A_S"
+		config MSTAR_TITANIA_BD_MST105B_D01A_S
+		  bool "BD_MST105B_D01A_S"
+		config MSTAR_TITANIA_BD_MST105C_D01A_S
+		  bool "BD_MST105C_D01A_S"
+		config MSTAR_TITANIA_BD_MST105D_D01A_S
+		  bool "BD_MST105D_D01A_S"
+		config MSTAR_TITANIA_BD_MST116A_D01A_S
+		  bool "BD_MST116A_D01A_S"
+             config MSTAR_TITANIA_BD_MST011B_20ASV_S
+		  bool "BD_MST011B_20ASV_S"
+       config MSTAR_TITANIA_BD_MST011B_20ASV_DVB
+          bool "BD_MST011B_20ASV_DVB"
+        config MSTAR_TITANIA_BD_MST120A_D01A_S
+          bool "BD_MST120A_D01A_S"
+        config MSTAR_TITANIA_BD_MST003D_10ASV_10294
+          bool "BD_MST003D_10ASV_10294"
+        config MSTAR_TITANIA_BD_MST120A_D01A_SKY
+          bool "BD_MST120A_D01A_SKY"
+        config MSTAR_TITANIA_BD_MST120A_D01A_HAIER
+          bool "BD_MST120A_D01A_HAIER"
+	endif
+
+	# Boards for AMBER2 (MSTAR)
+
+	if (MSTAR_AMBER2)
+		config MSTAR_TITANIA_BD_MST105C_D01A_A2
+		  bool "BD_MST105C_D01A_A2"
+	endif
+
+	# Boards for AGATE (MSTAR)
+	if (MSTAR_AGATE)
+		config MSTAR_BD_MST147A_D01A_S_AGATE
+		  bool "BD_MST147A_D01A_S"
+		config MSTAR_BD_MST147B_D01A_S_AGATE
+		  bool "BD_MST147B_D01A_S"
+	endif
+
+	# Boards for AMBER3 (MSTAR)
+	if (MSTAR_AMBER3)
+		config MSTAR_TITANIA_BD_MST129F_D01A1_S
+		  bool "BD_MST129F_D01A1_S"
+		config MSTAR_TITANIA_BD_MST145A_D01A1_S
+		  bool "BD_MST145A_D01A1_S"
+		config MSTAR_TITANIA_BD_MST142A_D01A_S_A3
+		  bool "BD_MST142A_D01A_S_A3"
+		config MSTAR_TITANIA_BD_MST145B_D01A_S
+		  bool "BD_MST145B_D01A_S"
+		config MSTAR_TITANIA_BD_MST028B_10AFX_A3
+		  bool "BD_MST028B_10AFX_A3"
+		config MSTAR_TITANIA_BD_MST029B_10AFVA_A3
+		  bool "BD_MST029B_10AFVA_A3"
+		config MSTAR_TITANIA_BD_MS801_MAA2XG_A3
+		  bool "BD_MS801_MAA2XG_A3"
+		config MSTAR_TITANIA_BD_MST029B_CUS37_A3
+		  bool "BD_MST029B_CUS37_A3"
+		config MSTAR_TITANIA_BD_MST029B_CUS18_A3
+		  bool "BD_MST029B_CUS18_A3"
+		config MSTAR_TITANIA_BD_MST029B_CUS18_A3_ATSC
+		  bool "BD_MST029B_CUS18_A3_ATSC"
+		config MSTAR_TITANIA_BD_MSTCUS23_6A801_A3
+		  bool "BD_MSTCUS23_6A801_A3"
+		config MSTAR_TITANIA_BD_MST029B_CUS36_A3
+		  bool "BD_MST029B_CUS36_A3"
+		config MSTAR_TITANIA_BD_MST032B_10AFX_A3
+		  bool "BD_MST032B_10AFX_A3"
+                config MSTAR_TITANIA_BD_CUS28_6A800
+		  bool "BD_CUS28_6A800"
+                config MSTAR_TITANIA_BD_CUS28_6A801
+		  bool "BD_CUS28_6A801"
+		config MSTAR_TITANIA_BD_MST029B_BOX_A3
+		  bool "BD_MST029B_BOX_A3"
+	endif
+
+	# Boards for AMBER5 (MSTAR)
+
+	if (MSTAR_AMBER5)
+		config MSTAR_TITANIA_BD_MST127A_D01A_S_A5
+		  bool "BD_MST127A_D01A_S_A5"
+		config MSTAR_TITANIA_BD_MST129A_D01A_S
+		  bool "BD_MST129A_D01A_S"
+		config MSTAR_TITANIA_BD_MST129B_D01A_S
+		  bool "BD_MST129B_D01A_S"
+		config MSTAR_TITANIA_BD_MST129C_D01A_S
+		  bool "BD_MST129C_D01A_S"
+		config MSTAR_TITANIA_BD_MST129D_D01A_S
+		  bool "BD_MST129D_D01A_S"
+		config MSTAR_TITANIA_BD_MST129E_D01A_S
+		  bool "BD_MST129E_D01A_S"
+		config MSTAR_TITANIA_BD_MST016B_10AA5_11165
+		  bool "BD_MST016B_10AA5_11165"
+	endif
+
+	# Boards for Titania9 / Titania13 / Amber1 (MSTAR)
+	if (MSTAR_TITANIA9)
+	    config MSTAR_TITANIA_BD_MST105A_D01A_S_T8
+			bool "BD_MST105A_D01A_S (T8)"
+		config MSTAR_TITANIA_BD_MST106A_D01A_S
+			bool "BD_MST106A_D01A_S"
+	    config MSTAR_TITANIA_BD_MST087E_D01A_T9
+			bool "BD_MST087E_D01A (T9)"
+	endif
+
+	if ((MSTAR_TITANIA9) || (MSTAR_TITANIA13))
+	    config MSTAR_TITANIA_BD_MST106B_D01A_S
+			bool "BD_MST106B_D01A_S"
+		config MSTAR_TITANIA_BD_MST110A_D01A_S
+			bool "BD_MST110A_D01A_S"
+	endif
+
+	if (MSTAR_TITANIA13)
+	    config MSTAR_TITANIA_BD_MST087E_D01A_T13
+			bool "BD_MST087E_D01A (T13)"
+
+	    config MSTAR_TITANIA_BD_MST119A_D01A_S
+			bool "BD_MST119A_D01A_S"
+
+	    config MSTAR_TITANIA_BD_MST119A_D01A_S_COMBO
+			bool "BD_MST119A_D01A_S_COMBO"
+
+	    config MSTAR_TITANIA_BD_MST119A_D01A_S_TCL
+			bool "BD_MST119A_D01A_S_TCL"
+
+	    config MSTAR_TITANIA_BD_MST119A_D01A_S_SKY
+			bool "BD_MST119A_D01A_S_SKY"
+
+	    config MSTAR_TITANIA_BD_MST008B_10ATX_10405
+			bool "BD_MST008B_10ATX_10405"
+
+	    config MSTAR_TITANIA_BD_MST6358_D01A_S_XOC
+			bool "BD_MST6358_D01A_S_XOC"
+
+	    config MSTAR_TITANIA_BD_MST119A_D01A_S_KON
+			bool "BD_MST119A_D01A_S_KON"
+
+	    config MSTAR_TITANIA_BD_MST119A_D01A_S_HISENSE
+			bool "BD_MST119A_D01A_S_HISENSE"
+
+	    config MSTAR_TITANIA_BD_MST110B_D01A_S
+			bool "BD_MST110B_D01A_S"
+
+	    config MSTAR_TITANIA_BD_MST119C_D01A_S
+			bool "BD_MST119C_D01A_S"
+	endif
+
+    if(MSTAR_AMBER1)
+	    config MSTAR_BD_MST127A_D01A_S
+			bool "BD_MST127A_D01A_S"
+	    config MSTAR_BD_MST127B_D01A_S
+			bool "BD_MST127B_D01A_S"
+	    config MSTAR_BD_MST127C_D01A_S
+			bool "BD_MST127C_D01A_S"
+	    config MSTAR_BD_MST127E_C01A_S
+			bool "BD_MST127E_C01A_S"
+        config MSTAR_BD_MST132A_D01A_S_A1
+            bool "BD_MST132A_D01A_S (Amber1)"
+        config MSTAR_BD_MST132H_D01A_S
+			bool "BD_MST132H_D01A_S"
+    endif
+
+    if(MSTAR_AMBER6)
+		config MSTAR_BD_MST131A_D01A_S
+			bool "BD_MST131A_D01A_S"
+		config MSTAR_BD_MST131B_D01A_S
+			bool "BD_MST131B_D01A_S"
+		config MSTAR_BD_MST018B_10ADS
+			bool "BD_MST018B_10ADS"
+    endif
+
+    if(MSTAR_AMBER7)
+		config MSTAR_BD_MST132A_D01A_S_A7
+			bool "BD_MST132A_D01A_S (Amber7)"
+        config MSTAR_BD_MST132B_D01A_S
+			bool "BD_MST132B_D01A_S"
+		config MSTAR_BD_MST132C_D01A_S
+			bool "BD_MST132C_D01A_S"
+		config MSTAR_BD_MST132D_D01A_S
+			bool "BD_MST132D_D01A_S"
+		config MSTAR_BD_MST132E_D01A_S
+			bool "BD_MST132E_D01A_S"
+	    config MSTAR_BD_MST132F_D01A_S
+			bool "BD_MST132F_D01A_S"
+	    config MSTAR_BD_MST132G_D01A_S
+			bool "BD_MST132G_D01A_S"
+	    config MSTAR_BD_MST157D_D01A_S_A7
+			bool "BD_MST157D_D01A_S (Amber7)"
+	    config MSTAR_BD_MST142D_D01A_S_A7
+			bool "BD_MST142D_D01A_S (Amber7)"
+		config MSTAR_BD_MST024B_10ABT
+            bool "BD_MST024B_10ABT"
+    endif
+
+    if(MSTAR_AMETHYST)
+		config MSTAR_BD_MST142A_D01A_S
+			bool "BD_MST142A_D01A_S"
+        config MSTAR_BD_MST142B_D01A_S
+			bool "BD_MST142B_D01A_S"
+		config MSTAR_BD_MST142C_D01A_S
+			bool "BD_MST142C_D01A_S"
+		config MSTAR_BD_MST142D_D01A_S
+			bool "BD_MST142D_D01A_S"
+	    config MSTAR_BD_MST142E_D01A_S
+			bool "BD_MST142E_D01A_S"
+		config MSTAR_BD_MST028B_10AFX_11455_DVB
+		    bool "BD_MST028B_10AFX_11455_DVB"
+		config MSTAR_BD_MST028B_10AFX_11455_ISDB
+		    bool "BD_MST028B_10AFX_11455_ISDB"
+		config MSTAR_BD_MST028B_10AFX_11455
+		    bool "BD_MST028B_10AFX_11455"
+    endif
+
+    if((MSTAR_AMBER1) || (MSTAR_AMBER7) || (MSTAR_AMETHYST))
+        config MSTAR_BD_MST015B_10ABX
+			      bool "BD_MST015B_10ABX"
+        config MSTAR_BD_MST015B_10ABX_DVB
+            bool "BD_MST015B_10ABX_DVB"
+        config MSTAR_BD_MST017B_10ABT
+            bool "BD_MST017B_10ABT"
+        config MSTAR_BD_MST015B_10ABX_ISDB
+			      bool "BD_MST015B_10ABX_ISDB"
+	      config MSTAR_BD_MST569M_10HVT
+			      bool "BD_MST569M_10HVT"
+    endif
+
+    if(MSTAR_EAGLE)
+		config MSTAR_BD_MST142A_D01A_S_EAGLE
+			bool "BD_MST142A_D01A_S (Eagle)"
+
+		config MSTAR_BD_MST147A_D01A_S_EAGLE
+			bool "BD_MST147A_D01A_S (Eagle)"
+
+		config MSTAR_BD_MST152A_D01A_S_EAGLE
+			bool "BD_MST152A_D01A_S (Eagle)"
+
+		config MSTAR_BD_MST038B_10AHT_EAGLE
+			bool "BD_MST038B_10AHT (Eagle)"
+
+		config MSTAR_BD_MST028B_10AFX_EAGLE
+			bool "BD_MST028B_10AFX_11455 (Eagle)"
+
+		config MSTAR_BD_MSTCUS28_800C_EAGLE
+			bool "BD_MSTCUS28_800C (Eagle)"
+    endif
+
+    if(MSTAR_EIFFEL)
+		config MSTAR_BD_MST152A_D01A_S_EIFFEL
+			bool "BD_MST152A_D01A_S (Eiffel)"
+		config MSTAR_BD_MST169A_D01A_S_EIFFEL
+			bool "BD_MST169A_D01A_S (Eiffel)"
+    endif
+
+    if(MSTAR_NIKE)
+		config MSTAR_BD_MST152A_D01A_S_NIKE
+			bool "BD_MST152A_D01A_S (Nike)"
+    endif
+
+	# Boards for Janus (MSTAR)
+	if (MSTAR_JANUS)
+		config MSTAR_JANUS_BD_MST092A_D01A_S
+			bool "BD_MST092A_D01A_S"
+		config MSTAR_JANUS_BD_MST092B_D01A_S
+			bool "BD_MST092B_D01A_S"
+		config MSTAR_JANUS_BD_MST092C_D01A_S
+			bool "BD_MST092C_D01A_S"
+		config MSTAR_JANUS_BD_MST216A_JNS_10A_9463
+			bool "BD_MST216A_JNS_10A_9463"
+		config MSTAR_JANUS_BD_MST092A_D01A
+			bool "BD_MST092A_D01A"
+		config MSTAR_JANUS_BD_MST092B_D01A
+			bool "BD_MST092B_D01A"
+		config MSTAR_JANUS_BD_MST092B_D02A
+			bool "BD_MST092B_D02A"
+	endif
+
+	if (MSTAR_JANUS2)
+        config MSTAR_CONFIG_MSTAR_BD_JANUS2_FPGA
+            bool "BD_JANUS2_FPGA"
+        config MSTAR_JANUS2_BD_MST120A_D01A_S
+            bool "BD_MST120A_D01A_S"
+        config MSTAR_JANUS2_BD_MST120A_D01A_SKY
+            bool "BD_MST120A_D01A_SKY"
+        config MSTAR_JANUS2_BD_MST120B_D01A_S
+          bool "BD_MST120B_D01A_S"
+        config MSTAR_JANUS2_BD_MST012B_10AAV
+          bool "BD_MST012B_10AAV"
+        endif
+
+	# Boards for Maria10 (MSTAR)
+	if (MSTAR_MARIA10)
+		config MSTAR_MARIA10_BD_MST109A_D01A_S
+			bool "BD_MST109A_D01A_S"
+		config MSTAR_MARIA10_BD_MST109C_D01A_S
+			bool "BD_MST109C_D01A_S"
+		config MSTAR_MARIA10_BD_MST109D_D01A_S
+			bool "BD_MST109D_D01A_S"
+		config MSTAR_MARIA10_BD_MST109E_D01A_S
+			bool "BD_MST109E_D01A_S"
+		config MSTAR_MARIA10_BD_MST109F_D01A_S
+			bool "BD_MST109F_D01A_S"
+		config MSTAR_MARIA10_BD_MST004B_20AVS_10306
+			bool "BD_MST004B_20AVS_10306"
+		config MSTAR_MARIA10_BD_MST006B_10AVS_10315
+			bool "BD_MST006B_10AVS_10315"
+		config MSTAR_MARIA10_BD_MST006B_20AVS_10313
+			bool "BD_MST006B_20AVS_10313"
+		config MSTAR_MARIA10_BD_MST6M181_TCL
+			bool "BD_MST6M181_TCL"
+	  config MSTAR_MARIA10_BD_MST136A_D01A_S
+	    bool "BD_MST136A_D01A_S"
+	endif
+
+	# Boards for Macaw12 (MSTAR)
+	if (MSTAR_MACAW12)
+		config MSTAR_MACAW12_BD_MST149A_D01A_S
+			bool "BD_MST149A_D01A_S"
+		config MSTAR_MACAW12_BD_MST149B_D01A_S
+			bool "BD_MST149B_D01A_S"
+		config MSTAR_MACAW12_BD_MST149C_D01A_S
+			bool "BD_MST149C_D01A_S"
+		config MSTAR_MACAW12_BD_MST149D_D01A_S
+			bool "BD_MST149D_D01A_S"
+		config MSTAR_MACAW12_BD_MST149E_D01A_S
+			bool "BD_MST149E_D01A_S"
+	endif
+
+	# Boards for Eden (MSTAR)
+	if (MSTAR_EDEN)
+		config MSTAR_EDEN_BD_MST165A_D01A_S
+			bool "BD_MST165A_D01A_S"
+		config MSTAR_EDEN_BD_MST165B_D01A_S
+			bool "BD_MST165B_D01A_S"
+		config MSTAR_EDEN_BD_MST165C_D01A_S
+			bool "BD_MST165C_D01A_S"
+		config MSTAR_EDEN_BD_MST165C_D01B_S
+			bool "BD_MST165C_D01B_S"
+		config MSTAR_EDEN_BD_MST043B_10ALB_12351
+			bool "BD_MST043B_10ALB_12351"
+		config MSTAR_EDEN_BD_MST043B_10BLB_12413
+			bool "BD_MST043B_10BLB_12413"
+  	config MSTAR_EDEN_BD_MST042B_10BLU_12423
+			bool "BD_MST042B_10BLU_12423"
+	endif
+
+	# Boards for Euler (MSTAR)
+	if (MSTAR_EULER)
+		config MSTAR_EULER_BD_MST165A_D01B_S
+			bool "BD_MST165A_D01B_S"
+		config MSTAR_EULER_BD_MST165B_D01B_S
+			bool "BD_MST165B_D01B_S"
+		config MSTAR_EULER_BD_MST165C_D01B_S
+			bool "BD_MST165C_D01B_S"
+	endif
+
+    if(MSTAR_EMERALD)
+	    config MSTAR_BD_MST157A_D01A_S
+			bool "BD_MST157A_D01A_S"
+	    config MSTAR_BD_MST157B_D01A_S
+			bool "BD_MST157B_D01A_S"
+	    config MSTAR_BD_MST157C_D01A_S
+			bool "BD_MST157C_D01A_S"
+	    config MSTAR_BD_MST157E_D01A_S
+			bool "BD_MST157E_D01A_S"
+	    config MSTAR_BD_MST157E_D01B_S
+			bool "BD_MST157E_D01B_S"
+	    config MSTAR_BD_MST157E_D01C_S
+			bool "BD_MST157E_D01C_S"
+	    config MSTAR_BD_MST157E_D01D_S
+			bool "BD_MST157E_D01D_S"
+	    config MSTAR_BD_MST157F_D01A_S
+			bool "BD_MST157F_D01A_S"
+    endif
+
+    if(MSTAR_EDISON)
+		  config MSTAR_BD_MST159A_D01A_S
+		    bool "BD_MST159A_D01A_S"
+	    config MSTAR_BD_MST147A_D01B_S
+		    bool "BD_MST147A_D01B_S"
+	    config MSTAR_BD_MST036B_EDISON
+		    bool "BD_MST036B_EDISON"
+	    config MSTAR_BD_MST036B_EDISON_CUS36
+		    bool "BD_MST036B_EDISON_CUS36"
+	    config MSTAR_BD_MST036B_EDISON_CUS28
+		    bool "BD_MST036B_EDISON_CUS28"
+	    config MSTAR_BD_MST036B_EDISON_CUS28_AP
+		    bool "BD_MST036B_EDISON_CUS28_AP"
+	    config MSTAR_BD_MST036B_EDISON_CUS36_AP
+		    bool "BD_MST036B_EDISON_CUS36_AP"
+    endif
+
+    if(MSTAR_EINSTEIN)
+	    config MSTAR_BD_MST147A_D01A_S
+		    bool "BD_MST147A_D01A_S"
+    endif
+
+endchoice
+
+choice
+	prompt "MStar Panel Selection"
+	default PNL_WXGA_AU20_T200XW02
+
+config PNL_FULLHD_SEC_LE32A
+        bool "PNL_FULLHD_SEC_LE32A"
+config PNL_SXGA_AU17_EN05
+        bool "PNL_SXGA_AU17_EN05"
+config PNL_WXGA_AU20_T200XW02
+        bool "PNL_WXGA_AU20_T200XW02"
+config PNL_WXGA_PLUS_CMO190_M190A1
+        bool "PNL_WXGA_PLUS_CMO190_M190A1"
+config PNL_WSXGA_AU22_M201EW01
+        bool "PNL_WSXGA_AU22_M201EW01"
+config PNL_FULLHD_CMO216_H1L01
+        bool "PNL_FULLHD_CMO216_H1L01"
+config PANEL_RES_FULL_HD
+        bool "PANEL_RES_FULL_HD"
+config PNL_WUXGA_CMO260_J2
+        bool "PNL_WUXGA_CMO260_J2"
+config MFC120_FULLHD_CMO216_H1L01
+        bool "MFC120_FULLHD_CMO216_H1L01"
+config MFC60_FULLHD_CMO216_H1L01
+        bool "MFC60_FULLHD_CMO216_H1L01"
+config PNL_FULLHD_TCON
+        bool "PNL_FULLHD_TCON"
+config PNL_DACOUT_576I
+        bool "PNL_576I"
+config PNL_DACOUT_576P
+        bool "PNL_576P"
+config PNL_DACOUT_720P_50
+        bool "PNL_720P_50"
+config PNL_DACOUT_1080I_50
+        bool "PNL_1080I_50"
+config PNL_DACOUT_1080P_50
+        bool "PNL_1080P_50"
+config PNL_DACOUT_480I
+        bool "PNL_480I"
+config PNL_DACOUT_480P
+        bool "PNL_480P"
+config PNL_DACOUT_720P_60
+        bool "PNL_720P_60"
+config PNL_DACOUT_1080I_60
+        bool "PNL_1080I_60"
+config PNL_DACOUT_1080P_60
+        bool "PNL_1080P_60"
+config PNL_LG_FULLHD_120HZ
+        bool "PNL_LG_FULLHD_120HZ"
+config PNL_LG_FULLHD_120HZ_3DPASSIVE
+        bool "PNL_LG_FULLHD_120HZ_3DPASSIVE"
+config PNL_LG_FullHD_120HZ_3DLR_LM230WF4
+        bool "PNL_LG_FullHD_120HZ_3DLR_LM230WF4"
+endchoice
+
+choice
+	prompt "Memory Map Type Selection"
+
+    default MSTAR_TITANIA_MMAP_128MB_128MB_DEFAULT if (!MSTAR_JANUS && !MSTAR_JANUS2 && !MSTAR_MARIA10 && !MSTAR_MACAW12 && !MSTAR_EDEN && !MSTAR_EULER && !MSTAR_AMBER6 && !MSTAR_KRONUS && !MSTAR_AMBER3 && !MSTAR_EDISON && !MSTAR_EINSTEIN)
+    default MSTAR_JANUS_MMAP_128MB if (MSTAR_JANUS)
+    default MSTAR_TITANIA_MMAP_256MB_256MB if (MSTAR_JANUS2)
+    default MSTAR_MARIA10_MMAP_64MB if (MSTAR_MARIA10)
+    default MSTAR_MACAW12_MMAP_64MB if (MSTAR_MACAW12)
+    default MSTAR_EDEN_MMAP_64MB if (MSTAR_EDEN)
+    default MSTAR_EULER_MMAP_64MB if (MSTAR_EULER)
+    default MSTAR_TITANIA_MMAP_128MB if (MSTAR_AMBER6)
+    default MSTAR_KRONUS_MMAP_256MB if (MSTAR_KRONUS)
+    default MSTAR_TITANIA_MMAP_512MB_512MB if(MSTAR_AMBER3)
+    default MSTAR_EDISON_MMAP_512MB_512MB if(MSTAR_EDISON)
+    default MSTAR_EINSTEIN_MMAP_512MB_512MB if(MSTAR_EINSTEIN)
+
+	config MSTAR_TITANIA_MMAP_128MB_128MB_DEFAULT
+	depends on ((!MSTAR_MACAW12)&&(!MSTAR_EDEN)&&(!MSTAR_EULER))
+		bool "128MB_128MB_DEFAULT"
+
+    if (!MSTAR_JANUS && !MSTAR_MARIA10 && !MSTAR_MACAW12 && !MSTAR_EDEN && !MSTAR_EULER && !MSTAR_KRONUS && !MSTAR_KAISERIN)
+	config MSTAR_TITANIA_MMAP_256MB_256MB_DEFAULT
+		bool "256MB_256MB_DEFAULT"
+
+	config MSTAR_TITANIA_MMAP_128MB_128MB
+		bool "128MB_128MB"
+
+	config MSTAR_TITANIA_MMAP_128MB_256MB
+		bool "128MB_256MB"
+
+	config MSTAR_TITANIA_MMAP_128MB_64MB
+		bool "128MB_64MB"
+
+	config MSTAR_TITANIA_MMAP_64MB_128MB
+		bool "64MB_128MB"
+
+	config MSTAR_TITANIA_MMAP_64MB_64MB
+		bool "64MB_64MB"
+
+	config MSTAR_TITANIA_MMAP_128MB
+		bool "128MB"
+
+	config MSTAR_TITANIA_MMAP_64MB
+		bool "64MB"
+
+	config MSTAR_TITANIA_MMAP_512MB
+		bool "512MB"
+
+	config MSTAR_TITANIA_MMAP_512MB_512MB
+		bool "512MB_512MB"
+
+	config MSTAR_TITANIA_MMAP_256MB
+		bool "256MB"
+
+	config MSTAR_TITANIA_MMAP_256MB_256MB
+		bool "256MB_256MB"
+	  endif
+
+	if(MSTAR_AMBER5 || MSTAR_AMBER3)
+	config MSTAR_TITANIA_MMAP_512MB_256MB
+		bool "512MB_256MB"
+	endif
+
+    if(MSTAR_AMBER3)
+	config MSTAR_TITANIA_MMAP_1024MB_512MB
+		bool "1024MB_512MB"
+	endif
+
+	if(MSTAR_EDISON)
+	config MSTAR_EDISON_MMAP_512MB_256MB
+		bool "512MB_256MB_EDISON"
+
+	config MSTAR_EDISON_MMAP_512MB_512MB
+		bool "512MB_512MB_EDISON"
+	endif
+
+	if(MSTAR_EINSTEIN)
+	config MSTAR_EINSTEIN_MMAP_512MB_256MB
+		bool "512MB_256MB Einstein"
+
+	config MSTAR_EINSTEIN_MMAP_512MB_512MB
+		bool "512MB_512MB Einstein"
+	endif
+
+	if (MSTAR_JANUS)
+	config MSTAR_JANUS_MMAP_128MB
+		bool "Janus 128MB (temp)"
+
+	config MSTAR_JANUS_MMAP_64MB
+		bool "Janus 64MB (temp)"
+	endif
+
+	if(MSTAR_JANUS2)
+	config MSTAR_JANUS2_MMAP_128MB
+		bool "Janus2 128MB "
+	endif
+
+	if (MSTAR_MARIA10)
+	config MSTAR_MARIA10_MMAP_128MB
+		bool "Maria10 128MB"
+
+	config MSTAR_MARIA10_MMAP_64MB
+		bool "Maria10 64MB"
+
+	config MSTAR_MARIA10_MMAP_32MB
+		bool "Maria10 32MB"
+	endif
+
+	if (MSTAR_MACAW12)
+	config MSTAR_MACAW12_MMAP_128MB_DDR3
+       depends on (MSTAR_MACAW12_BD_MST149C_D01A_S)
+		bool "Macaw12 128MB DDR3"
+
+	config MSTAR_MACAW12_MMAP_128MB
+       depends on (MSTAR_MACAW12_BD_MST149D_D01A_S)
+		bool "Macaw12 128MB"
+
+	config MSTAR_MACAW12_MMAP_64MB
+       depends on ((MSTAR_MACAW12_BD_MST149A_D01A_S) || (MSTAR_MACAW12_BD_MST149B_D01A_S) \
+             || (MSTAR_MACAW12_BD_MST149E_D01A_S))
+		bool "Macaw12 64MB"
+
+	config MSTAR_MACAW12_MMAP_32MB
+       depends on ((MSTAR_MACAW12_BD_MST149A_D01A_S) || (MSTAR_MACAW12_BD_MST149B_D01A_S) \
+             || (MSTAR_MACAW12_BD_MST149E_D01A_S))
+		bool "Macaw12 32MB"
+	endif
+
+	if (MSTAR_EDEN)
+	config MSTAR_EDEN_MMAP_64MB
+       depends on ((MSTAR_EDEN_BD_MST165A_D01A_S) || (MSTAR_EDEN_BD_MST165B_D01A_S)\
+       || (MSTAR_EDEN_BD_MST165C_D01A_S) || (MSTAR_EDEN_BD_MST165C_D01B_S)\
+       ||(MSTAR_EDEN_BD_MST043B_10ALB_12351)||(MSTAR_EDEN_BD_MST043B_10BLB_12413)||(MSTAR_EDEN_BD_MST042B_10BLU_12423))
+		bool "Eden 64MB"
+
+	config MSTAR_EDEN_MMAP_32MB
+       depends on ((MSTAR_EDEN_BD_MST165A_D01A_S) || (MSTAR_EDEN_BD_MST165B_D01A_S)\
+       || (MSTAR_EDEN_BD_MST165C_D01A_S) || (MSTAR_EDEN_BD_MST165C_D01B_S)\
+       ||(MSTAR_EDEN_BD_MST043B_10ALB_12351)||(MSTAR_EDEN_BD_MST043B_10BLB_12413)||(MSTAR_EDEN_BD_MST042B_10BLU_12423))
+		bool "Eden 32MB"
+	endif
+
+	if (MSTAR_EULER)
+	config MSTAR_EULER_MMAP_128MB
+		bool "Euler 128MB"
+
+	config MSTAR_EULER_MMAP_64MB
+		bool "Euler 64MB"
+
+	config MSTAR_EULER_MMAP_32MB
+		bool "Euler 32MB"
+	endif
+
+
+	if (MSTAR_KRONUS)
+	config MSTAR_KRONUS_MMAP_32MB
+		bool "Kronus 32MB"
+
+	config MSTAR_KRONUS_MMAP_64MB
+		bool "Kronus 64MB"
+
+	config MSTAR_KRONUS_MMAP_128MB
+		bool "Kronus 128MB"
+
+	config MSTAR_KRONUS_MMAP_256MB
+		bool "Kronus 256MB"
+	endif
+
+	if (MSTAR_KAISERIN)
+	config MSTAR_KAISERIN_MMAP_128MB_128MB
+		bool "128MB_128MB"
+
+	config MSTAR_KAISERIN_MMAP_256MB_128MB
+		bool "256MB_128MB"
+
+	config MSTAR_KAISERIN_MMAP_256MB_256MB
+		bool "256MB_256MB"
+
+	config MSTAR_KAISERIN_MMAP_512MB_512MB
+		bool "512MB_512MB"
+
+	endif
+
+endchoice
+
+choice
+ 	prompt "Memory Frequency Selection"
+    depends on !((MSTAR_AMBER7) || (MSTAR_AMETHYST) || (MSTAR_EAGLE) || (MSTAR_EIFFEL) || (MSTAR_NIKE))
+
+	default MEM1066MHz if MSTAR_URANUS4
+	default MEM800MHz  if MSTAR_TITANIA4
+	default MEM1066MHz if MSTAR_TITANIA7
+	default MEM1066MHz if MSTAR_TITANIA8
+	default MEM1066MHz if MSTAR_TITANIA12
+	default MEM1300MHz if MSTAR_AMBER2
+	default MEM1300MHz if MSTAR_AGATE
+	default MEM1300MHz if MSTAR_AMBER3
+	default MEM1300MHz if MSTAR_AMBER5
+	default MEM1300MHz if MSTAR_TITANIA9
+	default MEM1300MHz if MSTAR_TITANIA13
+	default MEM1300MHz if MSTAR_AMBER1
+	default MEM1066MHz if MSTAR_AMBER6
+	default MEM1066MHz if MSTAR_JANUS
+	default MEM1300MHz if MSTAR_JANUS2
+	default MEM1066MHz if MSTAR_MARIA10
+	default MEM800MHz if MSTAR_MACAW12
+	default MEM800MHz if MSTAR_EDEN
+	default MEM800MHz if MSTAR_EULER
+	default MEM1600MHz if MSTAR_KRONUS
+	default MEM1066MHz if MSTAR_KAISERIN
+	default MEM1600MHz if MSTAR_EMERALD
+	default MEM1600MHz if MSTAR_EDISON
+	default MEM1600MHz if MSTAR_EINSTEIN
+
+if(!MSTAR_JANUS && !MSTAR_MARIA10 && !MSTAR_EDEN && !MSTAR_EULER)
+ 	config MEM2133MHz
+		bool "2133 MHz"
+
+ 	config MEM1866MHz
+		bool "1866 MHz"
+
+        config MEM1600MHz
+              bool "1600 MHz"
+
+	config MEM1300MHz
+		bool "1300 MHz"
+endif
+
+if(MSTAR_EULER)
+	config MEM1333MHz
+		bool "1333 MHz"
+endif
+
+	config MEM1066MHz
+		bool "1066 MHz"
+
+if(!MSTAR_JANUS2)
+	config MEM800MHz
+		bool "800 MHz"
+
+  if(!MSTAR_MACAW12 && !MSTAR_EDEN && !MSTAR_EULER)
+	config MEM667MHz
+		bool "667 MHz"
+  endif
+
+  if(MSTAR_URANUS4)
+	config MEM400MHz
+		bool "400 MHz"
+  endif
+endif
+
+endchoice
+
+choice
+    prompt "DDR3 Mode Configuration"
+	depends on (MSTAR_KRONUS)
+	default DDR3_16BIT_MODE
+	config   DDR3_16BIT_MODE
+	    bool "DDR3 16-BIT MODE"
+	config   DDR3_8BIT_MODE
+	    bool "DDR3 8-BIT MODE"
+endchoice
+
+choice
+ 	prompt "MIU0 DRAM Selection"
+ 	depends on ((MSTAR_AMBER7) || (MSTAR_AMETHYST) || (MSTAR_EAGLE) || (MSTAR_EIFFEL) || (MSTAR_NIKE))
+	default MIU0_DDR3_1333 if MSTAR_AMBER7
+	default MIU0_DDR3_1333 if MSTAR_AMETHYST
+	default MIU0_DDR3_1666 if MSTAR_EAGLE
+	default MIU0_DDR3_1666 if MSTAR_EIFFEL
+	default MIU0_DDR3_1666 if MSTAR_NIKE
+
+    config MIU0_DRAM_NONE
+		bool "None"
+
+	config MIU0_DDR3_2133
+		bool "DDR3-2100"
+
+	config MIU0_DDR3_1866
+		bool "DDR3-1800"
+
+	config MIU0_DDR3_1666
+		bool "DDR3-1600"
+
+	config MIU0_DDR3_1333
+		bool "DDR3-1300"
+
+	config MIU0_DDR3_1066
+		bool "DDR3-1000"
+
+	config MIU0_DDR2_1066
+		bool "DDR2-1000"
+
+	config MIU0_DDR2_800
+		bool "DDR2-800"
+endchoice
+
+choice
+ 	prompt "MIU1 DRAM Selection"
+ 	depends on ((MSTAR_AMBER1) || (MSTAR_AMBER6) || (MSTAR_AMBER7) || (MSTAR_AMETHYST) || (MSTAR_EAGLE) || (MSTAR_EIFFEL) || (MSTAR_NIKE) || (MSTAR_EMERALD))
+	default MIU1_DDR3_1333 if MSTAR_AMBER1
+	default MIU1_DRAM_NONE if MSTAR_AMBER6
+	default MIU1_DDR3_1333 if MSTAR_AMBER7
+	default MIU1_DDR3_1333 if MSTAR_AMETHYST
+	default MIU1_DDR3_1666 if MSTAR_EAGLE
+	default MIU1_DDR3_1666 if MSTAR_EIFFEL
+	default MIU1_DDR3_1666 if MSTAR_NIKE
+	default MIU1_DDR3_1666 if MSTAR_EMERALD
+
+    config MIU1_DRAM_NONE
+		bool "None"
+
+	config MIU1_DDR3_2133
+		bool "DDR3-2100"
+
+	config MIU1_DDR3_1866
+		bool "DDR3-1800"
+
+	config MIU1_DDR3_1666
+		bool "DDR3-1600"
+
+	config MIU1_DDR3_1333
+		bool "DDR3-1300"
+
+	config MIU1_DDR3_1066
+		bool "DDR3-1000"
+
+	config MIU1_DDR2_1066
+		bool "DDR2-1000"
+
+	config MIU1_DDR2_800
+		bool "DDR2-800"
+endchoice
+
+config ENABLE_MIU_SWAP
+    bool "Enable MIU0/MIU1 Swap Function"
+    default n
+    depends on MSTAR_AMBER7
+	help
+	    Swap MIU0 / MIU1
+
+choice
+	prompt "BIST Length Selection"
+
+	default BIST_0x1001_UNITS
+
+	config BIST_0x0401_UNITS
+		bool "0x0401 units"
+		help
+		    BIST Length: 0x0401 units
+
+	config BIST_0x1001_UNITS
+		bool "0x1001 units"
+		help
+		    BIST Length: 0x1001 units
+
+	config BIST_0x8001_UNITS
+		bool "0x8001 units"
+		help
+		    BIST Length: 0x8001 units
+endchoice
+
+config MIU0_BUSADDR
+    hex "MIU0 Bus Address"
+    default 0x20000000 if((MSTAR_EIFFEL) || (MSTAR_NIKE))
+    default 0x40000000 if(MCU_ARM)
+    default 0x00000000 if((MCU_MIPS32) || (MCU_AEONR2) || (MCU_AEON))
+    help
+      The start address of MIU0 bus
+
+config MIU1_BUSADDR
+    hex "MIU1 Bus Address"
+    default 0xA0000000 if(MCU_ARM)
+    default 0x60000000 if((MCU_MIPS32) || (MCU_AEONR2) || (MCU_AEON))
+    help
+      The start address of MIU1 bus
+
+config BOOTRAM_LOADADDR
+	hex "SBOOT BOOTRAM Memory Address"
+	default 0x81000000 if (!MSTAR_JANUS)
+    default 0x01000000 if (MSTAR_JANUS)
+	default 0x80500000 if (!MSTAR_JANUS)&&(BOOTING_FROM_OTP_WITH_PM51)
+	default 0x80204C00 if (!MSTAR_JANUS)&&(!BOOTING_FROM_OTP_WITH_PM51)
+	help
+	  The address to load ram stage bootloader (usually bootram.S)
+	  - Please note this should not overlap with decompressor or u-boot
+
+config UBOOT_LOADADDR
+	hex "UBOOT BOOTRAM Memory Address"
+	default 0x41200000 if (MCU_ARM)
+	default 0x81200000 if (MCU_MIPS32)
+	default 0x01200000 if (MCU_AEONR2 || MCU_AEON)
+	help
+	  The address to load u-boot before relocation
+
+config KERNEL_START_ADDRESS
+	hex "Kernel stext entry physical adress"
+	default 0x40400000 if (MCU_ARM)
+	default 0x80400000 if (MCU_MIPS32)
+	default 0x00400000 if (MCU_AEONR2 || MCU_AEON)
+	help
+	  SMP core of secondary boot form the address
+
+config DRAM_SIZE_MB_RELOCATE
+	int "DRAM Size for UBoot relocation (MB)"
+	default 256
+	help
+	  The dram size for Uboot relocation
+
+if ((MSTAR_TITANIA9) || (MSTAR_TITANIA13) || (MSTAR_AMBER1) || (MSTAR_AMBER6) || (MSTAR_AMBER7) || \
+    (MSTAR_JANUS2) || (MSTAR_AMBER5) || (MSTAR_AMETHYST) || (MSTAR_KRONUS) || (MSTAR_EAGLE) || \
+    (MSTAR_EIFFEL) || (MSTAR_EMERALD) || (MSTAR_EDISON) || (MSTAR_AMBER3) || (MSTAR_AGATE) || \
+    (MSTAR_EINSTEIN) || (MSTAR_NIKE))
+
+menu "Extended CPU Configuration"
+
+if (MCU_ARM)
+
+config ENABLE_AUTO_DQS
+    bool "Enable MIU Auto DQS"
+    default y
+    depends on (MSTAR_EAGLE) || (MSTAR_EIFFEL) || (MSTAR_NIKE)
+	help
+	    ENABLE MIU Auto DQS Mechanism
+
+config MSTAR_DFS_ENABLE
+    bool "Enable Dynamic Frequency Selection (DFS)"
+    default n
+    depends on (MSTAR_EAGLE) || (MSTAR_EIFFEL) || (MSTAR_NIKE)
+	help
+	    Enable Dynamic Frequency Selection (DFS)
+
+config MSTAR_VID_ENABLE
+    bool "Enable Voltage Identification (VID)"
+    default n
+    depends on (MSTAR_EAGLE) || (MSTAR_EIFFEL) || (MSTAR_NIKE) || (MSTAR_EDISON)
+	help
+	    Enable Voltage Identification (VID)
+
+config MSTAR_MOBF_ENABLE
+    bool "Enable MOBF Function"
+    default n
+    depends on (MSTAR_EAGLE || MSTAR_EDISON || MSTAR_AMBER3 || MSTAR_AGATE || MSTAR_EIFFEL || MSTAR_NIKE || MSTAR_EINSTEIN)
+	help
+	    Enable MOBF Function
+
+config MSTAR_ASIC_EMULATION_ENABLE
+    bool "Enable ASIC Emulation"
+    default n
+    depends on MSTAR_EAGLE
+	help
+	    Enable ASIC Emulation
+
+endif   #// MCU_ARM
+
+if (MCU_MIPS32)
+
+choice
+ 	prompt "MIPS Core Type"
+	default MSTAR_MIPS_SINGLE_CORE
+	depends on MSTAR_JANUS2
+
+	config MSTAR_MIPS_SINGLE_CORE
+		bool "Single Core"
+
+	config MSTAR_MIPS_DUAL_CORE
+		bool "Dual Core"
+endchoice
+
+choice
+ 	prompt "MIPS VPE Type"
+	default MSTAR_MIPS_SINGLE_VPE_PER_CORE if MSTAR_MIPS_SINGLE_CORE
+	default MSTAR_MIPS_DUAL_VPE_PER_CORE if MSTAR_MIPS_DUAL_CORE
+	depends on MSTAR_JANUS2
+
+	config MSTAR_MIPS_SINGLE_VPE_PER_CORE
+		bool "Single VPE per Core"
+
+	config MSTAR_MIPS_DUAL_VPE_PER_CORE
+		bool "Dual VPE per Core"
+endchoice
+
+choice
+ 	prompt "OCP Clock Ratio"
+	default MSTAR_MIPS_OCP_CLOCK_RATIO_1_2
+	depends on MSTAR_JANUS2
+
+	config MSTAR_MIPS_OCP_CLOCK_RATIO_1_1
+		bool "MIPS : OCP = 1 : 1"
+
+	config MSTAR_MIPS_OCP_CLOCK_RATIO_1_2
+		bool "MIPS : OCP = 1 : 2"
+
+	config MSTAR_MIPS_OCP_CLOCK_RATIO_1_3
+		bool "MIPS : OCP = 1 : 3"
+
+	config MSTAR_MIPS_OCP_CLOCK_RATIO_1_4
+		bool "MIPS : OCP = 1 : 4"
+
+	config MSTAR_MIPS_OCP_CLOCK_RATIO_1_5
+		bool "MIPS : OCP = 1 : 5"
+endchoice
+
+config MSTAR_L2_CACHE_ENABLE
+    bool "Enable MIPS L2 Cache Mechanism"
+    default n
+    depends on ((MSTAR_JANUS2) || (MSTAR_AMBER5) || (MSTAR_AMETHYST))
+	help
+	    Enable / Disable MIPS L2 Cache Mechanism
+
+config MSTAR_CPU_PREFETCH_ENABLE
+    bool "Enable CPU Prefetch Buffer"
+    default y
+    depends on !(MSTAR_KRONUS)
+	help
+	    Enable / Disable Prefetch Buffer
+
+choice
+	prompt "L2 Cache Size Selection"
+	default MSTAR_TITANIA_L2_CACHE_256K_BYTES
+	depends on ((MSTAR_JANUS2) && (MSTAR_CPU_PREFETCH_ENABLE || MSTAR_L2_CACHE_ENABLE))
+
+ 	config MSTAR_TITANIA_L2_CACHE_128K_BYTES
+		bool "128K-Byte"
+    	help
+    	    L2 Cache Size: 128K-Byte
+
+ 	config MSTAR_TITANIA_L2_CACHE_256K_BYTES
+		bool "256K-Byte"
+    	help
+    	    L2 Cache Size: 256K-Byte
+endchoice
+
+choice
+	prompt "L2 Cache Type Selection"
+	default MSTAR_TITANIA_L2_CACHE_WRITE_BACK
+	depends on (((MSTAR_JANUS2) || (MSTAR_AMBER5) || (MSTAR_AMETHYST)) && \
+	            (MSTAR_CPU_PREFETCH_ENABLE || MSTAR_L2_CACHE_ENABLE))
+
+ 	config MSTAR_TITANIA_L2_CACHE_WRITE_BACK
+		bool "Write Back"
+    	help
+    	    L2 Cache Type: Write Back
+
+ 	config MSTAR_TITANIA_L2_CACHE_WRITE_THROUGH
+		bool "Write Through"
+    	help
+    	    L2 Cache Type: Write Through
+endchoice
+
+choice
+	prompt "Cache Line Size Selection"
+	default MSTAR_TITANIA_L2_CACHE_LINE_64_BYTES
+	depends on (MSTAR_CPU_PREFETCH_ENABLE || MSTAR_L2_CACHE_ENABLE)
+
+ 	config MSTAR_TITANIA_L2_CACHE_LINE_32_BYTES
+		bool "32-Byte"
+		depends on !(MSTAR_JANUS2 || MSTAR_AMBER5 || MSTAR_AMETHYST)
+    	help
+    	    Prefetch Buffer: Cache Line Size: 32-Byte
+
+ 	config MSTAR_TITANIA_L2_CACHE_LINE_64_BYTES
+		bool "64-Byte"
+    	help
+    	    Prefetch Buffer: Cache Line Size: 64-Byte
+
+ 	config MSTAR_TITANIA_L2_CACHE_LINE_128_BYTES
+		bool "128-Byte"
+		depends on (MSTAR_JANUS2 || MSTAR_AMBER5 || MSTAR_AMETHYST)
+    	help
+    	    Prefetch Buffer: Cache Line Size: 128-Byte
+
+ 	config MSTAR_TITANIA_L2_CACHE_LINE_256_BYTES
+		bool "256-Byte"
+		depends on (MSTAR_JANUS2)
+    	help
+    	    Prefetch Buffer: Cache Line Size: 256-Byte
+
+endchoice
+
+choice
+	prompt "Preferch Buffer Line Size Selection"
+	default MSTAR_TITANIA_PREFETCH_LINE_32_BYTES
+	depends on ((MSTAR_AMBER5) || (MSTAR_AMETHYST)) && (MSTAR_CPU_PREFETCH_ENABLE)
+
+ 	config MSTAR_TITANIA_PREFETCH_LINE_32_BYTES
+		bool "32-Byte"
+    	help
+    	    Prefetch buffer Line size : 2x128(32Byte)
+
+ 	config MSTAR_TITANIA_PREFETCH_LINE_64_BYTES
+		bool "64-Byte"
+    	help
+    	    Prefetch buffer Line size : 4x128(64Byte)
+endchoice
+
+config MSTAR_MEMORY_PREFETCH_ENABLE
+    bool "Enable Memory Prefetch Mechanism"
+    default n
+    depends on (MSTAR_AMBER1 || MSTAR_JANUS2 || MSTAR_AMBER5 || MSTAR_AMBER7 || MSTAR_AMETHYST || MSTAR_EMERALD)
+	help
+	    Enable / Disable Memory Prefetch Mechanism
+
+config MSTAR_FORCE_REQUEST_INTO_CACHE
+    bool "Force All MIU Requests into Cache"
+    depends on !(MSTAR_JANUS2 || MSTAR_AMBER5 || MSTAR_AMETHYST || MSTAR_KRONUS)
+    default n
+	help
+	    Enable / Disable to Force All MIU Requests into Cache
+
+config MSTAR_MIU_HIGHWAY_ENABLE
+    bool "Enable MIU Highway Mechanism"
+    default n
+    depends on (MSTAR_JANUS2 || MSTAR_AMBER5)
+	help
+	    Enable / Disable MIU Highway Mechanism
+
+config MSTAR_32BIT_RIU_MASK_ENABLE
+    bool "Enable 32-bit RIU Mask Mechanism"
+    default n
+    depends on !(MSTAR_TITANIA9 || MSTAR_JANUS2)
+	help
+	    Enable / Disable 32-bit RIU Mask Mechanism
+
+config MSTAR_TLB_SHARE_ENABLE
+    bool "Enable TLB Sharing Mechanism"
+    default n
+    depends on MSTAR_TITANIA13
+	help
+	    Enable / Disable TLB Sharing Mechanism
+
+config MSTAR_TITANIA_MIU1_ENABLE
+    bool "Enable Memory Interface Unit 1 (MIU1)"
+    default y
+    depends on ((MSTAR_TITANIA_MMAP_128MB_128MB_DEFAULT || \
+                 MSTAR_TITANIA_MMAP_256MB_256MB_DEFAULT || \
+		         MSTAR_TITANIA_MMAP_128MB_128MB || \
+                 MSTAR_TITANIA_MMAP_128MB_64MB || \
+                 MSTAR_TITANIA_MMAP_64MB_128MB || \
+                 MSTAR_TITANIA_MMAP_64MB_64MB || \
+                 MSTAR_TITANIA_MMAP_256MB_256MB || \
+                 MSTAR_TITANIA_MMAP_512MB_512MB) && \
+                 (MSTAR_TITANIA13 || MSTAR_JANUS2))
+    help
+        Enable / Disable Memory Interface Unit 1 (MIU1)
+
+endif   #// MCU_MIPS32
+
+endmenu
+
+endif
+
+endmenu
+
+menu "General Configuration"
+
+menu "Mmap Configuartion"
+
+if (MCU_ARM)
+config HEAP_SIZE_CONFIG
+      bool "U-boot heap size Config"
+      default n
+      help
+          set malloc heap size for u-boot
+if (HEAP_SIZE_CONFIG)
+menu "uboot custom-config"
+config UBOOT_HEAP_SIZE
+    hex "UBOOT_HEAP_SIZE"
+    default 0x00000000
+    help
+      The Size is Uboot Heap
+endmenu #"uboot custom-config"
+endif
+endif
+config LOGO_CUSTOM_CONFIG
+      bool "Logo Mmap Custom Config"
+      default n
+      help
+          set logo memory map customization
+
+if (LOGO_CUSTOM_CONFIG)
+menu "Logo custom-config"
+
+config JPD_READBUFF_ADR
+    hex "JPD_READBUFF_ADR"
+    default 0x00000000
+    help
+      The address is JPD_READBUFF_ADR
+
+config JPD_READBUFF_LEN
+    hex "JPD_READBUFF_LEN"
+    default 0x00000000
+    help
+      The address is JPD_READBUFF_LEN
+
+config JPD_INTERBUFF_ADR
+    hex "JPD_INTERBUFF_ADR"
+    default 0x00000000
+    help
+      The address is JPD_INTERBUFF_ADR
+
+config JPD_INTERBUFF_LEN
+   hex "JPD_INTERBUFF_LEN"
+    default 0x00000000
+    help
+      The address is JPD_INTERBUFF_LEN
+
+config JPD_OUT_ADR
+  hex "JPD_OUT_ADR"
+    default 0x00000000
+    help
+      The address is JPD_OUT_ADR
+
+config JPD_OUT_LEN
+  hex "JPD_OUT_LEN"
+    default 0x00000000
+    help
+      The address is JPD_OUT_LEN
+
+config LOGO_JPG_DRAM_ADDR
+  hex "LOGO_JPG_DRAM_ADDR"
+    default 0x00000000
+    help
+      The address is LOGO_JPG_DRAM_ADDR
+
+config GOP_BUFFER_ADDR
+  hex "GOP_BUFFER_ADDR"
+    default 0x00000000
+    help
+      The address is GOP_BUFFER_ADDR
+
+endmenu #"Logo custom-config"
+endif
+
+config AUDIO_CUSTOM_CONFIG
+      bool "Audio Mmap Custom Config"
+      default n
+      help
+          set audio memory map customization
+
+if (AUDIO_CUSTOM_CONFIG)
+menu "Audio custom-config"
+
+config AUDIO_R2_MEM_INFO_ADR
+  hex "AUDIO_R2_MEM_INFO_ADR"
+    default 0x00000000
+    help
+      The address is AUDIO_R2_MEM_INFO_ADR
+
+config AUDIO_S_MEM_INFO_ADR
+  hex "AUDIO_S_MEM_INFO_ADR"
+    default 0x00000000
+    help
+      The address is AUDIO_S_MEM_INFO_ADR
+
+config AUDIO_D_MEM_INFO_ADR
+  hex "AUDIO_D_MEM_INFO_ADR"
+    default 0x00000000
+    help
+      The address is AUDIO_D_MEM_INFO_ADR
+
+endmenu #"Audio custom-config"
+endif
+
+endmenu #"Mmap Configuartion"
+
+###
+### config NEXT_IMAGE_FILE
+###	 string "Next Stage Image File"
+###	 default "../u-boot-1.1.6/u-boot.bin"
+###	 help
+### 	  Next stage image file
+### 	  Usually it is
+### 		1. u-boot.bin
+### 		2. binary from vmlinux (objcopy -O binary vmlinux vmlinux.bin)
+###
+
+choice
+	prompt "Buffer allocation policy"
+	default FEATURE_BUFFERS_USE_MALLOC
+	help
+	  There are 3 ways SBoot can handle buffer allocations:
+	  - Use malloc. This costs code size for the call to xmalloc.
+	  - Put them on stack. For some very small machines with limited stack
+		space, this can be deadly. For most folks, this works just fine.
+	  - Put them in BSS. This works beautifully for computers with a real
+		MMU (and OS support), but wastes runtime RAM for uCLinux. This
+		behavior was the only one available for SBoot versions 0.48 and
+		earlier.
+
+config FEATURE_BUFFERS_USE_MALLOC
+	bool "Allocate with Malloc"
+
+config FEATURE_BUFFERS_GO_ON_STACK
+	bool "Allocate on the Stack"
+
+config FEATURE_BUFFERS_GO_IN_BSS
+	bool "Allocate in the .bss section"
+
+endchoice
+
+config ANDROID_BOOT
+	bool "Android System"
+	default n
+	help
+	  Selecting this item will enable Android options.
+
+config UART1_SEL
+        bool "UART1 Enable"
+        default n
+
+config EMMC_BOOT
+        bool "MIPS boot from eMMC"
+        default n
+
+config TOP_AND_BOTTOM_BOOT
+        bool "Build top & bottom bootloader"
+        default n
+
+config TOP_BOOT_ENABLE
+        bool "Enable top boot flow"
+        default n
+
+config BOTTOM_BOOT_ENABLE
+        bool "Enable bottom boot flow"
+        default n
+
+config SBOOT_TO_KERNEL
+        bool "Sboot to kernel"
+        default n
+
+if (SBOOT_TO_KERNEL)
+choice
+        prompt "Kernel Selection"
+        default None
+config KERNEL_2_6_28_9
+        bool "2.6.28.9"
+config KERNEL_2_6_32_15
+        bool "2.6.32.15"
+config KERNEL_2_6_35_11
+        bool "2.6.35.11"
+config KERNEL_3_0_20
+        bool "3.0.20"
+
+endchoice
+endif
+
+config SHOW_USAGE
+	bool "Show terse applet usage messages"
+	default y
+	help
+	  All SBoot applets will show help messages when invoked with
+	  wrong arguments. You can turn off printing these terse usage
+	  messages if you say no here.
+	  This will save you up to 7k.
+
+config NON_OS
+	bool "Build bootloader without U-Boot (Non-OS)"
+	default n
+	help
+	  Build the bootloader with Non-OS system.
+
+if (NON_OS)
+config SBOOT_USE_BDMA_TO_CHECK_CRC
+        bool "Sboot uses BDMA to check CRC"
+        default y if (MSTAR_TITANIA_BD_MSD380B_D01A || \
+            MSTAR_TITANIA_BD_MSD523B_D01A)
+        depends on (MSTAR_TITANIA4 || \
+            MSTAR_TITANIA7 || \
+            MSTAR_TITANIA8 || \
+            MSTAR_TITANIA9 || \
+            MSTAR_TITANIA12 || \
+            MSTAR_TITANIA13 || \
+            MSTAR_AMBER1 || \
+            MSTAR_AMBER7 || \
+            MSTAR_EMERALD)
+        help
+          If enable this option, sboot would compare the CRC
+          stored in the AP image with the CRC calculated from the
+          AP. It should be only applicable to Non-OS project.
+          It is default on on AEON based CPUs.
+
+config SECURE_BOOT
+	bool "Secure Boot"
+	default n
+	help
+	  Secure Boot.
+endif
+
+config COMPRESSED_UBOOT
+	bool "Build bootloader with compressed U-Boot"
+	default n
+	help
+	  Build the bootloader with compressed U-Boot.
+
+if (MSTAR_MARIA10)
+config MSTAR_MARIA10_PM
+	bool "Build PM binary"
+	default n
+	help
+	  Build PM binary for sleep(saving) mode.
+endif
+
+if (MSTAR_MACAW12)
+config MSTAR_MACAW12_PM
+	bool "Build PM binary"
+	default n
+	help
+	  Build PM binary for sleep(saving) mode.
+endif
+
+if (MSTAR_EDEN)
+config MSTAR_EDEN_PM
+	bool "Build PM binary"
+	default n
+	help
+	  Build PM binary for sleep(saving) mode.
+endif
+
+if (MSTAR_EULER)
+config MSTAR_EULER_PM
+	bool "Build PM binary"
+	default n
+	help
+	  Build PM binary for sleep(saving) mode.
+endif
+
+config DISPLAY_VERSIONINFO
+	bool "Display ChangeList"
+	default y
+
+if (DISPLAY_VERSIONINFO)
+config CHANGELIST
+	string "Changelist"
+	default "00112233"
+	help
+	  Define changelist number.
+endif
+
+endmenu
+
+menu 'Build Options'
+
+### config BUILD_AT_ONCE
+###	bool "Compile all sources at once"
+###	default n
+###	help
+###	  Normally each source-file is compiled with one invocation of
+###	  the compiler.
+###	  If you set this option, all sources are compiled at once.
+###	  This gives the compiler more opportunities to optimize which can
+###	  result in smaller and/or faster binaries.
+###
+###	  Setting this option will consume alot of memory, e.g. if you
+###	  enable all applets with all features, gcc uses more than 300MB
+###	  RAM during compilation of busybox.
+###
+###	  This option is most likely only beneficial for newer compilers
+###	  such as gcc-4.1 and above.
+###
+###	  Say 'N' unless you know what you are doing.
+
+### config KERNEL_SOURCE_DIR
+### 	string "Kernel Source directory"
+### 	default "../../RedLion/2.6.28.9"
+### 	help
+### 	  Kerenl source directory need by sboot
+###
+### 	  linux-2.6.28.9:	../../RedLion/2.6.28.9
+### 	  linux-2.6.26:		../../RedLion/2.6.26
+###
+### 	  This option will be removed later
+
+config CROSS_COMPILER_PREFIX
+	string "Cross Compiler prefix"
+	default "mips-linux-gnu-" if (MCU_MIPS32)
+	default "aeon-" if (MCU_AEONR2||MCU_AEON)
+	default "arm-none-eabi-" if (MCU_ARM)
+
+	help
+	  If you want to build SBoot with a cross compiler, then you
+	  will need to set this to the cross-compiler prefix, for example,
+	  "mips-linux-gnu-" or "aeon-"
+
+	  Note that CROSS_COMPILE environment variable or
+	  "make CROSS_COMPILE=xxx ..." will override this selection.
+
+	  Native builds leave this empty.
+
+config EXTRA_CFLAGS
+	string "Additional CFLAGS"
+	default "-EL" if MCU_MIPS32
+	default "-march=aeon1 -EL" if MCU_AEON
+	default "-march=aeonR2 -EL" if (MCU_AEONR2)
+	help
+	  Additional CFLAGS to pass to the compiler verbatim.
+
+config EXTRA_AFLAGS
+	string "Additional AFLAGS"
+	help
+	  Additional AFLAGS (for assembly files) to pass to
+	  the compiler verbatim.
+
+endmenu
+
+menu 'Debugging Options'
+
+config DEBUG
+	bool "Build SBoot with extra Debugging symbols"
+	default n
+	help
+	  Say Y here if you wish to examine SBoot internals while applets are
+	  running. This increases the size of the binary considerably, and
+	  should only be used when doing development. If you are doing
+	  development and want to debug SBoot, answer Y.
+
+	  Most people should answer N.
+
+config DEBUG_PESSIMIZE
+	bool "Disable compiler optimizations"
+	default n
+	depends on DEBUG
+	help
+	  The compiler's optimization of source code can eliminate and reorder
+	  code, resulting in an executable that's hard to understand when
+	  stepping through it with a debugger. This switches it off, resulting
+	  in a much bigger executable that more closely matches the source
+	  code.
+
+config WERROR
+	bool "Abort compilation on any warning"
+	default n
+	help
+	  Selecting this will add -Werror to gcc command line.
+
+	  Most people should answer Y.
+
+config EARLY_DISABLE_UART
+	bool "Early disable uart"
+	default n
+	help
+	  Selecting this will disable uart in the early stage of u-boot.
+	  Most people should answer N.
+
+endmenu
+
+menu 'Installation Options'
+
+config PREFIX
+	string "SBoot installation prefix"
+	default "./_install"
+	help
+	  Define your directory to install SBoot files/subdirs in.
+
+endmenu
+
+menu 'Module Options'
+config COMPRESS
+	bool "COMPRESS"
+	default y
+	help
+	  COMPRESS7 algorithm.
+
+config DONT_OVERWRITE
+	bool "DONT_OVERWRITE"
+	default y
+	help
+	  Determining which partition can't be overwrite on software upgrade..
+
+config USB
+	bool "USB"
+	default n
+	help
+	  Selecting this item will enable USB cmd.
+
+if (USB)
+config USB_LAN
+	bool "USB_LAN"
+	default n
+	help
+	  Selecting this item will enable USB LAN cmd.
+endif
+
+config FLASH_TYPE
+	bool "Flash Type"
+	default y
+	help
+		Enable to select flash type. Unused flag.
+if(FLASH_TYPE)
+config NAND_FLASH
+	bool "NAND Flash"
+	default y
+	help
+	  Selecting this item will enable NAND flash cmd.
+#	  Warning! Don't select "Serial Flash" and "NAND Flash" at the same time.
+
+if(NAND_FLASH)
+config BFN_WRITE_NAND
+        bool "BFN_WRITE_NAND"
+        default n
+        help
+        Enable NAND CMD to write BFN BIN files, MIU,LDR,UBOOT
+
+config BOOT_FROM_NAND
+	bool "Boot from nand flash"
+	default n
+	depends on (!BFN_WRITE_NAND)
+	help
+
+endif
+
+config MMC
+    bool "MMC"
+    default n
+    help
+        selecting this item will enable support embeded-MMC device feature.
+
+if(!MMC)
+config SD
+    bool "SD"
+    default n
+    help
+        selecting this item will enable support SD Card device feature.
+endif
+
+if(!BOOT_FROM_NAND)
+config BOOT_FROM_EMMC
+	bool "Boot from e-MMC"
+	default n
+	depends on (MMC)
+	help
+	  Selecting this item, all system will be stored in e-MMC.
+#	  Warning! Don't select "Serial Flash" and "NAND Flash" and "e-MMC" at the same time.
+endif
+endif
+
+#if(!BOOT_FROM_NAND)
+config SPI
+	bool "SPI"
+	default n
+	help
+	  Selecting this item will enable SPI flash cmd.
+if (SPI)
+config APP_IN_SPI
+	bool "APP_IN_SPI"
+	default n
+	help
+		System only has SPI storage. Kernel and all filesystems are stored
+		in it.
+endif
+#endif
+
+if (NAND_FLASH)
+config UBI
+    bool "UBI"
+    default y
+    help
+
+endif
+
+if(UBI)
+config UBI_MLC_BACKUP_LSB
+    bool "  UBI MLC Backup LSB"
+    default n
+    help
+		UBI backup lsb mechanism for MLC NAND
+
+config UBI_ENHANCE_INIT
+	bool "  UBI scan speed up"
+	default n
+	help
+		Speed up only one selected mtd parition for ubi_scan
+endif
+
+config FILE_SYSTEM
+	bool "File System"
+	default y
+	help
+		Enable to select file system. Unused flag.
+
+if (FILE_SYSTEM)
+if ((USB) || (MMC))
+config FAT
+	bool "FAT"
+	default n
+	help
+	  Selecting this item will enable FAT cmd.
+
+if (FAT)
+config FAT_WRITE
+    bool "FAT_WRITE"
+    default y
+    help
+
+endif
+endif
+
+if (UBI)
+config UBI_FS
+    bool "UBI File System"
+    default y
+    help
+
+endif
+
+config JFFS2
+    bool "JFFS2"
+    default y
+    help
+
+if((USB) || (MMC))
+config CMD_EXT2
+	bool "EXT2"
+	default n
+	help
+	  Selecting this item will enable EXT2 cmd.
+config CMD_EXT4
+	bool "EXT4"
+	default n
+	depends on CMD_EXT2
+	help
+	  Selecting this item will enable EXT4 cmd.
+config CMD_EXT4_WRITE
+	bool "EXT4 Write Support"
+	default n
+	depends on CMD_EXT4
+	help
+	  Selecting this item will enable EXT4 Write cmd.
+endif
+endif
+
+config KEYPAD
+	bool "Keypad"
+	default n
+	help
+	  Selecting this item will enable Keypad, Header and ELF cmd.
+
+if (MSTAR_AMBER3) || (MSTAR_EAGLE) || (MSTAR_EDISON) || (MSTAR_EIFFEL) || (MSTAR_NIKE) || (MSTAR_EINSTEIN)
+if(KEYPAD)
+config KEYPAD_CUST
+    bool "  KEYPAD_CUST"
+	default n
+	help
+	  Select Customer info to set Keypad's setting.
+
+config BOOT_KEYPAD
+    bool "  BOOT_KEYPAD"
+    default n
+    help
+      Selecting this item will enable BOOT_KEYPAD cmd,
+      thus you can select boot mode via KEYPAD.
+endif
+
+endif
+
+if (MSTAR_AMBER3) || (MSTAR_EAGLE) || (MSTAR_EDISON) || (MSTAR_EIFFEL) || (MSTAR_NIKE) || (MSTAR_EINSTEIN)
+config IR
+	bool "IR"
+	default n
+	help
+	  Selecting this item will enable IR cmd.
+if(IR)
+config BOOT_IR
+    bool "BOOT_IR"
+    default n
+    help
+      Selecting this item will enable BOOT_IR cmd,
+      thus you can select boot mode via IR.
+endif
+endif
+
+config SECURITY_BOOT
+    bool "Security"
+    default n
+    help
+
+if (SECURITY_BOOT)
+menu 'Security Options'
+
+choice
+    prompt "Storage Device"
+        default SECURITY_STORE_IN_NAND_FLASH
+        config SECURITY_STORE_IN_SPI_FLASH
+            bool "SECURITY_STORE_IN_SPI_FLASH"
+        depends on (SPI)
+        config SECURITY_STORE_IN_NAND_FLASH
+            bool "SECURITY_STORE_IN_NAND_FLASH"
+        depends on ( (NAND_FLASH) || ( MMC) ) && (SPI)
+        config SECURITY_STORE_IN_EMMC_FLASH
+            bool "SECURITY_STORE_IN_EMMC_FLASH"
+        depends on (MMC)
+endchoice
+
+config SECURE_AESDMA
+	bool "Enhance Secure booting"
+	default n
+	help
+
+config SECURE_PARTIAL_AUTHENTICATION
+	bool "Secure_Partial_authentication"
+
+config SECURE_USB_UPGRADE
+	bool "Secure USB Upgrade"
+        default n
+        help
+
+config SECURE_DEBUG_MESSAGE
+	bool "Secure Debug Message"
+        default n
+        help
+
+config SECURE_SPI_PROTECT
+	bool "Enable SPI Protect"
+	default n
+	help
+
+if (SECURE_SPI_PROTECT)
+menu 'SPI Protect Options'
+
+config BOOTING_ACTIVE_SPI_PROTECT
+	bool "Active SPI Protect in u-boot"
+	default n
+	help
+
+choice
+    depends on SECURE_SPI_PROTECT
+	prompt "SECURE_SPI_PROTECT_TYPE"
+	default SECURE_SPI_PARTIAL_PROTECT
+        config SECURE_SPI_PARTIAL_PROTECT
+			bool "SECURE_SPI_PARTIAL_PROTECT"
+		config SECURE_SPI_FULL_PROTECT
+			bool "SECURE_SPI_FULL_PROTECT"
+	help
+        SECURE_SPI_FULL_PROTECT can't used with ENV_IN_SERIAL
+endchoice
+
+if (SECURE_SPI_PARTIAL_PROTECT)
+menu 'SPI Protect/Non-Protect Area Setting'
+
+config SECURE_SPI_PROTECT_SPACE
+	hex "SPI Protect Space Length, Reserved from start of SPI"
+	default 0xC0000 if (COMPRESSED_UBOOT)
+	default 0x120000
+	help
+	  The value must greater than MBoot length
+	  Please re-tune the value if make MBoot fail
+
+config SECURE_SPI_NON_PROTECT_SPACE
+	hex "SPI Non-Protect Space Length, Reserved from end of SPI"
+	default 0x0
+        help
+	  The value will effect the result of partial protect
+	  When partial protect active fail
+	  Please re-tune the value or use full protect
+	  It will auto reserved 7/3 more bank for MBoot
+
+endmenu
+
+config BACKUP_SENSITIVE_TABLE
+    bool "Backup DDR/Clk table on non-protected area"
+    default n
+    help
+
+if (BACKUP_SENSITIVE_TABLE)
+#menu 'Seeting SPI offset'
+config SPI_OFFSET_OF_BACKUP_TABLE
+    hex "The spi offset of DDR/Clk table"
+    default 0x1B0000
+    help
+        This value will be recored on chunk header.
+		PM code could check this value to know where
+        the backup DDR/clk tables are.
+#endmenu
+endif
+
+endif
+
+endmenu
+endif
+
+endmenu
+endif
+
+config LZO
+	bool "LZO"
+	default n
+	help
+	  Selecting this item will enable LZO compress.
+
+if (LZO)
+config UNLZO_DST_ADDR
+	hex "LZO Uncompress Dst Memory Address"
+	default 0x5f000000
+	help
+	  The address to store lzo uncompressed data before writing to flash
+endif
+
+config HDMI_TX
+        bool "HDMI_TX"
+        default n
+        help
+	  Selecting this item will try to start a HDMI TX device.
+if (HDMI_TX)
+choice
+    prompt "HDMI TX device"
+    config HDMITX_NXP_TDA19988
+        bool "HDMITX_NXP_TDA19988"
+        help
+          Using for HDMI TX device NXP_TDA19988.
+endchoice
+endif
+
+config URSA_6M30
+	bool "URSA_6M30"
+	default n
+	help
+	  Selecting this item will enable URSA 6M30 cmd.
+
+config URSA_6M40
+	bool "URSA_6M40"
+	default n
+	help
+	  Selecting this item will enable URSA 6M40 cmd.
+
+config 3D_HWLVDSLRFLAG
+	bool "3D_HWLVDSLRFLAG"
+	default n
+	help
+	  Selecting this item will enable 3D_HWLVDSLRFLAG cmd.
+
+config PANEL_INIT
+	bool "PANEL_INIT"
+    default n
+	help
+	  Selecting this item will enable PANEL_INIT cmd.
+
+if(PANEL_INIT)
+config TCON_PANEL
+  bool "TCON_PANEL"
+	default n
+	help
+	  Select this item will support tcon panel.
+endif
+
+config DISPLAY_LOGO
+	bool "DISPLAY_LOGO"
+	default n
+	help
+	  Selecting this item will enable DISPLAY_LOGO cmd.
+if (DISPLAY_LOGO)
+choice
+    prompt "GOP Destination Type"
+    config GOP_OP_PATH
+        bool "GOP_OP_PATH"
+        help
+          Using for GOP op path and GOP mixer to ve path
+    config GOP_MIXER2OP_PATH
+        bool "GOP_MIXER2OP_PATH"
+        help
+          Using for GOP mixer to op path
+endchoice
+config DISPLAY_LOGO_SPACE
+	hex "DISPLAY_LOGO_SPACE"
+	default 0x40000
+	help
+	  The value for booting logo
+endif
+
+config SBOOT_PROTECT
+	bool "SBOOT_PROTECT"
+	default n
+	help
+	  Selecting this item will enable Sboot kernel protect.
+if (SBOOT_PROTECT)
+config LX1_END
+	hex "LX1_END"
+	default 0xE800000
+	help
+	  The value for LX1 end
+config LX2_START
+	hex "LX2_START"
+	default 0x0
+	help
+	  The value for LX2 start
+config LX2_END
+	hex "LX2_END"
+	default 0x10000000
+	help
+	  The value for LX2 end
+endif
+
+config DISPLAY_OSD
+	bool "DISPLAY_OSD"
+	default n
+	help
+	  Selecting this item will DISPLAY_OSD cmd.
+if (DISPLAY_OSD || DISPLAY_LOGO)
+choice
+	depends on (DISPLAY_OSD || DISPLAY_LOGO)
+    prompt "BootLogo/BootOSD Output"
+        default BOOTLOGO_OUT_CVBS
+        config BOOTLOGO_OUT_CVBS
+            bool "BOOTLOGO_OUT_CVBS"
+            help
+              Selecting this item will display boot logo/osd by using CVBS output.
+        config BOOTLOGO_OUT_SCART_HD_DAC
+            bool "BOOTOLOG_OUT_SCART_HD_DAC"
+            help
+              Selecting this item will display boot logo/osd by using SCART output
+              and SCART CVBS on HD DAC.
+        config BOOTLOGO_OUT_SCART_SD_DAC
+            bool "BOOTOLOG_OUT_SCART_SD_DAC"
+            help
+              Selecting this item will display boot logo/osd by using SCART output
+              and SCART CVBS on SD DAC.
+endchoice
+endif
+
+config POWER_MUSIC
+	bool "POWER_MUSIC"
+	default n
+	help
+	Selecting this item will POWER_MUSIC .
+if (POWER_MUSIC)
+choice
+	prompt "amplifier type"
+	default SIM_Amplifier
+	config DIGITAL_TI5711
+		bool "TI5711"
+
+	config DIGITAL_TI5707
+		bool "TI5707"
+
+	config DIGITAL_TI5708
+		bool "TI5708"
+
+	config DIGITAL_STA333
+		bool "STA333"
+
+	config SIM_Amplifier
+		bool "sim_amplifier"
+endchoice
+endif
+
+if (DISPLAY_LOGO ||POWER_MUSIC)
+config ACTIVE_STANDBY
+	bool "ACTIVE_STANDBY"
+	default n
+	help
+	Selecting this item will Active Standby mode.
+endif
+
+config FRONT_END
+    bool "FrontEnd"
+    default n
+    help
+      Selecting this item will enable front-end driver.
+if (FRONT_END)
+choice
+	prompt "Tuner"
+        config MSTAR_TUNER_NUTUNE_FT2125
+			bool "NUTUNE_FT2125_TUNER"
+		config MSTAR_TUNER_NUTUNE_FJ2207
+			bool "NUTUNE_FJ2207_TUNER"
+        config MSTAR_TUNER_NXP_TD1611ALF
+            bool "NXP_TD1611ALF_TUNEr"
+endchoice
+choice
+	prompt "DEMOD"
+		config MSTAR_MSB123x_DEMOD
+			bool "MSTAR_MSB123x_DEMOD"
+        config MSTAR_MSB122x_DEMOD
+            bool "MSTAR_MSB122x_DEMOD"
+endchoice
+config DEMUX
+	bool "Demux"
+	default y
+	help
+	  Selecting this item will enable demux driver.
+endif
+
+config NET
+	bool "NET"
+	default y
+	help
+	  Selecting this item will enable NET cmd.
+if (NET)
+config NETUPDATE
+    bool "Network Upate"
+    default n
+    help
+        selecting this item will enable network update feature.
+endif
+
+config PHY_SELECTION
+	bool "PHY Selection"
+	default y
+	help
+		Enable to select PHY. Unused flag.
+if (PHY_SELECTION)
+config ALBANY
+	bool "MSTAR PHY"
+	default n
+	depends on MSTAR_JANUS
+	help
+		Selecting this item will enable Mstar PHY (Albany)
+
+config ETHERNET_ALBANY
+	bool "MStar Internal Ethernet PHY"
+	default n
+	depends on (MSTAR_JANUS2 || MSTAR_AMBER1 || MSTAR_AMBER2 || MSTAR_AMBER3 || MSTAR_AMBER5 || \
+                MSTAR_AMBER7 || MSTAR_AMETHYST || MSTAR_KAISERIN || MSTAR_EAGLE || MSTAR_EMERALD || \
+                MSTAR_EDISON || MSTAR_EIFFEL || MSTAR_EINSTEIN || MSTAR_NIKE)
+	help
+		Enable MStar Internal Ethernet PHY (Albany)
+endif
+
+config OAD
+    bool "OAD"
+    default n
+    help
+        selecting this item will enable OAD (Over the Air Download) feature.
+
+if (OAD)
+choice
+    prompt "Selection"
+    default SUPERNOVA_OAD
+
+    config OBAMA_OAD
+        depends on OAD
+               bool "Obama_OAD"
+               help
+                 Selecting this item will enable OAD base on Obama.
+
+    config SUPERNOVA_OAD
+        depends on OAD
+               bool "Supernova_OAD"
+               help
+                 Selecting this item will enable OAD base on Supernova.
+
+endchoice
+    config OAD_IN_MBOOT
+        depends on (OAD && SUPERNOVA_OAD)
+               bool "OAD_In_MBoot"
+               default n
+               help
+                 Selecting this item will enable OAD base on Supernova
+                 and download in MBoot.
+endif
+
+config MTD_NAND_BBT
+	bool "MTD NAND FLASH BASE BBT"
+	default y
+	help
+		Selecting this item, bbt will be stored in nand flash.
+config MSTARI2C
+	bool "MSTARI2C"
+	default n
+	help
+	  Selecting this item will enable MSTARI2C driver.
+
+config EEPROM
+	bool "EEPROM"
+	default n
+	help
+	  Selecting this item will enable EEPROM cmd.
+
+config STANDBY
+	bool "STANDBY"
+	default n
+	help
+	  Selecting this item will enter standby mode.
+
+config MICOM
+	bool "Micom"
+	default n
+	help
+	  Selecting this item will enable Micom cmd.
+
+config WDT
+    bool "Watchdog timer"
+    default n
+    help
+        selecting this item will enable watchdog timer.
+
+config KERNEL_PROTECT
+    bool "KERNEL_PROTECT"
+    default n
+    help
+        selecting this item will enable kernel Protect LX_MEM1...3.
+
+config BACKUP_PARTITION
+	bool "backup partition"
+	default n
+	help
+	  Selecting this item will enable backup partition.
+
+config LED_FLICKER_WHEN_SW_UPDATE
+    bool "LED_FLICKER_WHEN_SW_UPDATE"
+    default n
+    help
+        selecting this item will enable led flicker during upgrade.
+
+config SET_4K2K_MODE
+    bool "set 4K2K mode"
+    default n
+    help
+        selecting this item will set 4K2K mode
+
+config ENABLE_4K2K_OP_DEFAULT
+    bool "default osd mix video output via OP"
+    default n
+    help
+        selecting this item will set 4K2K default output method
+
+if (ENV_IN_SERIAL)
+config LOAD_ENV_FROM_SN
+    bool "Load env from sn"
+endif
+
+config MSTAR_STR_ENABLE
+  bool "Enable MStar STR"
+  default false
+  help
+    Enable MStar STR
+
+if MSTAR_STR_ENABLE
+config MSTAR_STR_CRC
+  bool "Enable MStar STR CRC Check"
+  default false
+  help
+    Enable MStar STR CRC check
+endif
+
+config MSTAR_PM_SWIR
+  bool "Enable PM SWIR"
+  default false
+  help
+    Enable MStar PM SWIR
+
+config MSTAR_EDINBURGH
+  bool "Enable Edinburgh"
+  default false
+  help
+    Enable MStar Demodulator Edinburgh
+
+config R2_BRINGUP
+  bool "Enable R2 Bringup"
+  default false
+  help
+    Enable R2 Bringup
+
+if (BOOTING_FROM_OTP_WITH_PM51)
+config PM_DRAM_ADDRESS
+	hex "PM in DRAM Address"
+	default 0x87FF0000
+    help
+
+config CUSTOMER_KEY_BANK_DRAM_ADDRESS
+	hex "Customer key bank in DRAM Address"
+	default 0xA0300000
+    help
+
+config SECURE_INFO_DRAM_ADDRESS
+	hex "SECURE INFO in DRAM Address"
+	default 0xA0400000
+    help
+
+endif
+
+choice
+    prompt "Logo Storage"
+        default LOGO_STORE_NOT_SET
+        config LOGO_STORE_NOT_SET
+            bool "LOGO_STORE_NOT_SET"
+        config LOGO_STORE_IN_MBOOT
+            bool "LOGO_STORE_IN_MBOOT"
+        config LOGO_STORE_IN_SPI_FLASH
+            bool "LOGO_STORE_IN_SPI_FLASH"
+        depends on (SPI)
+        config LOGO_STORE_IN_NAND_FLASH
+            bool "LOGO_STORE_IN_NAND_FLASH"
+        depends on (NAND_FLASH)
+        config LOGO_STORE_IN_EMMC_FLASH
+            bool "LOGO_STORE_IN_EMMC_FLASH"
+        depends on (MMC)
+endchoice
+
+
+
+menu "Env config"
+choice
+    prompt "Env location"
+    default ENV_IN_NAND if (NAND_FLASH)
+    default ENV_IN_SERIAL if (SPI)
+    default ENV_IN_MMC if (MMC)
+    if((!BOOT_FROM_NAND)&&(!BOOT_FROM_EMMC))
+    config ENV_IN_SERIAL
+        bool "Serial"
+    endif
+
+    if(!BOOT_FROM_NAND)
+    config ENV_IN_MMC
+        bool "e-MMC"
+    endif
+
+    if (NAND_FLASH)
+        config ENV_IN_NAND
+        bool "Nand Flash"
+    endif
+
+    if((!BOOT_FROM_NAND)&&(!BOOT_FROM_EMMC))
+    config ENV_IN_SERIAL_512K
+        bool "Serial_512K"
+    endif
+    config ENV_IN_ERR
+        bool "Error"
+
+endchoice
+
+config ENV_VAR_SIZE
+	hex "The size of env variable in the storage"
+	default 0x10000
+	help
+	  This config is for assign the size to env variable.
+
+config FORCE_TO_ASSIGN_ENV_OFFSET
+	bool "force to assignment env location"
+	default n
+	help
+	  This config is for assign the offset to env location.
+
+if(FORCE_TO_ASSIGN_ENV_OFFSET)
+config ENV_VAR_OFFSET
+	hex "The offset of env variable in the storage"
+	default 0xFFFFFFFF
+	help
+	  This config is for assign the offset to env variable.
+endif
+
+
+endmenu
+
+if (USB || OAD)
+choice
+    prompt "Info Exchange Config"
+    default INFO_IN_UBI_FILE if (NAND_FLASH && UBI && UBI_FS)
+    default INFO_IN_SERIAL_ENV if (ENV_IN_SERIAL)
+    default INFO_IN_MMC if (ENV_IN_MMC)
+
+    if (NAND_FLASH)
+        if (UBI && UBI_FS)
+        config INFO_IN_UBI_FILE
+            bool "Nand UBI File"
+        endif
+    endif
+    if(!BOOT_FROM_NAND)
+    if (ENV_IN_SERIAL)
+    config INFO_IN_SERIAL_ENV
+        bool "Serial ENV"
+    endif
+    if (ENV_IN_MMC)
+    config INFO_IN_MMC_ENV
+        bool "e-MMC ENV"
+    endif
+    endif
+
+    config INFO_IN_ERR
+        bool "Error"
+
+endchoice
+endif
+
+endmenu

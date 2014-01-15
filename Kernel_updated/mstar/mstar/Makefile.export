@@ -1,0 +1,15 @@
+#
+# Makefile for export MStar device driver header files
+#
+
+include ../../.config
+include Makefile
+
+DRV_MAKEFILE = $(foreach dir, ${obj-y}, $(dir)Makefile)
+include ${DRV_MAKEFILE}
+
+export_h: ${EXPORT_H_FILES} 
+
+${EXPORT_H_FILES}:
+	-@mkdir -p include
+	-@cd include; cp -f `find .. -name ${@}` . 

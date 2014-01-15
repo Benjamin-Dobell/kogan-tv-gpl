@@ -1,0 +1,31 @@
+#===================================================
+#  Board Selection
+#===================================================
+choice
+	prompt "MStar DTV Board Config"
+	default MSTAR_TITANIA_BD_CUSXXX
+
+config MSTAR_TITANIA_BD_CUSXXX
+	bool BD_CUSXXX
+
+#config MSTAR_TITANIA_BD_CUSXXX                              <- // MODME, >> add new board here <<
+#	bool BD_CUSXXX                                          <- // MODME, >> add new board here <<
+
+endchoice
+
+
+
+#===================================================
+#  MMAP Selection
+#===================================================
+choice
+	prompt "MStar DTV Memory Map Config"
+	default MSTAR_TITANIA_MMAP_128MB_128MB_FOR_CUSXXX
+
+config MSTAR_TITANIA_MMAP_128MB_128MB_FOR_CUSXXX
+	bool "MMAP 128MB+128MB for CUSXXX"
+
+#config MSTAR_TITANIA_MMAP_XXX_FOR_CUSXXX                    <- // MODME, >> add new mmap here <<
+#	bool "MMAP XXX for CUSXXX"                              <- // MODME, >> add new mmap here <<
+
+endchoice

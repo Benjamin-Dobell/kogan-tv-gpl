@@ -1,0 +1,2 @@
+3.1.10_CL675824.patch: open source, tegra version has removed SD support in MMC layer, I restored them to 3.1.10 version with SD supported.
+3.1.10_CL678542.patch: open source, Sync xHCI driver with kernel v3.0.20

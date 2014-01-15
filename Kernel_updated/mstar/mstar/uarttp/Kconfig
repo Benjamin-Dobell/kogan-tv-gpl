@@ -1,0 +1,6 @@
+config MSTP
+
+tristate "MSTP"
+ 
+help
+    MSTP driver function

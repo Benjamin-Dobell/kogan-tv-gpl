@@ -1,0 +1,19 @@
+#menu: create a menu for the following "config"
+#menconfig: create a config a "that" menu
+
+menuconfig TZ_SUPPORT
+	tristate "Trustzone support"
+
+if TZ_SUPPORT
+
+config TZ_WORLD_TALK_SUPPORT
+	tristate "TZ support"
+	help
+	  test
+
+config WORLD_TALK_SUPPORT2
+	bool "TZ support2"
+	help
+	  test2
+
+endif

@@ -1,0 +1,1 @@
+#define CONFIG_DISPLAY_OSD 1

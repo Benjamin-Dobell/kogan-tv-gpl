@@ -1,0 +1,6 @@
+config MSTAR_ALSA_AUDIO_DRIVER_DRV
+	tristate "ALSA Audio Driver - DRV Layer"
+	default m
+	depends on MSTAR_ALSA_AUDIO_DRIVER
+	help
+		MStar ALSA Audio Driver - DRV Layer.

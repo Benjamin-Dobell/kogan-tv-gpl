@@ -1,0 +1,1 @@
+#define CONFIG_BIST_0x1001_UNITS 1

@@ -1,0 +1,7 @@
+#This file is auto created. Do not modify!
+CPU_CLOCK = 1152
+EMMC_BOOT = 0
+SBOOT_TO_KERNEL = 0
+FPGA_BOARD = 0
+BOOTING_FROM_EXT_SPI_WITH_PM51 = 0
+SIZE_UBOOT = 0x001160C0

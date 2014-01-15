@@ -1,0 +1,6 @@
+config MSTAR_ALSA_AUDIO_DRIVER_HAL
+	tristate "ALSA Audio Driver - HAL Layer"
+	default m
+	depends on MSTAR_ALSA_AUDIO_DRIVER_DRV
+	help
+		MStar ALSA Audio Driver - HAL Layer.

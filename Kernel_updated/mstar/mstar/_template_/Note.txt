@@ -1,0 +1,20 @@
+Please just put *_st.h and *_io.h in drivers\mstar\include.
+The history is as following, for your reference:
+
+以前定linux架構時, 有人建議想把header files 跟module 的source code 都放在一起, 
+然後build code 時 makefile 再把要extern 給adaptation layer 使用的header files 
+( *_st.h 和 *_io.h, 例如mdrv_mpool_st.h mdrv_mpool_io.h) 自動搬到mstar\include folder.
+這樣會比較模組化!
+
+所以理論上header files應該是只放在各個Driver 底下, 而mstar\include 底下應該是空的
+一直到compile 後, mstar\include 底下才會多出一份從各driver folder 下, copy出來的header files
+
+但後來因為大家並不一定每次都會重新compile RedLion, 也會造成header file 沒update, 
+compile adaptation layer 時就會compile fail
+所以大家就養成習慣同時submit 一份header file 到 mstar\include
+但這樣就造成code 重複, 有兩份
+後來新加入linux 的人也不一定攪的清楚, 就造成有的人只submit 到mstar\include
+有的人可能會漏掉某一個
+
+所以為了大家方便使用, 就決定統一放 mstar\include
+

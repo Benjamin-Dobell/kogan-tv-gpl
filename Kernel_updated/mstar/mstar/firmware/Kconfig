@@ -1,0 +1,7 @@
+config MSTAR_FW
+
+tristate "Firmware"
+ 
+help
+    MStar firmware driver function
+

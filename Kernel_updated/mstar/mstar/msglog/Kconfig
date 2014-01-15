@@ -1,0 +1,17 @@
+config MSTAR_MSGLOG
+
+tristate "MSGLOG - serial message logging system"
+
+help
+    Saving all serial message into the log file.
+
+if 0
+
+config MSTAR_MSGLOG_EMERGENCY_LOG
+  bool "MSGLOG - Emergency Log"
+  default n
+  help
+    Save emergency serial message into flash.
+
+endif
+

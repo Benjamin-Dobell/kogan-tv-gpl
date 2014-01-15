@@ -1,0 +1,1 @@
+#undef CONFIG_KERNEL_2_6_32_15

@@ -1,0 +1,5 @@
+./code_review/apply_patch.sh $1 "3.1.10/code_review/3.1.10_CL675824.patch"
+./code_review/apply_patch.sh $1 "3.1.10/code_review/3.1.10_CL678542.patch"
+./code_review/apply_patch.sh $1 "3.1.10/code_review/3.1.10_CL679564.patch"
+./code_review/apply_patch.sh $1 "3.1.10/code_review/3.1.10_CL680297.patch"
+./code_review/apply_patch.sh $1 "3.1.10/code_review/3.1.10_CL683098.patch"

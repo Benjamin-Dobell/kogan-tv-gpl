@@ -1,0 +1,635 @@
+menu "Mstar Patch Apply (Only for control patch apply to kernel or not)"
+
+menu "Platform Porting layer"
+
+config MP_PLATFORM_ARCH_GENERAL
+bool "General Config For ARCH"
+default y
+
+config MP_PLATFORM_ARM
+bool "For ARM only"
+default y
+
+config MP_PLATFORM_MIPS
+bool "For MIPS only"
+default y
+
+config MP_PLATFORM_FIXME
+bool "PLEASE FIX ME"
+default y
+
+config MP_PLATFORM_ARM_PMU
+bool "For ARM PMU"
+default y
+
+config MP_PLATFORM_PM
+bool "For PM Power Off"
+default y
+
+config MP_PLATFORM_ARM_ERRATA_775420
+bool "ARM errata_775420: A data cache maintenance operation which aborts, might lead to deadlock"
+default y
+
+config MP_PLATFORM_MSTAR_LEGANCY_INTR
+bool "For Second Level Interrupt"
+default y
+
+config MP_PLATFORM_SW_PATCH_L2_SRAM_RMA
+bool "For L2 Sram RMA"
+default n
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_PLATFORM_ARCH_GENERAL_DEBUG
+bool "(Debug) General Config For ARCH"
+depends on MP_PLATFORM_ARCH_GENERAL
+default n
+
+config MP_PLATFORM_ARM_DEBUG
+bool "(Debug) For ARM only"
+depends on MP_PLATFORM_ARM
+default n
+
+config MP_PLATFORM_MIPS_DEBUG
+bool "(Debug) For MIPS only"
+depends on MP_PLATFORM_MIPS
+default n
+
+config MP_PLATFORM_FIXME_DEBUG
+bool "(Debug) PLEASE FIX ME"
+depends on MP_PLATFORM_FIXME
+default n
+
+config MP_PLATFORM_ARM_PMU_DEBUG
+bool "(Debug) For ARM PMU"
+depends on MP_PLATFORM_ARM_PMU
+default n
+
+config MP_PLATFORM_PM_DEBUG
+bool "(Debug) For PM Power Off"
+depends on MP_PLATFORM_PM
+default n
+
+config MP_PLATFORM_ARM_ERRATA_775420_DEBUG
+bool "(Debug) ARM errata_775420: A data cache maintenance operation which aborts, might lead to deadlock"
+depends on MP_PLATFORM_ARM_ERRATA_775420
+default n
+
+config MP_PLATFORM_MSTAR_LEGANCY_INTR_DEBUG
+bool "(Debug) For Second Level Interrupt"
+depends on MP_PLATFORM_MSTAR_LEGANCY_INTR
+default n
+
+config MP_PLATFORM_SW_PATCH_L2_SRAM_RMA_DEBUG
+bool "(Debug) For L2 Sram RMA"
+depends on MP_PLATFORM_SW_PATCH_L2_SRAM_RMA
+default n
+
+endmenu
+
+menu "NAND Driver Porting layer"
+
+config MP_NAND_UBI
+bool  "Patch for UBI"
+default  y
+
+config MP_NAND_MTD
+bool  "Patch for MTD"
+default  y
+
+config MP_NAND_UBIFS
+bool "Patch for UBIFS"
+default  y
+
+config MP_NAND_Spansion
+bool "Patch for specific customers"
+default  y
+
+config MP_NAND_BBT
+bool "patch for the security mechanism of bbt"
+default  y
+
+config MP_NAND_BBT_SIZE
+bool "add bbt size compatibility and pair page effect"
+default  y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_NAND_UBI_DEBUG
+bool "(Debug) Patch for UBI"
+depends on MP_NAND_UBI
+default n
+
+config MP_NAND_MTD_DEBUG
+bool "(Debug) Patch for MTD"
+depends on MP_NAND_MTD
+default n
+
+config MP_NAND_UBIFS_DEBUG
+bool "(Debug) Patch for UBIFS"
+depends on MP_NAND_UBIFS
+default n
+
+config MP_NAND_Spansion_DEBUG
+bool "(Debug) Patch for specific customers"
+depends on MP_NAND_Spansion
+default n
+
+config MP_NAND_BBT_DEBUG
+bool "(Debug) patch for the security mechanism of bbt"
+depends on MP_NAND_BBT
+default n
+
+config MP_NAND_BBT_SIZE_DEBUG
+bool "(Debug) add bbt size compatibility and pair page effect"
+depends on MP_NAND_BBT_SIZE
+default n
+
+endmenu
+
+menu "USB Driver Patch"
+
+config MP_USB_MSTAR
+bool  "MSTAR USB Porting"
+default  y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_USB_MSTAR_DEBUG
+bool "(Debug) MSTAR USB Porting"
+depends on MP_USB_MSTAR
+default n
+
+endmenu
+
+menu "SD Driver Patch"
+
+config MP_SD_MSTAR
+bool  "MSTAR SD Patch"
+default  y
+
+config MP_SD_PLUG
+bool  "Wiat for the initialization of SD card"
+default  y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_SD_MSTAR_DEBUG
+bool "(Debug) MSTAR SD Patch"
+depends on MP_SD_MSTAR
+default n
+
+config MP_SD_PLUG_DEBUG
+bool "(Debug) Wiat for the initialization of SD card"
+depends on MP_SD_PLUG
+default n
+
+endmenu
+
+menu "EMMC Driver Patch"
+
+config MP_EMMC_PARTITION
+bool  "EMMC Partition Porting"
+default  y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_EMMC_PARTITION_DEBUG
+bool "(Debug) EMMC Partition Porting"
+depends on MP_EMMC_PARTITION
+default n
+
+endmenu
+
+menu "MStar STR"
+
+config MP_MSTAR_STR_BASE
+bool "Enable MStar STR"
+default n
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_MSTAR_STR_BASE_DEBUG
+bool "(Debug) Enable MStar STR"
+depends on MP_MSTAR_STR_BASE
+default n
+
+endmenu
+
+menu "MSTAR Android Patch"
+
+config MP_Android_LOW_MEM_KILLER_INCLUDE_CACHEMEM
+bool "MSTAR Android Low Memory Killer Patch Consider Cache and Free"
+default y
+
+config MP_Android_DUMMY_MSTAR_RTC
+bool "MSTAR Fake RTC For Android"
+default n
+
+config MP_Android_ALARM_CLOCK_BOOTTIME_PATCH
+bool "MSTAR Android Alarm clock boot time patch"
+default y
+
+config MP_Android_MSTAR_RC_MAP_DEFINE
+bool "MStar rc map define, depend on CONFIG_MSTAR_IR_INPUT_DEVICE"
+default y
+
+config MP_Android_COREDUMP_PATH
+bool "Change Coredump Path depend on core name"
+default n
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_Android_LOW_MEM_KILLER_INCLUDE_CACHEMEM_DEBUG
+bool "(Debug) MSTAR Android Low Memory Killer Patch Consider Cache and Free"
+depends on MP_Android_LOW_MEM_KILLER_INCLUDE_CACHEMEM
+default n
+
+config MP_Android_DUMMY_MSTAR_RTC_DEBUG
+bool "(Debug) MSTAR Fake RTC For Android"
+depends on MP_Android_DUMMY_MSTAR_RTC
+default n
+
+config MP_Android_ALARM_CLOCK_BOOTTIME_PATCH_DEBUG
+bool "(Debug) MSTAR Android Alarm clock boot time patch"
+depends on MP_Android_ALARM_CLOCK_BOOTTIME_PATCH
+default n
+
+config MP_Android_MSTAR_RC_MAP_DEFINE_DEBUG
+bool "(Debug) MStar rc map define, depend on CONFIG_MSTAR_IR_INPUT_DEVICE"
+depends on MP_Android_MSTAR_RC_MAP_DEFINE
+default n
+
+config MP_Android_COREDUMP_PATH_DEBUG
+bool "(Debug) Change Coredump Path depend on core name"
+depends on MP_Android_COREDUMP_PATH
+default n
+
+endmenu
+
+menu "Fix Compiler Error"
+
+config MP_COMPILER_ERROR
+bool "Please Fix Compiler Error"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_COMPILER_ERROR_DEBUG
+bool "(Debug) Please Fix Compiler Error"
+depends on MP_COMPILER_ERROR
+default n
+
+endmenu
+
+menu "MSTAR DEBUG_TOOL"
+
+config MP_DEBUG_TOOL_WATCHDOG
+bool "Enable Watchdog Reset"
+default y
+
+config MP_DEBUG_TOOL_CODEDUMP
+bool "Enable CODEDUMP Item"
+default y
+
+config MP_DEBUG_TOOL_KDEBUG
+bool "Enable KDEBUG Item"
+default y
+
+config MP_DEBUG_TOOL_CHANGELIST
+bool "Display Kernel Changelist"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_DEBUG_TOOL_WATCHDOG_DEBUG
+bool "(Debug) Enable Watchdog Reset"
+depends on MP_DEBUG_TOOL_WATCHDOG
+default n
+
+config MP_DEBUG_TOOL_CODEDUMP_DEBUG
+bool "(Debug) Enable CODEDUMP Item"
+depends on MP_DEBUG_TOOL_CODEDUMP
+default n
+
+config MP_DEBUG_TOOL_KDEBUG_DEBUG
+bool "(Debug) Enable KDEBUG Item"
+depends on MP_DEBUG_TOOL_KDEBUG
+default n
+
+config MP_DEBUG_TOOL_CHANGELIST_DEBUG
+bool "(Debug) Display Kernel Changelist"
+depends on MP_DEBUG_TOOL_CHANGELIST
+default n
+
+endmenu
+
+menu "MSTAR Remote Control Patch"
+
+config MP_REMOTE_CONTROL_RC_REGISTER_RETRY
+bool "MSTAR Patch for rc device register"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_REMOTE_CONTROL_RC_REGISTER_RETRY_DEBUG
+bool "(Debug) MSTAR Patch for rc device register"
+depends on MP_REMOTE_CONTROL_RC_REGISTER_RETRY
+default n
+
+endmenu
+
+menu "SCSI sd card hotplug "
+
+config MP_SCSI_MSTAR_SD_CARD_HOTPLUG
+bool "MSTAR Patch for sd card hotplug"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_SCSI_MSTAR_SD_CARD_HOTPLUG_DEBUG
+bool "(Debug) MSTAR Patch for sd card hotplug"
+depends on MP_SCSI_MSTAR_SD_CARD_HOTPLUG
+default n
+
+endmenu
+
+menu "3D alloc in MIU0/MIU1 "
+
+config MP_MM_MSTAR_3DALLOC_MIU0_1
+bool "MSTAR Patch for 3d alloc in MIU0/MIU1"
+default y
+
+config MP_MM_MALI_MMU_NOTIFIER
+bool "replacing mmu_notifier in mm/Kconfig"
+default n
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_MM_MSTAR_3DALLOC_MIU0_1_DEBUG
+bool "(Debug) MSTAR Patch for 3d alloc in MIU0/MIU1"
+depends on MP_MM_MSTAR_3DALLOC_MIU0_1
+default n
+
+config MP_MM_MALI_MMU_NOTIFIER_DEBUG
+bool "(Debug) replacing mmu_notifier in mm/Kconfig"
+depends on MP_MM_MALI_MMU_NOTIFIER
+default n
+
+endmenu
+
+menu "Modify memory map"
+
+config MP_MMAP_BUFFERABLE
+bool "change the write strategy from non-cache to non-cache bufferable"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_MMAP_BUFFERABLE_DEBUG
+bool "(Debug) change the write strategy from non-cache to non-cache bufferable"
+depends on MP_MMAP_BUFFERABLE
+default n
+
+endmenu
+
+menu  "Jiffies patch"
+
+config MP_JIFFIES_PRINT
+bool "Show the jiffies"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_JIFFIES_PRINT_DEBUG
+bool "(Debug) Show the jiffies"
+depends on MP_JIFFIES_PRINT
+default n
+
+endmenu
+
+menu  "MIU settings"
+
+config MP_MIU_MAPPING
+bool "Memory mapping strategy through MIU for eagle"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_MIU_MAPPING_DEBUG
+bool "(Debug) Memory mapping strategy through MIU for eagle"
+depends on MP_MIU_MAPPING
+default n
+
+endmenu
+
+menu "MIPS Mstar L2 Patch"
+
+config MP_MIPS_L2_CATCH
+bool "Enable MIPS L2 Cache Mechanism"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_MIPS_L2_CATCH_DEBUG
+bool "(Debug) Enable MIPS L2 Cache Mechanism"
+depends on MP_MIPS_L2_CATCH
+default n
+
+endmenu
+
+menu  "WDT settings"
+
+config MP_WDT_OFF_DBG
+bool "Do not reset watch dog under debug mode"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_WDT_OFF_DBG_DEBUG
+bool "(Debug) Do not reset watch dog under debug mode"
+depends on MP_WDT_OFF_DBG
+default n
+
+endmenu
+
+menu  "CAMERA plug"
+
+config MP_CAMERA_PLUG_OUT
+bool "Set time out for event waiting"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_CAMERA_PLUG_OUT_DEBUG
+bool "(Debug) Set time out for event waiting"
+depends on MP_CAMERA_PLUG_OUT
+default n
+
+endmenu
+
+menu  "ATTR of API"
+
+config MP_SYSATTR_SHOW
+bool  "Let the hidden attribute could be accessed by user API"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_SYSATTR_SHOW_DEBUG
+bool "(Debug) Let the hidden attribute could be accessed by user API"
+depends on MP_SYSATTR_SHOW
+default n
+
+endmenu
+
+menu "MIPS Highmem Patch"
+
+config MP_MIPS_HIGHMEM_CACHE_ALIAS_PATCH
+bool "Highmem Cache Alias Patch"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_MIPS_HIGHMEM_CACHE_ALIAS_PATCH_DEBUG
+bool "(Debug) Highmem Cache Alias Patch"
+depends on MP_MIPS_HIGHMEM_CACHE_ALIAS_PATCH
+default n
+
+endmenu
+
+menu  "Print for autotest"
+
+config MP_CHECKPT_BOOT
+bool "Add a checkpoint for boottime autotest"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_CHECKPT_BOOT_DEBUG
+bool "(Debug) Add a checkpoint for boottime autotest"
+depends on MP_CHECKPT_BOOT
+default n
+
+endmenu
+
+menu  "Dynamically decided core file path"
+
+config MP_CORE_PATH
+bool "depend on bootargs to change core pattern"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_CORE_PATH_DEBUG
+bool "(Debug) depend on bootargs to change core pattern"
+depends on MP_CORE_PATH
+default n
+
+endmenu
+
+menu  "WEBCAM settings"
+
+config MP_WEBCAM_INIT
+bool "modify the init process of logic webcam"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_WEBCAM_INIT_DEBUG
+bool "(Debug) modify the init process of logic webcam"
+depends on MP_WEBCAM_INIT
+default n
+
+endmenu
+
+menu "BDI race condition patch"
+
+config MP_BDI_MSTAR_BDI_PATCH
+bool "MSTAR Patch for bdi race condition"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_BDI_MSTAR_BDI_PATCH_DEBUG
+bool "(Debug) MSTAR Patch for bdi race condition"
+depends on MP_BDI_MSTAR_BDI_PATCH
+default n
+
+endmenu
+
+menu "NTFS CONTROL"
+
+config MP_NTFS_IOCTL
+bool "Enable NTFS IOCTL"
+default y
+
+config MP_NTFS_VOLUME_LABEL
+bool "Enable NTFS VOLUME LABEL"
+default y
+
+config MP_NTFS_VOLUME_ID
+bool "Enable NTFS VOLUME ID"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_NTFS_IOCTL_DEBUG
+bool "(Debug) Enable NTFS IOCTL"
+depends on MP_NTFS_IOCTL
+default n
+
+config MP_NTFS_VOLUME_LABEL_DEBUG
+bool "(Debug) Enable NTFS VOLUME LABEL"
+depends on MP_NTFS_VOLUME_LABEL
+default n
+
+config MP_NTFS_VOLUME_ID_DEBUG
+bool "(Debug) Enable NTFS VOLUME ID"
+depends on MP_NTFS_VOLUME_ID
+default n
+
+endmenu
+
+menu "USB STR patch"
+
+config MP_USB_STR_PATCH
+bool "MSTAR Patch for usb str"
+default y
+
+menu "-------------------Debug Options-------------------"
+endmenu
+
+config MP_USB_STR_PATCH_DEBUG
+bool "(Debug) MSTAR Patch for usb str"
+depends on MP_USB_STR_PATCH
+default n
+
+endmenu
+
+endmenu

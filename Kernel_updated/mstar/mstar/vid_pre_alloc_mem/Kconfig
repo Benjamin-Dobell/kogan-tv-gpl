@@ -1,0 +1,7 @@
+config MSTAR_VPOOL
+
+tristate "VPOOL"
+ 
+help
+    MStar VPOOL driver function
+    

@@ -1,0 +1,77 @@
+
+--------------------------------------------------------------------------------
+ LOBOT : System Built-in Self-Auto-Test
+ (Component #1: tty snooping driver)
+--------------------------------------------------------------------------------
+
+Concept
+-------
+ Kernel pseudo tty will all sending data to line descipline then to real H/W
+ we capture data flow in tty_io.c and dispatch this data from kernel to
+ user-space. User space can snoop tty then can snoop all process stdout.
+ By snooping all process stdout in system, we can parse specified string
+ to judge the program flow and bevavior without instrumented code.
+
+ Full Self-Auto-Test are composed by following components.
+   1) [msgio      ] kernel tty snooping
+   2) [snooper    ] user-space monitoring
+   3) [APM injsock] APM input event injection
+   4) [lobot      ] user-space emulated input and debug message recognization
+   5) [script     ] script syntax and engine for emulated input and msg recognize.
+   6) [smartlog   ] smart logging & backdoor logging
+   7) [accesslobot] win32 program to access device test result.
+
+Proc node
+----------
+ /proc/msgio/enable (RW) : turn on/off this function
+ /proc/msgio/data   (RO) : access raw data from kernel buffer.
+
+Userspace program
+-----------------
+ By "echo 1 >/proc/msgio/enable" to enable this logging
+ By "echo 0 >/proc/msgio/enable" to disable this logging
+ Accessing /proc/msgio/data to get raw buffer out of kernel
+
+  int fd = open("/proc/msgio/data", O_RDONLY);
+  while(1)
+  {
+      lseek(fd, 0, CUR_SET);
+      ret = read(fd, buf, BUFSIZE);
+      usleep(200 * 1000* 1000);
+  }
+
+ Always call lseek to set to starting and get data out.
+ Using userspace program to arrange raw buffer int lined buffer.
+ Kernel buffer are set to 32KB, overrun data will destroy old data.
+ Please polling raw data first, then turn on this function.
+
+Performance Downgrade
+---------------------
+ printf one line with 78 'A' with tailing end of line.
+ 10,000 line of printf = 790,000 characters.
+ clean bakcground, only kernel thread and busybox.
+
+  +----------------+----------------+----------------+
+  | disabled       | enabled        | not built-in   |
+  +----------------+----------------+----------------+
+  | real 1m 10.05s | real 1m 10.07s | real 1m 10.06s |
+  | user 0m 0.02s  | user 0m 0.04s  | user 0m 0.02s  |
+  | sys  1m 10.03s | sys  1m 10.03s | sys  1m 10.04s |
+  +----------------+----------------+----------------+
+  | real 1m 10.05s | real 1m 10.07s | real 1m 10.06s |
+  | user 0m 0.02s  | user 0m 0.02s  | user 0m 0.04s  |
+  | sys  1m 10.03s | sys  1m 10.05s | sys  1m 10.02s |
+  +----------------+----------------+----------------+
+  100,000 lines of printf
+  +-----------------+-----------------+-----------------+
+  | real 11m 40.57s | real 11m 40.40s | real 11m 40.67s |
+  | user 0m 0.20s   | user 0m 0.40s   | user 0m 0.34s   |
+  | sys  11m 40.35s | sys  11m 40.30s | sys  11m 40.33s |
+  +-----------------+-----------------+-----------------+
+
+
+Special Thanks
+--------------
+ Special thanks to WH.Hung, Richard.Hsieh, Roger.Tsai, Goter.Lin
+ Bring joy, laugh, passion into this war room.
+

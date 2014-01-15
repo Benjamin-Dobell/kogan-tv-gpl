@@ -1,0 +1,6 @@
+config MSTAR_MSGIO
+
+tristate "MSGIO - serial message logging to userspace"
+
+help
+    deliver all serial message into one centric userspeace node.

@@ -1,0 +1,120 @@
+B::
+
+//WINPAGE.RESET
+
+//[Reset]
+//res
+System.CPU MIPS34K
+System.Option E Little
+SYStem.Mode UP
+
+//stop COUNT at debug mode
+PER.S CP0:0x17 %LONG 0x40110002
+
+WAIT 0.5s
+
+//Data.Set D:0xbf8078c0 %LE %LONG 0xaa55                  // watch dog -> MCU  55aa->aa55
+//Data.Set D:0xbf8078c0 %LE %LONG 0xaa55                  // watch dog -> MCU  55aa->aa55
+//Data.Set D:0xbf806010 %LE %LONG 0x0000                  // watch dog -> MCU  55aa->aa55
+  Data.Set D:0xbf006010 %LE %LONG 0x0000                  // watch dog -> MCU  55aa->aa55
+//Data.Set D:0xbf006014 %LE %LONG 0x0000                  // watch dog -> MCU  55aa->aa55
+//-------------------------------------------------------------------
+// power on atop
+//-------------------------------------------------------------------
+
+
+Data.Set D:0xbf203d40 %LE %LONG 0x0000  // 2009/1/14 Julian add
+//Data.Set D:0xbf203188 %LE %LONG 0x000A  // set bit 1:0 to 1 for instruction not hit, this will cause linux boot so slow
+//Data.Set D:0xbf203184 %LE %LONG 0x000A  // set bit 1:0 to 1 for data not hit
+//Data.Set D:0xbf203AF4 %LE %LONG 0x0004
+//-------------------------------------------------------------------
+// clk_mcu
+//-------------------------------------------------------------------
+
+//-------------------------------------------------------------------
+// initialize MIU
+//-------------------------------------------------------------------
+//#T4 trigger MIU init
+Data.Set D:0xbf202404 %LE %LONG 0x0000
+Data.Set D:0xbf202404 %LE %LONG 0x0818                  // initial
+Data.Set D:0xbf202408 %LE %LONG 0x0185                  // initial
+//Data.Set D:0xbf202408 %LE %LONG 0x0186                  // initial for delay 1T register
+Data.Set D:0xbf20240c %LE %LONG 0x0120
+Data.Set D:0xbf202410 %LE %LONG 0x0833
+Data.Set D:0xbf202414 %LE %LONG 0x0c33
+Data.Set D:0xbf202418 %LE %LONG 0x7111
+Data.Set D:0xbf20241c %LE %LONG 0x100e
+Data.Set D:0xbf202420 %LE %LONG 0x0031
+
+
+Data.Set D:0xbf20243C %LE %LONG 0x0C01
+Data.Set D:0xbf20243C %LE %LONG 0x0C00
+
+Data.Set D:0xbf202400 %LE %LONG 0x0008
+Data.Set D:0xbf202400 %LE %LONG 0x000c
+
+wait 0.1s
+
+Data.Set D:0xbf202400 %LE %LONG 0x000e
+wait 0.1s
+
+Data.Set D:0xbf202400 %LE %LONG 0x001f
+
+wait 0.1s
+Data.Set D:0xbf20243C %LE %LONG 0x0C08
+wait 0.1s
+
+
+
+
+wait 1s
+
+SYStem.Option MonBase 0xA1400000   ; use a memory area not used by startup
+//SYStem.Option TURBO ON
+
+// New
+//DATA.LOAD.ELF C:\Oberon_Bring\Oberon.Mips.Dev.serial.os\Project\DVBC\Bin\Uranus.elf /STRIPPART "/cygdrive/c/" /PATH "C:\"
+//DATA.LOAD.ELF X:\3_bluelion\RedLion\2.6.26\vmlinux /STRIPPART "/home/mstar/3_bluelion/RedLion/2.6.26"
+//DATA.LOAD.ELF C:\p4_p4_svr1666_MSNB6958_emac_mii\Uranus\Trunk\CUS_MSTAR\Project\MSTAR_U2\Bin\Oberon.elf /STRIPPART "/cygdrive/c/" /PATH "C:\"
+//DATA.LOAD.ELF Y:\jesse\U4\2.6.28.9_U4\vmlinux /STRIPPART "/home/mstar/jesse/U4/2.6.28.9_U4"
+//DATA.LOAD.ELF Y:\jesse\U4\MIPS\MIPS\MipsNoOs.MontaVista\Uranus.elf
+//DATA.LOAD.ELF Y:\jesse\U4\2.6.28.9_U4\arch\mips\mips-boards\uranus4\ice\Uranus.elf /STRIPPART "/home/mstar/jesse/U4/"
+//DATA.LOAD.ELF U:\HDTV\Projects\Uranus4\linux_image\v02\vmlinux_157206.elf /STRIPPART "/home/mstar/jesse/U4/"
+//DATA.LOAD.ELF U:\HDTV\Projects\Uranus4\linux_image\v01\vmlinux1.elf /STRIPPART "/home/mstar/jesse/U4/"
+//DATA.LOAD.ELF Y:\jesse\U4\2.6.28.9_U4\vmlinux /STRIPPART "/home/mstar/jesse/U4/" /NOCODE /NoClear
+//DATA.LOAD.ELF Y:\jesse\U4\2.6.28.9_U4\arch\mips\mips-boards\uranus4\ice\Uranus.elf /STRIPPART "/home/mstar/jesse/U4/"
+
+//start of two elf
+DATA.LOAD.ELF Y:\jesse\U4\2.6.28.9_U4\vmlinux /STRIPPART "/home/mstar/jesse/U4/"
+DATA.LOAD.ELF Y:\jesse\U4\2.6.28.9_U4\arch\mips\mips-boards\uranus4\ice\Uranus.elf /STRIPPART "/home/mstar/jesse/U4/" /NoClear
+//end of two elf
+
+//NOCODE: is used for flash, let ICE load symble only
+
+//SYStem.Option TURBO OFF
+
+B::
+
+TOOLBAR ON
+STATUSBAR ON
+
+WINPOS 0.125 0.0 80. 25. 13. 1. W006
+WINTABS 10. 10. 25. 62.
+Data.List
+
+WINPOS 86.875 0.0 69. 13. 0. 0. W004
+Var.Watch
+
+WINPAGE.SELECT P000
+
+sYmbol.SourcePath ..
+
+Mode.Hll
+
+//do 0break.cmm
+do UART_TEST.cmm
+do 0break.cmm
+do 0path.cmm
+
+
+

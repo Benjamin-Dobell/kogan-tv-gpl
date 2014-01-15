@@ -1,0 +1,1 @@
+#undef CONFIG_SET_4K2K_MODE

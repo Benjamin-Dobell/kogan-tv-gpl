@@ -1,0 +1,280 @@
+
+# drivers/MStar/Kconfig-MMap
+
+choice
+        prompt "MStar DTV Memory Map Config"
+#        default MSTAR_TITANIA_MMAP_64MB_64MB
+#
+#config MSTAR_TITANIA_MMAP_64MB
+#        bool "MMAP 64MB"
+#
+#config MSTAR_TITANIA_MMAP_64MB_64MB
+#        bool "MMAP 64MB+64MB"
+#
+#config MSTAR_MMAP_128MB_128MB_DEFAULT
+#        bool "MMAP 128MB+128MB DEFAULT"
+#
+config MSTAR_OBERON_MMAP_128MB_128MB
+        depends on MSTAR_OBERON
+        bool "MMAP 128MB+128MB (Oberon)"
+
+config MSTAR_EUCLID_FPGA_MMAP_128MB
+        depends on MSTAR_EUCLID
+        bool "MMAP 128MB (Euclid_FPGA)"
+
+config MSTAR_EUCLID_MMAP_128MB_128MB
+        depends on MSTAR_EUCLID
+        bool "MMAP 128MB+128MB (Euclid)"
+
+config MSTAR_TITANIA3_MMAP_128MB_128MB
+        depends on MSTAR_TITANIA3
+        bool "MMAP 128MB+128MB (Titania3)"
+
+config MSTAR_TITANIA10_MMAP_128MB_128MB
+        depends on MSTAR_TITANIA10
+        bool "MMAP 128MB+128MB (Titania10)"
+
+
+config MSTAR_TITANIA4_MMAP_128MB_128MB
+        depends on MSTAR_TITANIA4
+        bool "MMAP 128MB+128MB (Titania4)"
+
+config MSTAR_TITANIA4_MMAP_128MB
+        depends on MSTAR_TITANIA4
+        bool "MMAP 128MB (Titania4)"
+
+config MSTAR_TITANIA8_MMAP_128MB_128MB
+        depends on MSTAR_TITANIA8
+        bool "MMAP 128MB+128MB (Titania8)"
+
+config MSTAR_TITANIA8_MMAP_256MB_256MB
+        depends on MSTAR_TITANIA8
+        bool "MMAP 256MB+256MB (Titania8)"
+
+config MSTAR_TITANIA8_MMAP_512MB_512MB
+        depends on MSTAR_TITANIA8
+        bool "MMAP 512MB+512MB (Titania8)"
+
+config MSTAR_TITANIA8_MMAP_128MB
+        depends on MSTAR_TITANIA8
+        bool "MMAP 128MB (Titania8)"
+
+config MSTAR_TITANIA9_MMAP_128MB_128MB
+        depends on MSTAR_TITANIA9
+        bool "MMAP 128MB+128MB (Titania9)"
+
+config MSTAR_TITANIA9_MMAP_256MB_256MB
+        depends on MSTAR_TITANIA9
+        bool "MMAP 256MB+256MB (Titania9)"
+
+config MSTAR_TITANIA9_MMAP_128MB
+        depends on MSTAR_TITANIA9
+        bool "MMAP 128MB (Titania9)"
+
+config MSTAR_TITANIA11_MMAP_128MB_128MB
+        depends on MSTAR_TITANIA11
+        bool "MMAP 128MB+128MB (Titania11)"
+
+config MSTAR_TITANIA11_MMAP_256MB_256MB
+        depends on MSTAR_TITANIA11
+        bool "MMAP 256MB+256MB (Titania11)"
+
+config MSTAR_TITANIA11_MMAP_512MB_512MB
+        depends on MSTAR_TITANIA11
+        bool "MMAP 512MB+512MB (Titania11)"
+
+config MSTAR_TITANIA11_MMAP_128MB
+        depends on MSTAR_TITANIA11
+        bool "MMAP 128MB (Titania11)"
+
+config MSTAR_TITANIA12_MMAP_128MB_128MB
+        depends on MSTAR_TITANIA12
+        bool "MMAP 128MB+128MB (Titania12)"
+
+config MSTAR_TITANIA12_MMAP_256MB_256MB
+        depends on MSTAR_TITANIA12
+        bool "MMAP 256MB+256MB (Titania12)"
+
+config MSTAR_TITANIA12_MMAP_512MB_512MB
+        depends on MSTAR_TITANIA12
+        bool "MMAP 512MB+512MB (Titania12)"
+
+config MSTAR_TITANIA12_MMAP_128MB
+        depends on MSTAR_TITANIA12
+        bool "MMAP 128MB (Titania12)"
+
+config MSTAR_TITANIA13_MMAP_128MB_128MB
+        depends on MSTAR_TITANIA13
+        bool "MMAP 128MB+128MB (Titania13)"
+
+config MSTAR_TITANIA13_MMAP_256MB_256MB
+        depends on MSTAR_TITANIA13
+        bool "MMAP 256MB+256MB (Titania13)"
+
+config MSTAR_TITANIA13_MMAP_128MB
+        depends on MSTAR_TITANIA13
+        bool "MMAP 128MB (Titania13)"
+
+config MSTAR_AMBER1_MMAP_128MB_128MB
+        depends on MSTAR_AMBER1
+        bool "MMAP 128MB+128MB (Amber1)"
+
+config MSTAR_AMBER1_MMAP_256MB_256MB
+        depends on MSTAR_AMBER1
+        bool "MMAP 256MB+256MB (Amber1)"
+
+config MSTAR_AMBER1_MMAP_128MB
+        depends on MSTAR_AMBER1
+        bool "MMAP 128MB (Amber1)"
+
+config MSTAR_AMBER5_MMAP_128MB_128MB
+        depends on MSTAR_AMBER5
+        bool "MMAP 128MB+128MB (Amber5)"
+
+config MSTAR_AMBER5_MMAP_256MB_256MB
+        depends on MSTAR_AMBER5
+        bool "MMAP 256MB+256MB (Amber5)"
+
+config MSTAR_AMBER5_MMAP_128MB
+        depends on MSTAR_AMBER5
+        bool "MMAP 128MB (Amber5)"
+
+config MSTAR_AMBER6_MMAP_128MB_128MB
+        depends on MSTAR_AMBER6
+        bool "MMAP 128MB+128MB (Amber6)"
+
+config MSTAR_AMBER6_MMAP_256MB_256MB
+        depends on MSTAR_AMBER6
+        bool "MMAP 256MB+256MB (Amber61)"
+
+config MSTAR_AMBER6_MMAP_128MB
+        depends on MSTAR_AMBER6
+        bool "MMAP 128MB (Amber6)"
+
+config MSTAR_AMBER7_MMAP_128MB_128MB
+        depends on MSTAR_AMBER7
+        bool "MMAP 128MB+128MB (Amber7)"
+
+config MSTAR_AMBER7_MMAP_256MB_256MB
+        depends on MSTAR_AMBER7
+        bool "MMAP 256MB+256MB (Amber7)"
+
+config MSTAR_AMBER7_MMAP_128MB
+        depends on MSTAR_AMBER7
+        bool "MMAP 128MB (Amber7)"
+
+config MSTAR_AMETHYST_MMAP_128MB_128MB
+        depends on MSTAR_AMETHYST
+        bool "MMAP 128MB+128MB (Amethyst)"
+
+config MSTAR_AMETHYST_MMAP_256MB_256MB
+        depends on MSTAR_AMETHYST
+        bool "MMAP 256MB+256MB (Amethyst)"
+
+config MSTAR_AMETHYST_MMAP_128MB
+        depends on MSTAR_AMETHYST
+        bool "MMAP 128MB (Amethyst)"
+
+config MSTAR_URANUS4_MMAP_128MB_128MB
+        depends on MSTAR_URANUS4
+        bool "MMAP 128MB+128MB (Uranus4)"
+
+config MSTAR_JANUS2_MMAP_128MB_128MB
+        depends on MSTAR_JANUS2
+        bool "MMAP 128MB+128MB (Janus2)"
+
+config MSTAR_KRONUS_MMAP_128MB
+        depends on MSTAR_KRONUS
+        bool "MMAP 128MB (Kronus)"
+
+config MSTAR_KRONUS_MMAP_64MB
+        depends on MSTAR_KRONUS
+        bool "MMAP 64MB (Kronus)"
+
+config MSTAR_KAISERIN_MMAP_128MB_128MB
+        depends on MSTAR_KAISERIN
+        bool "MMAP 128MB+128MB (Kaiserin)"
+
+config MSTAR_AMBER3_MMAP_128MB_128MB
+        depends on MSTAR_AMBER3
+        bool "MMAP 128MB+128MB (Amber3)"
+
+config MSTAR_AMBER3_MMAP_256MB_256MB
+        depends on MSTAR_AMBER3
+        bool "MMAP 256MB+256MB (Amber3)"
+
+config MSTAR_AMBER3_MMAP_128MB
+        depends on MSTAR_AMBER3
+        bool "MMAP 128MB (Amber3)"
+
+config MSTAR_AGATE_MMAP_128MB_128MB
+        depends on MSTAR_AGATE
+        bool "MMAP 128MB+128MB (Agate)"
+
+config MSTAR_AGATE_MMAP_256MB_256MB
+        depends on MSTAR_AGATE
+        bool "MMAP 256MB+256MB (Agate)"
+
+config MSTAR_AGATE_MMAP_128MB
+        depends on MSTAR_AGATE
+        bool "MMAP 128MB (Agate)"
+
+config MSTAR_EAGLE_MMAP_128MB_128MB
+        depends on MSTAR_EAGLE
+        bool "MMAP 128MB + 128MB (Eagle)"
+
+config MSTAR_EAGLE_MMAP_256MB_256MB
+        depends on MSTAR_EAGLE
+        bool "MMAP 256MB + 256MB (Eagle)"
+
+config MSTAR_EAGLE_MMAP_128MB
+        depends on MSTAR_EAGLE
+        bool "MMAP 128MB (Eagle)"
+        
+config MSTAR_EMERALD_MMAP_128MB_128MB
+        depends on MSTAR_EMERALD
+        bool "MMAP 128MB+128MB (Emerald)"
+
+config MSTAR_EMERALD_MMAP_256MB_256MB
+        depends on MSTAR_EMERALD
+        bool "MMAP 256MB+256MB (Emerald)"
+
+config MSTAR_EMERALD_MMAP_128MB
+        depends on MSTAR_EMERALD
+        bool "MMAP 128MB (Emerald)"
+
+config MSTAR_ARM_MMAP_128MB_128MB
+        depends on MSTAR_ARM
+        bool "MMAP 128MB+128MB (ARM)"
+
+config MSTAR_ARM_MMAP_256MB_256MB
+        depends on MSTAR_ARM
+        bool "MMAP 256MB+256MB (ARM)"
+
+config MSTAR_ARM_MMAP_128MB
+        depends on MSTAR_ARM
+        bool "MMAP 128MB (ARM)"
+
+config MSTAR_EIFFEL_MMAP_GENERIC
+        depends on MSTAR_EIFFEL
+        bool "Generic Memory Map (Eiffel)"
+
+endchoice
+
+#===================================================
+#
+#===================================================
+config MSTAR_RESERVE_MEM_FOR_AEON
+    bool "Reserve Memory for AEON"
+    default n
+
+config MSTAR_RESERVE_MEM_FOR_AEON_SIZE
+    depends on MSTAR_RESERVE_MEM_FOR_AEON
+    hex "Reserve memory (bytes) for co-processor"
+    default 0x200000
+    help
+        reserve n MB size for MSTAR co-processor
+
+config MSTAR_OFFSET_FOR_SBOOT
+    bool "Offset for SBoot"
+    default n

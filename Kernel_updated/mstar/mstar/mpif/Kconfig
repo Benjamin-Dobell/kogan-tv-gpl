@@ -1,0 +1,5 @@
+config MSTAR_MPIF
+tristate "MPIF"
+help
+    enable MStar MPIF driver.
+

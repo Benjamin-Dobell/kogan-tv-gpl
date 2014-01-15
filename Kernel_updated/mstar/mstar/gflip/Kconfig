@@ -1,0 +1,32 @@
+config MSTAR_GFLIP
+tristate "GFLIP"
+help
+    enable MStar GFLIP driver.
+
+if MSTAR_GFLIP
+
+if MSTAR_TITANIA3
+if MSTAR_GPIO
+config MSATR_3D_LR_REPORT
+  bool "Support 3D LR Report"
+  default n
+  help
+    Support 3D LR report
+endif
+endif
+
+
+config MSATR_VE_CAPTURE_SUPPORT
+  bool "Support VE Capture Function"
+  default y if (MSTAR_TITANIA12 || MSTAR_JANUS2 || MSTAR_AMBER5)
+  default y
+  help
+    If Support VE Capture feature
+
+config MSATR_NEW_FLIP_FUNCTION_ENABLE
+  bool "Enable the new flip function(to replace the old one)"
+  default y
+  help
+    If use the new function, it will make sure the flip is done in hardware vsync peroid
+
+endif

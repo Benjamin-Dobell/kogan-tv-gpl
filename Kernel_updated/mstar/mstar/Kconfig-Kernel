@@ -1,0 +1,59 @@
+#
+# For Mstar kernel related config
+#
+
+menu "MStar kernel Configuration"
+
+config MSTAR_PRJ_VALUE_HARDCODE
+        bool "PRJ value hardcode"
+        default n
+        help
+          This will make LPJ (loops per jiffies) hardcode value if enabled and
+          bypass the calibration loop at boot time. Pls note that the value may
+          diff if with different cpu frequency. Now only 900 and 1G freq are
+          supported
+
+config MSTAR_OOM_DO_WDT_RESET
+	bool "Do Watchdog Reset Immediately if OOM"
+        default n
+
+config MSTAR_KERNEL_PANIC_DO_WDT_RESET
+	bool "Do Watchdog Reset Immediately if kernel panic"
+        default y
+
+config MSTAR_KERNEL_FAULT_DO_WDT_RESET
+	bool "Do Watchdog Reset Immediately if kernel fault"
+        default y
+
+config MSTAR_DUMP_REG_LR        
+    bool "Dump Processor Link Register through UART Interrupt"
+        default y
+
+config MSTAR_PM_WDT
+	bool "Kernel will send password to PM to decide ReleaseMode or DebugMode"
+	default n
+	help
+		Kernel will send password to PM to decide ReleaseMode or DebugMode.
+		PM has 2 mode, one is ReleaseMode, and the other is DebugMode.
+		ReleaseMode has to enable WDT, but DebugMode has to disable WDT.
+
+menu  "Address Filter Select"
+
+config  Address_Filter
+	bool "Enable Address Filter"
+		default y
+
+config MSTAR_Master0_Only
+	bool "Enable Master0 only"
+		depends on Address_Filter
+		default y
+
+config MSTAR_Master1_Only
+	bool "Enable Master1 only"
+		depends on Address_Filter && !MSTAR_Master0_Only
+		default n
+
+endmenu
+endmenu
+
+

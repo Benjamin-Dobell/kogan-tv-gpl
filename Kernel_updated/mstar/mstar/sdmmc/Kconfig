@@ -1,0 +1,184 @@
+config MSTAR_SDMMC
+	bool "Mstar SD/MMC Card Interface Support"
+	depends on MMC
+	default n
+	---help---
+        Enable SD/MMC Driver Support for MStar Product
+
+config MSTAR_SDMMC_TCARD
+	bool "Mstar SD/MMC T-Flash Card Using"
+	depends on MSTAR_SDMMC
+	default n
+  ---help---
+        For T-Flash Socket, We don't use WP Pin
+
+config MSTAR_SDMMC_REVWP
+	bool "Mstar SD/MMC Reverse WP Pin"
+	depends on !MSTAR_SDMMC_TCARD && MSTAR_SDMMC
+	default n
+  ---help---
+        For SD Socket Type, Revert the WP pin Value for Write Protection
+
+config MSTAR_SDMMC_DUALCARDS
+	bool "Mstar SD/MMC Dual Cards Support"
+	depends on MSTAR_SDMMC
+	default n
+  ---help---
+        Enable Dual SD/MMC Card Interface
+
+config MSTAR_SDMMC1_MAXCLK
+    int "Mstar SD/MMC1 Maximum Clock"
+    depends on MSTAR_SDMMC
+    default 32000000
+    range 300000 36000000
+    ---help---
+      The maximun Clock of SDMMC1
+
+config MSTAR_SDMMC1_MAXDLVL
+    int "Mstar SD/MMC1 Maximum DownLevel"
+    depends on MSTAR_SDMMC
+    default 0
+    range 0 5
+    ---help---
+      The maximun Clock Downgrade Level of SDMMC1
+
+config MSTAR_SDMMC1_PORT1
+	bool "Mstar SD/MMC select slot1 to port1"
+	depends on MSTAR_SDMMC && MSTAR_AMBER3
+	default n
+	---help---
+        For SD, select sd card slot1 to port1
+  
+config MSTAR_SDMMC1_PORT2
+	bool "Mstar SD/MMC select slot1 to port2"
+	depends on MSTAR_SDMMC && MSTAR_AMBER3
+	default n
+	---help---
+        For SD, select sd card slot1 to port2        
+
+config MSTAR_SDMMC1_HOTP
+	bool "Mstar SD/MMC1 Hotplug Support"
+	depends on MSTAR_SDMMC
+	default n
+  ---help---
+        For SD1, Whether we need to run hotplug funciton (HW consideration)                
+        
+config MSTAR_SDMMC_GPIO_CDZ
+	bool "Mstar SD/MMC CDZ pin use GPIO"
+	depends on MSTAR_SDMMC1_HOTP && MSTAR_AMBER3
+	default n
+	---help---
+        Use other GPIO pin for card detect function
+
+config MSTAR_SDMMC_GPIO_PM10
+	bool "Mstar SD/MMC CDZ pin use GPIO PM10"
+	depends on MSTAR_SDMMC_GPIO_CDZ && MSTAR_AMBER3
+	default n
+	---help---
+        Use other GPIO PM10 pin for card detect function
+        
+config MSTAR_SDMMC_GPIO_PM16
+	bool "Mstar SD/MMC CDZ pin use GPIO PM16"
+	depends on MSTAR_SDMMC_GPIO_CDZ && MSTAR_AMBER3
+	default n
+	---help---
+        Use other GPIO PM16 pin for card detect function
+        
+config MSTAR_SDMMC1_GPIO_PM10
+	bool "Mstar SD/MMC1 CDZ pin use GPIO PM10"
+	depends on MSTAR_SDMMC1_HOTP 
+	default n
+	---help---
+        Use other GPIO PM10 pin for card detect function            
+        
+config MSTAR_SDMMC1_GPIO_PM16
+	bool "Mstar SD/MMC1 CDZ pin use GPIO PM16"
+	depends on MSTAR_SDMMC1_HOTP 
+	default n
+	---help---
+        Use other GPIO PM16 pin for card detect function
+        
+config MSTAR_SDMMC1_GPIO_PADSPI2DI
+	bool "Mstar SD/MMC1 CDZ pin use PADSPI2DI"
+	depends on MSTAR_SDMMC1_HOTP 
+	default n
+	---help---
+        Use other PADSPI2DI pin for sd1 card detect function               
+
+config MSTAR_SDMMC1_PASSLVL
+    int "Mstar SD/MMC1 Pass Level"
+    depends on MSTAR_SDMMC
+    default 0
+    range 0 5
+    ---help---
+      The maximun Clock Pass Level of SDMMC1
+
+        
+config MSTAR_SDMMC1_FAKECDZ
+	bool "Mstar SD/MMC1 Fake CDZ"
+	depends on !MSTAR_SDMMC1_HOTP && MSTAR_SDMMC
+	default n
+  ---help---
+        For SD1, Whether we need to assume card detection always true (HW consideration)        
+        
+
+config MSTAR_SDMMC2_MAXCLK
+    int "Mstar SD/MMC2 Maximum Clock"
+    depends on MSTAR_SDMMC_DUALCARDS
+    default 32000000
+    range 300000 50000000
+    ---help---
+      The maximun Clock of SDMMC2
+
+config MSTAR_SDMMC2_MAXDLVL
+    int "Mstar SD/MMC2 Maximum DownLevel"
+    depends on MSTAR_SDMMC_DUALCARDS
+    default 0
+    range 0 5
+    ---help---
+      The maximun Clock Downgrade Level of SDMMC2
+      
+config MSTAR_SDMMC2_PASSLVL
+    int "Mstar SD/MMC2 Pass Level"
+    depends on MSTAR_SDMMC_DUALCARDS
+    default 0
+    range 0 5
+    ---help---
+      The maximun Clock Pass Level of SDMMC2
+      
+config MSTAR_SDMMC2_HOTP
+	bool "Mstar SD/MMC2 Hotplug Support"
+	depends on MSTAR_SDMMC_DUALCARDS && MSTAR_SDMMC
+	default n
+  ---help---
+        For SD2, Whether we need to run hotplug funciton (HW consideration)
+
+config MSTAR_SDMMC2_GPIO_PM10
+	bool "Mstar SD/MMC2 CDZ pin use GPIO PM10"
+	depends on MSTAR_SDMMC2_HOTP 
+	default n
+	---help---
+        Use other GPIO PM10 pin for card detect function
+        
+config MSTAR_SDMMC2_GPIO_PM16
+	bool "Mstar SD/MMC2 CDZ pin use GPIO PM16"
+	depends on MSTAR_SDMMC2_HOTP 
+	default n
+	---help---
+        Use other GPIO PM16 pin for card detect function       
+        
+config MSTAR_SDMMC2_GPIO_PADSPI2DI
+	bool "Mstar SD/MMC2 CDZ pin use PADSPI2DI"
+	depends on MSTAR_SDMMC2_HOTP 
+	default n
+	---help---
+        Use other PADSPI2DI pin for sd2 card detect function
+
+config MSTAR_SDMMC2_FAKECDZ
+	bool "Mstar SD/MMC2 Fake CDZ"
+	depends on !MSTAR_SDMMC2_HOTP && MSTAR_SDMMC && MSTAR_SDMMC_DUALCARDS
+	default n
+  ---help---
+        For SD2, Whether we need to assume card detection always true (HW consideration)
+        
+

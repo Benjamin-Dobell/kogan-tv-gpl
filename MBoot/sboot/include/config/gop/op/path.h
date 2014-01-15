@@ -1,0 +1,1 @@
+#define CONFIG_GOP_OP_PATH 1

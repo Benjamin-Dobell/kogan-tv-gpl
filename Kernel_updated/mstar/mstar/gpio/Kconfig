@@ -1,0 +1,7 @@
+config MSTAR_GPIO
+
+tristate "GPIO"
+
+help
+    MStar GPIO driver function
+
