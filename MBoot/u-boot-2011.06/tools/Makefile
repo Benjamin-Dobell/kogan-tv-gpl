@@ -205,14 +205,36 @@ $(obj)ubsha1$(SFX):	$(obj)os_support.o $(obj)sha1.o $(obj)ubsha1.o
 	$(HOSTCC) $(HOSTCFLAGS) $(HOSTLDFLAGS) -o $@ $^
 
 # Some of the tool objects need to be accessed from outside the tools directory
-$(obj)%.o: $(SRCTREE)/common/%.c
+$(obj)env_embedded.o: $(SRCTREE)/common/env_embedded.c
 	$(HOSTCC) -g $(HOSTCFLAGS_NOPED) -c -o $@ $<
 
-$(obj)%.o: $(SRCTREE)/lib/%.c
+$(obj)image.o: $(SRCTREE)/common/image.c
+	$(HOSTCC) -g $(HOSTCFLAGS_NOPED) -c -o $@ $<
+
+$(obj)crc32.o: $(SRCTREE)/lib/crc32.c
 	$(HOSTCC) -g $(HOSTCFLAGS) -c -o $@ $<
 
-$(obj)%.o: $(SRCTREE)/lib/libfdt/%.c
+$(obj)md5.o: $(SRCTREE)/lib/md5.c
+	$(HOSTCC) -g $(HOSTCFLAGS) -c -o $@ $<
+
+$(obj)sha1.o: $(SRCTREE)/lib/sha1.c
+	$(HOSTCC) -g $(HOSTCFLAGS) -c -o $@ $<
+
+$(obj)fdt.o: $(SRCTREE)/lib/libfdt/fdt.c
 	$(HOSTCC) -g $(HOSTCFLAGS_NOPED) -c -o $@ $<
+
+$(obj)fdt_ro.o: $(SRCTREE)/lib/libfdt/fdt_ro.c
+	$(HOSTCC) -g $(HOSTCFLAGS_NOPED) -c -o $@ $<
+
+$(obj)fdt_rw.o: $(SRCTREE)/lib/libfdt/fdt_rw.c
+	$(HOSTCC) -g $(HOSTCFLAGS_NOPED) -c -o $@ $<
+
+$(obj)fdt_strerror.o: $(SRCTREE)/lib/libfdt/fdt_strerror.c
+	$(HOSTCC) -g $(HOSTCFLAGS_NOPED) -c -o $@ $<
+
+$(obj)fdt_wip.o: $(SRCTREE)/lib/libfdt/fdt_wip.c
+	$(HOSTCC) -g $(HOSTCFLAGS_NOPED) -c -o $@ $<
+
 
 subdirs:
 ifeq ($(TOOLSUBDIRS),)

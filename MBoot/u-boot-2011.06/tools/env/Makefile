@@ -36,7 +36,18 @@ ifeq ($(MTD_VERSION),old)
 HOSTCPPFLAGS += -DMTD_OLD
 endif
 
+# macro to check whether a host header is present; outputs 1 if present, 0 if
+# not
+check_include = $(shell echo | $(HOSTCC) $(HOSTCFLAGS_NOPED) -E -include $(1) -o /dev/null - 2>/dev/null && echo 1 || echo 0)
+ 
+# whether to build tools/env or not 
+has_mtd_user := $(call check_include, mtd/mtd-user.h)
+
+ifeq ($(has_mtd_user),1)
 all:	$(obj)fw_printenv
+else
+all: 
+endif
 
 # Some files complain if compiled with -pedantic, use HOSTCFLAGS_NOPED
 $(obj)fw_printenv:	$(HOSTSRCS) $(HEADERS)
