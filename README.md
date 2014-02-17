@@ -41,6 +41,13 @@ Compiling U-Boot
     cd MBoot/u-boot-2011.06
     make edison -j4
 
+Building the sboot firmware image
+===
+
+Well, we are stuck at this point because we don't have Mstar's signing keys. In addition to that it looks like all the signing tools are Windows only!
+
+Currently it's unclear whether the TV requires the firmware to be signed with Mstar's private key in order to boot, or whether signing is just there as a means to verify if a TV is running official firmware (at the time of a warranty claim etc.)
+
 Notes
 ===
 
