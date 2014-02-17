@@ -8,7 +8,7 @@ Prerequisites
 
 If running OS X, install homebrew then:
 
-    brew install coreutils xz
+    brew install binutils coreutils xz
 
 You will also need to obtain elfutils/libelf, ideally from AOSP.
 
@@ -35,7 +35,11 @@ _Suitable toolchains are included in the AOSP project._
 
 Where you replace *&lt;PATH\_TO\_ELFUTILS&gt;* with the path to elfutils. If you have downloaded AOSP, elfutils is included in the external/ sub-directory.
 
+Compiling U-Boot
+===
 
+    cd MBoot/u-boot-2011.06
+    make edison -j4
 
 Notes
 ===
@@ -43,3 +47,5 @@ Notes
  * Kernel_updated/kernel/Makefile has been modified as provided from Kogan/Mstar to skip running mpatch (Mstar's patching tool). This was done because the included binary is Linux only, but the necessary files to patch the kernel seem to be have been pregenerated and included anyway.
 
  * The source, as provided by Kogan, referred to a .config_edison_SMP_android_emmc, however no such file was provided. The .config_edison_SMP_android_emmc included in this repo was extracted from http://media.kogan.com/files/support_files/KALED473DSMTZA%20FIRMWARE%2020131107.zip
+
+ * Several minor tweaks were made to U-Boot (and Mstar) Makefiles to ensure U-Boot builds on Mac.
