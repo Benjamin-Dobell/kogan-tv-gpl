@@ -123,7 +123,7 @@ FLTFLAGS += -s 16000
 AFLAGS = $(CFLAGS)
 
 # SBoot could not be linked with std libraries
-LDFLAGS += -EL -nostdlib
+LDFLAGS += -nostdlib
 
 ifeq ($(CONFIG_MSTAR_TITANIA2),y)
 CHIP_FOLDER:=titania2
