@@ -39,7 +39,7 @@ Compiling U-Boot
 ===
 
     cd MBoot/u-boot-2011.06
-    make edison -j4
+    make edison -j4 LE=1
 
 Building the sboot firmware image
 ===
