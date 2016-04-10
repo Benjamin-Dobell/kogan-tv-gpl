@@ -8,11 +8,19 @@ Prerequisites
 
 If running OS X, install homebrew then:
 
-    brew install binutils coreutils xz
+    brew install binutils coreutils gar libelf xz
 
-You will also need to obtain elfutils/libelf, ideally from AOSP.
+You will also need an ARM cross-compilation toolchain.
 
-__NOTE:__ The libelf provided by homebrew is not sufficient.
+OS X:
+
+    git clone https://android.googlesource.com/platform/prebuilts/gcc/darwin-x86/arm/arm-eabi-4.6
+
+Linux:
+
+    git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6
+
+You will want to add the cloned bin/ directory to your PATH.
 
 Compiling Android/Linux Kernel
 ===
@@ -21,32 +29,39 @@ Copy the pregenerated kernel config to the kernel sub-directory.
 
     cp .config_edison_SMP_android_emmc Kernel_updated/kernel/.config
 
-Make sure a suitable ARM cross-compiling toolchain is in your PATH.
-
-_Suitable toolchains are included in the AOSP project._ 
+Then build the kernel as follows:
 
     cd Kernel_updated/kernel/
     
     export ARCH=arm
-    export SUBARCH=arm
     export CROSS_COMPILE=arm-eabi-
-    
-    make -j4 HOSTCFLAGS=-i<PATH_TO_ELFUTILS>/libelf
+
+OS X:
+
+    make -j4 HOSTCFLAGS="-I$(brew --prefix libelf) -I$(pwd)/include/linux -I$(pwd)/arch/arm/include/"
+
+Linux:
+
+    make -j4
 
 Where you replace *&lt;PATH\_TO\_ELFUTILS&gt;* with the path to elfutils. If you have downloaded AOSP, elfutils is included in the external/ sub-directory.
 
 Compiling U-Boot
 ===
 
+There is no major need to replace U-Boot on your device. All TVs I've encountered will happily flash and custom kernels and Android builds using the preinstalled bootloaders. As such you may wish to skip building MBoot.
+
+Compiling U-Boot
+---
+
+
     cd MBoot/u-boot-2011.06
-    make edison -j4 LE=1
+    make edison -j4
 
-Building the sboot firmware image
-===
+Building sboot
+---
 
-Well, we are stuck at this point because we don't have Mstar's signing keys. In addition to that it looks like all the signing tools are Windows only!
-
-Currently it's unclear whether the TV requires the firmware to be signed with Mstar's private key in order to boot, or whether signing is just there as a means to verify if a TV is running official firmware (at the time of a warranty claim etc.)
+The source code for sboot is not included. Precompiled binaries are included and it's possible to build MBoot using these (only tested on Linux using the precompiled 32-bit Linux binaries in this repo).
 
 Notes
 ===
