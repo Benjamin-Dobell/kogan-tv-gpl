@@ -4,6 +4,8 @@ SUBLEVEL = 0
 EXTRAVERSION =
 NAME = Unnamed
 
+SHELL=/bin/bash
+
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
 # More info can be located in ./README
@@ -370,7 +372,7 @@ export RCS_TAR_IGNORE := --exclude SCCS --exclude BitKeeper --exclude .svn --exc
 -include .config
 PHONY += scripts_basic
 scripts_basic:
-	$(Q)$(MAKE) $(build)=scripts/basic
+#	$(Q)$(MAKE) $(build)=scripts/basic
 
 PROJ=sboot
 ifeq ($(CONFIG_MCU_ARM),y)
@@ -1659,27 +1661,28 @@ else
 out/mboot.bin: out/sboot.bin
 endif
 else
-out/mboot.bin: out/sboot.bin
+out/mboot.bin:
 	$(Q)echo "  MERGE   $@"
 ifeq ($(CONFIG_BOOTING_FROM_EXT_SPI_WITH_CPU),y)
     ifeq ($(CONFIG_MSTAR_PM_SWIR),y)
-	$(Q)cat $< > $@;
+	$(Q)cat out/sboot.bin > $@;
 	$(Q)cat $(PM_BIN) >> $@;
+	$(Q)echo "   MERGE   PM_BIN $(PM_BIN)"
 	$(Q)cat $(RT_PM_BIN) >> $@;
 	$(Q)echo "   MERGE   RT_PM_BIN $(RT_PM_BIN)"
     else
-	$(Q)cat $< > $@;
+	$(Q)cat out/sboot.bin > $@;
 	$(Q)cat $(PM_BIN) >> $@;
     endif
 else ifeq ($(CONFIG_MSTAR_ROM_BOOT_WITH_NAND_FLASH), y)
-	$(Q)cat $< > $@;
+	$(Q)cat out/sboot.bin > $@;
 else ifeq ($(CONFIG_BOOTING_FROM_EXT_EMMC_WITH_CPU),y)
 	$(Q)cat $(CHUNK_HEADER) >> $@;
 	$(Q)$(MERGEDIR)/MergeBin.exe $(PM_BIN) $@ $(CHUNK_HEADER_SIZE) ;
 	$(Q)cat $(SECURITY_BIN) >> $@
 else
 	$(Q)cat $(PM_BIN) > $@;
-	$(Q)cat $< >> $@;
+	$(Q)cat out/sboot.bin >> $@;
 	$(Q)cat $(SECURITY_BIN) >> $@
 endif
 
@@ -1695,7 +1698,7 @@ else
             __MBOOT_SIZE=$$(($(SBOOT_SIZE)+$(PM_SIZE)+$(CHUNK_HEADER_SIZE)+$(UBOOT_SIZE)+$(CUSTOMER_KEY_BANK_SIZE))); \
             _MBOOT_SIZE_ALIGN=$$((($$__MBOOT_SIZE+0xFFFF)&(~0xFFFF))); \
             printf %c "$$DUMMY_BYTE" > $(LOGO_ALIGN_BIN); \
-            for ((i=1; i<$$(($$_MBOOT_SIZE_ALIGN-$$__MBOOT_SIZE)) ; i=i+1)) \
+            for i in $$(seq $$(($$_MBOOT_SIZE_ALIGN-$$__MBOOT_SIZE))); \
             do \
                 printf %c "$$DUMMY_BYTE" >> $(LOGO_ALIGN_BIN); \
             done; \
@@ -1721,7 +1724,7 @@ ifneq ($(CONFIG_BOOTING_FROM_EXT_SPI_WITH_CPU),y)
 	$(Q) rm ./out/keybank.*
 endif
 	$(Q)$(SEPARATEDIR)/SeparateBin.exe $(PM_BIN) ./out/$(DDR_BACKUP_BIN) 0xF200 0xE00
-	$(Q)$(SECUREDIR)/crc -a ./out/$(DDR_BACKUP_BIN);
+	crc32 ./out/$(DDR_BACKUP_BIN) | xxd -r -p >> ./out/$(DDR_BACKUP_BIN)
 
 ifeq ($(PARA),1)
 	@rm -f ./MBoot.bdf*
@@ -1788,7 +1791,7 @@ ifneq ($(CONFIG_MSTAR_ROM_BOOT_WITH_NAND_FLASH), y)
 endif
 endif
 	$(Q)$(SEPARATEDIR)/SeparateBin.exe $(PM_BIN) ./out/$(DDR_BACKUP_BIN) 0xF200 0xE00
-	$(Q)$(SECUREDIR)/crc -a ./out/$(DDR_BACKUP_BIN);
+	crc32 ./out/$(DDR_BACKUP_BIN) | xxd -r -p >> ./out/$(DDR_BACKUP_BIN)
 
 ifeq ($(PARA),1)
 	@rm -f ./MBoot.bdf*
@@ -2572,7 +2575,7 @@ define insert_key_value
     echo "$(shell printf "%-30s = $(strip $(2))" "$(strip $(1))")" >> $(3)
 endef
 
-.PHONY: mboot_build_ini
+#.PHONY: mboot_build_ini
 mboot_build_ini: 
 	@echo "Update mboot build ini file"
 	@echo ";Mboot Build Info"                             > $(MBOOT_BUILD_INI)

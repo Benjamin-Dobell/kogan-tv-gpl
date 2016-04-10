@@ -1,12 +1,12 @@
 #!/bin/bash
 
 FILE_PART_READ_CMD="filepartload"
-CRC_BIN="./crc"
+CRC="crc32"
+XXD="xxd"
 FULL_ERASE=0
 NEW_MBOOT=1
 FLASH_IS_EMMC=0
 SCRIPT_SIZE=0x4000
-SPILT_SIZE=16384
 CPU_IS_ARM=1
 
 function func_init_env_for_mboot(){
@@ -55,12 +55,9 @@ function func_init_common_env(){
 
 function func_set_crc_to_image(){
     #Set Only-Script CRC1
-    $CRC_BIN -a $SCRIPT_FILE
-    split -d -a 2 -b $SPILT_SIZE $SCRIPT_FILE $SCRIPT_FILE.tmp.
-    cat $SCRIPT_FILE.tmp.01 >> $OUTPUT_IMG
+    $CRC $SCRIPT_FILE | xxd -r -p >> $OUTPUT_IMG
     #Set Full-Bin CRC2
-    $CRC_BIN -a $OUTPUT_IMG
-    rm $SCRIPT_FILE.*
+    $CRC $OUTPUT_IMG | xxd -r -p >> $OUTPUT_IMG
 }
 
 function func_copy_first_16byte(){

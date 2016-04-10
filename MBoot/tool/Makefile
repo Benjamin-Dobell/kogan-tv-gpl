@@ -5,12 +5,16 @@ CFLAGS=-I$(IDIR)
 ODIR=obj
 LDIR =../lib
 
+MKDIR=mkdir
+
 _DEPS =
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 _OBJ = merge.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
+$(ODIR):
+	${MKDIR} ${ODIR}
 
 $(ODIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
