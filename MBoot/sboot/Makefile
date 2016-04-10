@@ -2548,12 +2548,7 @@ endif
 MBOOT_ROOT = ./..
 
 define get_svn_version
-$(strip \
-	$(eval SVN_CLIENT_VERSION := $(shell svn --version | grep '1\.[0-9]\.[0-9]*' -o)) \
-    $(if "$(shell expr $(SVN_CLIENT_VERSION) \>= 1.7.0)" == "1", \
-        $(shell  svn info $(1) |sed -n "6p" | grep [0-9]* -o), \
-        $(shell  svn info $(1) |sed -n "5p" | grep [0-9]* -o)) \
-)
+"KOGAN_CODE_DROP"
 endef
 
 ifeq ($(MBOOT_VERSION),)
