@@ -1,1 +1,0 @@
-cmd_drivers/mstar/alsa_audio_driver/hal/built-in.o :=  arm-none-linux-gnueabi-ld -EL    -r -o drivers/mstar/alsa_audio_driver/hal/built-in.o drivers/mstar/alsa_audio_driver/hal/mhal-alsa-audio.o ; scripts/mod/modpost drivers/mstar/alsa_audio_driver/hal/built-in.o

@@ -1,1 +1,0 @@
-cmd_drivers/mstar/semutex/built-in.o :=  arm-none-linux-gnueabi-ld -EL    -r -o drivers/mstar/semutex/built-in.o drivers/mstar/semutex/mdrv-semutex.o ; scripts/mod/modpost drivers/mstar/semutex/built-in.o

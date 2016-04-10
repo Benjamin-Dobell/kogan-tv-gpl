@@ -1,0 +1,11 @@
+System.map
+/u-boot*
+/arch/arm/include/asm/arch
+/arch/arm/include/asm/proc
+/board/mstar
+/drivers/mstar
+/include/generated/
+/include/kk/
+/include/mstar/
+/lib/asm-offsets.s
+/lib/mstar

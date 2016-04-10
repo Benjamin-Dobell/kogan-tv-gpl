@@ -1,1 +1,0 @@
-cmd_drivers/mstar/emac/mdrv-emac.o := arm-none-linux-gnueabi-ld -EL    -r -o drivers/mstar/emac/mdrv-emac.o drivers/mstar/emac/mdrv_emac.o drivers/mstar/emac/edison/mhal_emac.o ; scripts/mod/modpost drivers/mstar/emac/mdrv-emac.o
