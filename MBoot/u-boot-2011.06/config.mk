@@ -195,9 +195,6 @@ CPPFLAGS += -I$(TOPDIR)/drivers/mstar/mmc/inc/common/
 CPPFLAGS += -I$(TOPDIR)/drivers/mstar/mmc/inc/api/
 CPPFLAGS += -I$(TOPDIR)/drivers/mstar/mmc/inc/config/
 endif
-ifeq ($(ARCH),arm)
-CPPFLAGS += -munaligned-access -mno-unaligned-access 
-endif
 #Mstar End
 CPPFLAGS += -fno-builtin -ffreestanding -nostdinc	\
 	-isystem $(gccincdir) -pipe $(PLATFORM_CPPFLAGS)
