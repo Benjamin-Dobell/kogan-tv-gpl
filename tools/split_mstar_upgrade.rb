@@ -6,6 +6,8 @@ if ARGV.length < 1
   exit 1
 end
 
+mstar_upgrade_path = ARGV[0]
+
 output_base_path = File.basename mstar_upgrade_path, ".*"
 
 script = File.read mstar_upgrade_path, 16384
@@ -17,7 +19,7 @@ if script
   File.write path, script
   puts "Created #{path}"
 
-  regex = /filepartload \h+ .*? (\h+) (\h+)\n.*?mmc (?:unlzo|write\.p)(?:.continue)? \h+ (?:\h+ )?(\w+)/m
+  regex = /filepartload \h+ .*? (\h+) (\h+)\n.*?mmc (?:unlzo|write\.p)(?:.continue|.cont)? \h+ (?:\h+ )?(\w+)/m
   script.scan regex do |match|
     offset = match[0].to_i 16
     size = match[1].to_i 16
